@@ -13,12 +13,14 @@ public class GamePiece {
     private final Animation<TextureRegion> attack;
 
     private float animState = 0;
+    private float rotation = 0;
     private Animation<TextureRegion> currentAnimation;
     private TextureRegion keyframe;
     private GameTile currentTile;
     private GameTile moveTile;
     private final Rectangle bounds = new Rectangle();
     private final Vector2 position = new Vector2();
+    private boolean selected = false;
 
     public GamePiece(Animation<TextureRegion> idle, Animation<TextureRegion> attack) {
         this.idle = idle;
@@ -35,7 +37,14 @@ public class GamePiece {
     }
 
     public void setTile(GameTile tile) {
+        if (currentTile == tile) {
+            selected = !selected;
+            return;
+        }
+
         currentTile = tile;
+        rotation = 0;
+        selected = false;
         setPosition(tile.bounds.x + tile.bounds.width / 2, tile.bounds.y + TILE_OFFSET_Y);
     }
 
@@ -47,11 +56,14 @@ public class GamePiece {
     public void update(float dt) {
         animState += dt;
         keyframe = currentAnimation.getKeyFrame(animState);
+        if (selected) {
+            rotation += 80 * dt;
+        }
     }
 
     public void render(SpriteBatch batch) {
         if (currentTile == null) return;
 
-        batch.draw(keyframe, bounds.x, bounds.y);
+        batch.draw(keyframe, bounds.x, bounds.y, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, 1, 1, rotation);
     }
 }
