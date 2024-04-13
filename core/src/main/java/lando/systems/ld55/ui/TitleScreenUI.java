@@ -40,15 +40,14 @@ public class TitleScreenUI {
             settingsBound = new Rectangle(x, y - (buttonHeight + MARGIN), buttonWidth, buttonHeight);
             creditBound = new Rectangle(x, y - (buttonHeight + MARGIN) * 2, buttonWidth, buttonHeight);
         } else {
-            settingsBound = new Rectangle(x + buttonWidth + MARGIN, y, buttonWidth, buttonHeight);
-            creditBound = new Rectangle(x + buttonWidth + MARGIN * 2, y, buttonWidth, buttonHeight);
+            settingsBound = new Rectangle(x + (buttonWidth + MARGIN), y, buttonWidth, buttonHeight);
+            creditBound = new Rectangle(x + (buttonWidth + MARGIN) * 2, y, buttonWidth, buttonHeight);
         }
         startGameButton = new Button(startGameBound, "Start Game", Assets.NinePatches.glass_blue, Assets.NinePatches.glass, font);
         settingsButton = new Button(settingsBound, "Settings", Assets.NinePatches.glass_yellow, Assets.NinePatches.glass, font);
         creditButton = new Button(creditBound, "Credits", Assets.NinePatches.glass_red, Assets.NinePatches.glass, font);
 
         startGameButton.setOnClickAction(() -> {
-            Gdx.app.log("TitleScreenUI", "Start Game Button Clicked");
             EventManager.getInstance().dispatch("start_game");
         });
         settingsButton.setOnClickAction(() -> {

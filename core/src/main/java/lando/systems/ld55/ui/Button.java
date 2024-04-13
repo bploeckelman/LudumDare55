@@ -45,7 +45,6 @@ public class Button {
     }
 
     public void onClick() {
-        Gdx.app.log("Button", text + "onClick action called");
         if (onClickAction != null) {
             onClickAction.run();
         }
