@@ -69,11 +69,11 @@ public class TitleScreen extends BaseScreen {
             var layout = new GlyphLayout();
             layout.setText(font, "Coming Soon - \nClock Gobblers", Color.WHITE, width, Align.center, true);
             //font.draw(batch, layout, 0, height / 3f);
-            titleScreenUI.draw(batch);
         }
         batch.end();
 
         if (drawUI) {
+            titleScreenUI.draw(batch);
             uiStage.draw();
         }
     }
