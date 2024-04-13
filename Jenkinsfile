@@ -38,6 +38,13 @@ pipeline {
                 }
             }
         }
+        stage("Build TeaVM") {
+            steps {
+                script {
+                    sh './gradlew teavm:build'
+                }
+            }
+        }
         stage("Upload to Host") {
             steps{
                 script {
@@ -51,6 +58,11 @@ pipeline {
                                                             sourceFiles: "html/build/dist/**",
                                                             removePrefix: "html/build/dist/",
                                                             remoteDirectory: "${env.REMOTE_DIR}",
+                                                    ),
+                                                    sshTransfer(
+                                                            sourceFiles: "teavm/build/dist/webapp/**",
+                                                            removePrefix: "teavm/build/dist/webapp/",
+                                                            remoteDirectory: "${env.REMOTE_DIR}/teavm",
                                                     )
                                             ])
                             ])
@@ -69,8 +81,6 @@ pipeline {
                     topic: "jenkins/${env.GIT_REPO_NAME}"
         }
     }
-
-
 }
 
 def getMessageAttrib() {
