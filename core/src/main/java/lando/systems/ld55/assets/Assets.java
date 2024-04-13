@@ -48,6 +48,8 @@ public class Assets implements Disposable {
 
     public TextureRegion pixelRegion;
 
+    public ShaderProgram portalShader;
+
     public Array<ShaderProgram> randomTransitions;
     public ShaderProgram starWarsShader;
     public ShaderProgram blindsShader;
@@ -232,6 +234,9 @@ public class Assets implements Disposable {
         randomTransitions.addAll(
             blindsShader, fadeShader, radialShader, doomShader, pixelizeShader, doorwayShader, crosshatchShader,
             rippleShader, simpleZoomShader, heartShader, stereoShader, circleCropShader, cubeShader, dreamyShader);
+
+
+        portalShader = loadShader("shaders/default.vert", "shaders/portal.frag");
 
         // initialize patch values
         Patch.debug.ninePatch        = new NinePatch(atlas.findRegion("ninepatch/debug"), 2, 2, 2, 2);

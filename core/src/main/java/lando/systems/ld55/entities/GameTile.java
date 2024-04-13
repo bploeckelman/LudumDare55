@@ -27,5 +27,6 @@ public class GameTile {
             c = Color.LIGHT_GRAY;
         batch.setColor(c);
         batch.draw(Main.game.assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
+        batch.setColor(Color.WHITE);
     }
 }

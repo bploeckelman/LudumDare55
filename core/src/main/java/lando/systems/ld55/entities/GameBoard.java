@@ -17,6 +17,7 @@ public class GameBoard {
     public static float bottomMargin = 40;
     public Rectangle boardRegion;
     public Array<GameTile> tiles = new Array<>();
+    public Array<Portal> portalAnimations = new Array<>();
 
     private GameTile hoverTile;
     private GameScreen gameScreen;
@@ -42,14 +43,29 @@ public class GameBoard {
     public void update(float dt) {
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         hoverTile = getTileAtScreenPos(screenPosition);
+
+        if (Gdx.input.justTouched() && hoverTile != null) {
+            portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
+        }
+
+        for (int i = portalAnimations.size -1; i >= 0; i--) {
+            Portal p = portalAnimations.get(i);
+            p.update(dt);
+            if (p.isComplete()) {
+                portalAnimations.removeIndex(i);
+            }
+        }
     }
 
     public void render(SpriteBatch batch) {
         for (GameTile tile : tiles) {
             tile.render(batch);
         }
+        for (Portal p : portalAnimations) {
+            p.render(batch);
+        }
         if (hoverTile != null){
-            batch.setColor(Color.RED);
+            batch.setColor(1.0f, 0f, 0f, .4f);
             batch.draw(Main.game.assets.whitePixel, hoverTile.bounds.x, hoverTile.bounds.y, hoverTile.bounds.width, hoverTile.bounds.height);
         }
         batch.setColor(Color.WHITE);
