@@ -9,7 +9,7 @@ public class GameScreen extends BaseScreen{
 
     public GameScreen() {
         // TODO bring in size or level etc
-        gameBoard = new GameBoard(10);
+        gameBoard = new GameBoard(this, 10);
     }
 
     @Override
