@@ -3,6 +3,8 @@ package lando.systems.ld55.gwt;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
+import lando.systems.ld55.Config;
+import lando.systems.ld55.Main;
 
 /** Launches the GWT application. */
 public class GwtLauncher extends GwtApplication {
