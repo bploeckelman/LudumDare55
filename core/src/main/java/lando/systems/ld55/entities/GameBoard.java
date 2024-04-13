@@ -1,6 +1,7 @@
 package lando.systems.ld55.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,8 +10,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Config;
-import lando.systems.ld55.Main;
 import lando.systems.ld55.screens.GameScreen;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameBoard extends InputAdapter {
 
@@ -25,6 +28,10 @@ public class GameBoard extends InputAdapter {
     public final int tilesWide;
     public final GameScreen gameScreen;
     public final Vector3 screenPosition = new Vector3();
+
+    // TEMP -------------
+    public Pattern currentPattern = Pattern.PAWN_ATK;
+    // TEMP -------------
 
     public GameBoard(GameScreen gameScreen, int tilesWide) {
         this.gameScreen = gameScreen;
@@ -68,7 +75,51 @@ public class GameBoard extends InputAdapter {
         return getTileAt(tile.x + offsetX, tile.y + offsetY);
     }
 
+    public List<GameTile> getTilesForPattern(GameTile center, Pattern pattern) {
+        var tiles = new ArrayList<GameTile>();
+        var centerIndex = Pattern.size / 2;
+
+        for (int y = 0; y < Pattern.size; y++) {
+            for (int x = 0; x < Pattern.size; x++) {
+                char ch = pattern.vals[y][x];
+                if (ch == ' ' || ch == 'x') continue;
+
+                // NOTE - game board y coord is inverted relative to pattern array coords
+                int invY = Pattern.size - 1 - y;
+                // TODO - if this is for an 'enemy' rather than the 'player', invert X also
+
+                int offsetX = x - centerIndex;
+                int offsetY = invY - centerIndex;
+
+                var tile = getTileRelative(center, offsetX, offsetY);
+                if (tile != null) {
+                    tiles.add(tile);
+                }
+            }
+        }
+        return tiles;
+    }
+
+    public GameTile getTileAtScreenPos(Vector3 screenPos) {
+        gameScreen.worldCamera.unproject(screenPos);
+        if (boardRegion.contains(screenPos.x, screenPos.y)){
+            // could maybe look this up by index later
+            for (GameTile tile : tiles) {
+                if (tile.bounds.contains(screenPos.x, screenPos.y)) {
+                    return tile;
+                }
+            }
+        }
+        return null;
+    }
+
     public void update(float dt) {
+        // TEST ---------------
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            currentPattern = currentPattern.next__TEST();
+        }
+        // TEST ---------------
+
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         hoverTile = getTileAtScreenPos(screenPosition);
 
@@ -99,45 +150,14 @@ public class GameBoard extends InputAdapter {
             batch.setColor(color.r, color.g, color.b, alpha);
             batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
 
-            // find neighbor tiles (without pattern)
-            // TODO - find neighbor tiles (with pattern)
-            var left  = getTileRelative(hoverTile, -1,  0);
-            var right = getTileRelative(hoverTile, +1,  0);
-            var up    = getTileRelative(hoverTile,  0, +1);
-            var down  = getTileRelative(hoverTile,  0, -1);
-
+            // find neighbor tiles (with pattern)
             color = Color.RED;
             batch.setColor(color.r, color.g, color.b, alpha);
-            if (left != null) {
-                bounds = left.bounds;
-                batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-            }
-            if (right != null) {
-                bounds = right.bounds;
-                batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-            }
-            if (up != null) {
-                bounds = up.bounds;
-                batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-            }
-            if (down != null) {
-                bounds = down.bounds;
-                batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+            var tiles = getTilesForPattern(hoverTile, currentPattern);
+            for (var tile : tiles) {
+                batch.draw(texture, tile.bounds.x, tile.bounds.y, tile.bounds.width, tile.bounds.height);
             }
         }
         batch.setColor(Color.WHITE);
-    }
-
-    public GameTile getTileAtScreenPos(Vector3 screenPos) {
-        gameScreen.worldCamera.unproject(screenPos);
-        if (boardRegion.contains(screenPos.x, screenPos.y)){
-            // could maybe look this up by index later
-            for (GameTile tile : tiles) {
-                if (tile.bounds.contains(screenPos.x, screenPos.y)) {
-                    return tile;
-                }
-            }
-        }
-        return null;
     }
 }
