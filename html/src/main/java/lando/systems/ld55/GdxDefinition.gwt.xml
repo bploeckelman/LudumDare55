@@ -21,6 +21,7 @@
   <!-- TODO - add things to the reflection cache as needed
   <extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld55.???"/>
   -->
+    <extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld55.particles.Particle"/>
 
   <entry-point class="lando.systems.ld55.gwt.GwtLauncher" />
 
