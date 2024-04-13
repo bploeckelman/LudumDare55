@@ -1,6 +1,7 @@
 package lando.systems.ld55.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -11,7 +12,7 @@ import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.screens.GameScreen;
 
-public class GameBoard {
+public class GameBoard extends InputAdapter {
 
     public static float topMargin = 80;
     public static float bottomMargin = 40;
@@ -43,6 +44,17 @@ public class GameBoard {
         }
     }
 
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (hoverTile != null) {
+            gameScreen.selectTile(hoverTile);
+            portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
+            return true;
+        }
+        return false;
+    }
+
+
     public GameTile getTileAt(int x, int y) {
         if (x < 0 || x >= tilesWide
          || y < 0 || y >= tilesWide) {
@@ -59,10 +71,6 @@ public class GameBoard {
     public void update(float dt) {
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         hoverTile = getTileAtScreenPos(screenPosition);
-
-        if (Gdx.input.justTouched() && hoverTile != null) {
-            portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
-        }
 
         for (int i = portalAnimations.size -1; i >= 0; i--) {
             Portal p = portalAnimations.get(i);

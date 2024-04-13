@@ -1,9 +1,12 @@
 package lando.systems.ld55.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
+import lando.systems.ld55.entities.GameTile;
 import lando.systems.ld55.particles.Particles;
 
 public class GameScreen extends BaseScreen{
@@ -16,6 +19,8 @@ public class GameScreen extends BaseScreen{
         gameBoard = new GameBoard(this, 10);
         particles = new Particles(assets);
         gamePiece = new GamePiece(assets.cherry, assets.cherry);
+
+        Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
     }
 
     @Override
@@ -23,14 +28,14 @@ public class GameScreen extends BaseScreen{
 
     }
 
+    public void selectTile(GameTile tile) {
+        gamePiece.setTile(tile);
+    }
+
     public void update(float dt) {
         gameBoard.update(dt);
         particles.update(dt);
         gamePiece.update(dt);
-
-        if (gameBoard.hoverTile != null) {
-            gamePiece.setTile(gameBoard.hoverTile);
-        }
     }
 
     @Override
