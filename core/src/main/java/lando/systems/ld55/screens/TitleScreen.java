@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
+import lando.systems.ld55.Main;
+import lando.systems.ld55.audio.AudioManager;
 
 public class TitleScreen extends BaseScreen {
 
@@ -16,6 +18,8 @@ public class TitleScreen extends BaseScreen {
 
     public TitleScreen() {
         Gdx.input.setInputProcessor(uiStage);
+        Main.game.audioManager.playMusic(AudioManager.Musics.introMusic);
+
     }
 
     @Override

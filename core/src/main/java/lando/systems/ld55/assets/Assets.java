@@ -3,6 +3,8 @@ package lando.systems.ld55.assets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -77,6 +79,10 @@ public class Assets implements Disposable {
     public ShaderProgram starfieldShader;
     public ShaderProgram minimapShader;
     public ShaderProgram wormholeShader;
+
+    public Sound coin;
+
+    public Music introMusic;
 
     public enum Patch {
         debug, panel, metal, glass,
@@ -164,6 +170,10 @@ public class Assets implements Disposable {
             mgr.load("fonts/outfit-medium-20px.fnt", BitmapFont.class);
             mgr.load("fonts/outfit-medium-40px.fnt", BitmapFont.class);
             mgr.load("fonts/outfit-medium-80px.fnt", BitmapFont.class);
+
+            mgr.load("audio/sounds/coin.ogg", Sound.class);
+
+            mgr.load("audio/music/introMusic.ogg", Music.class);
         }
 
         if (load == Load.SYNC) {
@@ -287,6 +297,11 @@ public class Assets implements Disposable {
         NinePatches.metal_green                     = new NinePatch(atlas.findRegion("ninepatch/metal-green"),             12, 12, 12, 12);
         NinePatches.metal_yellow                    = new NinePatch(atlas.findRegion("ninepatch/metal-yellow"),            12, 12, 12, 12);
         NinePatches.shear                           = new NinePatch(atlas.findRegion("ninepatch/shear"),                   75, 75, 12, 12);
+
+        // Audio
+        coin = mgr.get("audio/sounds/coin.ogg", Sound.class);
+
+        introMusic = mgr.get("audio/music/introMusic.ogg", Music.class);
 
         initialized = true;
         return 1;

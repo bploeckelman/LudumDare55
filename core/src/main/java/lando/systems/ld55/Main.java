@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.kotcrab.vis.ui.VisUI;
 import lando.systems.ld55.assets.Assets;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.screens.BaseScreen;
 import lando.systems.ld55.screens.LaunchScreen;
 import lando.systems.ld55.screens.TitleScreen;
@@ -33,7 +34,7 @@ public class Main extends ApplicationAdapter {
 
     public Assets assets;
     public TweenManager tween;
-    //public AudioManager audioManager;
+    public AudioManager audioManager;
 
     public FrameBuffer frameBuffer;
     public TextureRegion frameBufferRegion;
@@ -102,7 +103,7 @@ public class Main extends ApplicationAdapter {
 
         transitioning = false;
 
-        //audioManager = new AudioManager(assets, tween);
+        audioManager = new AudioManager(assets, tween);
 
         var showLaunchScreen = (Gdx.app.getType() == Application.ApplicationType.WebGL || Config.Debug.show_launch_screen);
         var startingScreen = showLaunchScreen ? new LaunchScreen() : new TitleScreen();
