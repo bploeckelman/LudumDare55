@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -38,6 +39,7 @@ public class Assets implements Disposable {
     public BitmapFont font;
     public BitmapFont smallFont;
     public BitmapFont largeFont;
+    public BitmapFont fontAbandoned;
 
     public Texture pixel;
     public Texture gdx;
@@ -193,8 +195,10 @@ public class Assets implements Disposable {
         largeFont = mgr.get("fonts/outfit-medium-80px.fnt");
         largeFont.setUseIntegerPositions(false);
 
-//        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Abandoned-Bold.ttf"));
-        // TODO(brian) - we might need to do something special to get the ttf font gen working
+        var ttfParameter = new FreeTypeFontGenerator.FreeTypeFontParameter() {{ size = 40; }};
+        var ttfGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Abandoned-Bold.ttf"));
+        fontAbandoned = ttfGenerator.generateFont(ttfParameter);
+        ttfGenerator.dispose();
 
         inputPrompts = new InputPrompts(this);
 

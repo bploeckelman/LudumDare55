@@ -3,18 +3,20 @@
 <module rename-to="html">
   <source path="" />
   <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
-  <inherits name="aurelienribon.tweenengine" />
+  <inherits name="com.badlogic.gdx.graphics.g2d.freetype.freetype-gwt" />
   <inherits name="com.badlogic.gdx.controllers" />
   <inherits name="com.badlogic.gdx.controllers.controllers-gwt" />
   <inherits name="com.github.tommyettinger.textratypist" />
+  <inherits name="aurelienribon.tweenengine" />
   <inherits name="com.kotcrab.vis.vis-ui" />
-<!--  <inherits name="com.rafaskoberg.gdx.typinglabel.typinglabel" />-->
   <inherits name="com.ray3k.tenpatch.tenpatch" />
   <inherits name="formic" />
   <inherits name="guacamole_gdx_gwt" />
   <inherits name="regexodus.regexodus" />
   <inherits name="space.earlygrey.shapedrawer" />
   <inherits name="lando.systems.ld55.Main" />
+
+  <!--  <inherits name="com.rafaskoberg.gdx.typinglabel.typinglabel" />-->
 
   <!-- TODO - add things to the reflection cache as needed
   <extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld55.???"/>

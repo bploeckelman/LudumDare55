@@ -30,6 +30,8 @@ gwt {
 
 dependencies {
   implementation "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion:sources"
+  implementation "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:$gdxFreetypeGwtVersion"
+  implementation "com.github.intrigus.gdx-freetype-gwt:gdx-freetype-gwt:$gdxFreetypeGwtVersion:sources"
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
   implementation "com.github.crykn.guacamole:core:$guacamoleVersion:sources"
   implementation "com.github.crykn.guacamole:gdx:$guacamoleVersion:sources"

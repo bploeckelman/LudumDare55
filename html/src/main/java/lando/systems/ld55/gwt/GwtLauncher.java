@@ -3,6 +3,8 @@ package lando.systems.ld55.gwt;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
+import com.badlogic.gdx.graphics.g2d.freetype.gwt.FreetypeInjector;
+import com.badlogic.gdx.graphics.g2d.freetype.gwt.inject.OnCompletion;
 import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
 
@@ -20,6 +22,11 @@ public class GwtLauncher extends GwtApplication {
             GwtApplicationConfiguration config = new GwtApplicationConfiguration(Config.Screen.window_width, Config.Screen.window_height);
             config.useGL30 = true;
             return config;
+        }
+
+        @Override
+        public void onModuleLoad() {
+            FreetypeInjector.inject(GwtLauncher.super::onModuleLoad);
         }
 
         @Override

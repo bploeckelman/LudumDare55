@@ -1,9 +1,12 @@
 package lando.systems.ld55.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class TitleScreen extends BaseScreen {
@@ -53,6 +56,11 @@ public class TitleScreen extends BaseScreen {
             float width = worldCamera.viewportWidth;
             float height = worldCamera.viewportHeight;
             batch.draw(gdx, (width - gdx.getWidth()) / 2f, (height - gdx.getHeight()) / 2f);
+
+            var font = assets.fontAbandoned;
+            var layout = new GlyphLayout();
+            layout.setText(font, "Coming Soon - \nClock Gobblers", Color.WHITE, width, Align.center, true);
+            font.draw(batch, layout, 0, height / 3f);
         }
         batch.end();
 
