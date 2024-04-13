@@ -3,17 +3,19 @@ package lando.systems.ld55.entities;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class GamePiece {
 
     private final int TILE_OFFSET_Y = 10;
+
     private final Animation<TextureRegion> idle;
     private final Animation<TextureRegion> attack;
 
     private float animState = 0;
-    private float rotation = 0;
+    private float selectedAnimState = 0;
     private Animation<TextureRegion> currentAnimation;
     private TextureRegion keyframe;
     private GameTile currentTile;
@@ -39,13 +41,16 @@ public class GamePiece {
     public void setTile(GameTile tile) {
         if (currentTile == tile) {
             selected = !selected;
-            return;
+            selectedAnimState = 0;
+        } else {
+            currentTile = tile;
+            selected = false;
+            setPosition(tile.bounds.x + tile.bounds.width / 2, tile.bounds.y + TILE_OFFSET_Y);
         }
+    }
 
-        currentTile = tile;
-        rotation = 0;
-        selected = false;
-        setPosition(tile.bounds.x + tile.bounds.width / 2, tile.bounds.y + TILE_OFFSET_Y);
+    public void toggleSelect() {
+
     }
 
     public void setPosition(float x, float y) {
@@ -57,13 +62,15 @@ public class GamePiece {
         animState += dt;
         keyframe = currentAnimation.getKeyFrame(animState);
         if (selected) {
-            rotation += 80 * dt;
+            selectedAnimState += dt;
         }
     }
 
     public void render(SpriteBatch batch) {
         if (currentTile == null) return;
 
-        batch.draw(keyframe, bounds.x, bounds.y, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, 1, 1, rotation);
+
+        float yOffset = TILE_OFFSET_Y / 2f * MathUtils.sin(selectedAnimState * 4);
+        batch.draw(keyframe, bounds.x, bounds.y + yOffset, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, 1, 1, 0);
     }
 }
