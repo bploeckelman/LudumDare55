@@ -14,6 +14,8 @@ public class TeaVMLauncher {
         // change these to both 0 to use all available space, or both -1 for the canvas size.
         config.width = Config.Screen.window_width;
         config.height = Config.Screen.window_height;
+        config.alpha = true;
+        config.useDebugGL = true;
         new TeaApplication(new Main(), config);
     }
 }
