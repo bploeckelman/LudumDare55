@@ -15,29 +15,45 @@ public class GameBoard {
 
     public static float topMargin = 80;
     public static float bottomMargin = 40;
+
+    public GameTile hoverTile;
     public Rectangle boardRegion;
     public Array<GameTile> tiles = new Array<>();
     public Array<Portal> portalAnimations = new Array<>();
 
-    public GameTile hoverTile;
-    private GameScreen gameScreen;
-    private Vector3 screenPosition = new Vector3();
+    public final int tilesWide;
+    public final GameScreen gameScreen;
+    public final Vector3 screenPosition = new Vector3();
 
-    public GameBoard(GameScreen gameScreen, int tileWide) {
+    public GameBoard(GameScreen gameScreen, int tilesWide) {
         this.gameScreen = gameScreen;
-        float boardsize = Config.Screen.window_height - ( topMargin + bottomMargin);
-        float tileSize = boardsize/tileWide;
+        this.tilesWide = tilesWide;
+
+        float boardsize = Config.Screen.window_height - (topMargin + bottomMargin);
+        float tileSize = boardsize/tilesWide;
         float leftEdge = (Config.Screen.window_width - boardsize)/2f;
         Vector2 boardStartPoint = new Vector2(leftEdge, bottomMargin);
         boardRegion = new Rectangle(boardStartPoint.x, boardStartPoint.y, boardsize, boardsize);
 
-        for (int y = 0; y < tileWide; y++) {
-            for (int x = 0; x < tileWide; x++) {
+        for (int y = 0; y < tilesWide; y++) {
+            for (int x = 0; x < tilesWide; x++) {
                 Rectangle rect = new Rectangle(boardStartPoint.x + (x * tileSize), boardStartPoint.y + (y * tileSize), tileSize, tileSize);
                 tiles.add(new GameTile(x, y, rect));
             }
         }
+    }
 
+    public GameTile getTileAt(int x, int y) {
+        if (x < 0 || x >= tilesWide
+         || y < 0 || y >= tilesWide) {
+            return null;
+        }
+        int i = x + y * tilesWide;
+        return tiles.get(i);
+    }
+
+    public GameTile getTileRelative(GameTile tile, int offsetX, int offsetY) {
+        return getTileAt(tile.x + offsetX, tile.y + offsetY);
     }
 
     public void update(float dt) {
@@ -64,9 +80,42 @@ public class GameBoard {
         for (Portal p : portalAnimations) {
             p.render(batch);
         }
+
+        // draw hover overlays (work in progress)
         if (hoverTile != null){
-            batch.setColor(1.0f, 0f, 0f, .4f);
-            batch.draw(Main.game.assets.whitePixel, hoverTile.bounds.x, hoverTile.bounds.y, hoverTile.bounds.width, hoverTile.bounds.height);
+            var texture = gameScreen.assets.whitePixel;
+            var color = Color.LIME;
+            var alpha = 0.4f;
+
+            var bounds = hoverTile.bounds;
+            batch.setColor(color.r, color.g, color.b, alpha);
+            batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+
+            // find neighbor tiles (without pattern)
+            // TODO - find neighbor tiles (with pattern)
+            var left  = getTileRelative(hoverTile, -1,  0);
+            var right = getTileRelative(hoverTile, +1,  0);
+            var up    = getTileRelative(hoverTile,  0, +1);
+            var down  = getTileRelative(hoverTile,  0, -1);
+
+            color = Color.RED;
+            batch.setColor(color.r, color.g, color.b, alpha);
+            if (left != null) {
+                bounds = left.bounds;
+                batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+            }
+            if (right != null) {
+                bounds = right.bounds;
+                batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+            }
+            if (up != null) {
+                bounds = up.bounds;
+                batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+            }
+            if (down != null) {
+                bounds = down.bounds;
+                batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+            }
         }
         batch.setColor(Color.WHITE);
     }
