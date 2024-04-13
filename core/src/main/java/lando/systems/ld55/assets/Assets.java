@@ -300,7 +300,7 @@ public class Assets implements Disposable {
     }
 
     public static ShaderProgram loadShader(String vertSourcePath, String fragSourcePath) {
-        ShaderProgram.pedantic = false;
+        ShaderProgram.pedantic = true;
         var shaderProgram = new ShaderProgram(
             Gdx.files.internal(vertSourcePath),
             Gdx.files.internal(fragSourcePath));
