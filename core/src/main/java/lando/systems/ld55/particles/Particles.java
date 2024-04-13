@@ -2,13 +2,14 @@ package lando.systems.ld55.particles;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
 import lando.systems.ld55.assets.Assets;
 
 public class Particles implements Disposable {
 
-    public enum Layer { background, middle, overFog }
+    public enum Layer { BACKGROUND, FOREGROUND }
 
     private static final int MAX_PARTICLES = 4000;
 
@@ -20,9 +21,8 @@ public class Particles implements Disposable {
         this.assets = assets;
         this.activeParticles = new ObjectMap<>();
         int particlesPerLayer = MAX_PARTICLES / Layer.values().length;
-        this.activeParticles.put(Layer.background, new Array<>(false, particlesPerLayer));
-        this.activeParticles.put(Layer.middle,     new Array<>(false, particlesPerLayer));
-        this.activeParticles.put(Layer.overFog, new Array<>(false, particlesPerLayer));
+        this.activeParticles.put(Layer.BACKGROUND, new Array<>(false, particlesPerLayer));
+        this.activeParticles.put(Layer.FOREGROUND,     new Array<>(false, particlesPerLayer));
     }
 
     public void clear() {
@@ -65,4 +65,25 @@ public class Particles implements Disposable {
     // Spawners for different particle effects
     // ------------------------------------------------------------------------
 
+    public void smoke(float inX, float inY) {
+        for (int i = 0; i < 30; i++) {
+            float angle = MathUtils.random(0f, 360f);
+            float speed = MathUtils.random(0f, 100f);
+            float x = inX + MathUtils.random(-100f, 100f);
+            float y = inY + MathUtils.random(-100f, 100f);
+            float size = MathUtils.random(60f, 200f);
+            float color = MathUtils.random(.3f, 1f);
+            activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+                .keyframe(assets.particles.smoke)
+                .startPos(x, y)
+                .velocity(MathUtils.cosDeg(angle) * speed, MathUtils.sinDeg(angle) * speed)
+                .startColor(color, color, color, 1f)
+                .endColor(0, 0, 0, 0)
+                .startSize(size)
+                .endSize(5f)
+                .timeToLive(MathUtils.random(2f, 4f))
+                .init()
+            );
+        }
+    }
 }
