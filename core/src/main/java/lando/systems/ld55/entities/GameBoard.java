@@ -19,7 +19,7 @@ public class GameBoard {
     public Array<GameTile> tiles = new Array<>();
     public Array<Portal> portalAnimations = new Array<>();
 
-    private GameTile hoverTile;
+    public GameTile hoverTile;
     private GameScreen gameScreen;
     private Vector3 screenPosition = new Vector3();
 

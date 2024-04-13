@@ -47,6 +47,7 @@ public class Assets implements Disposable {
     public Texture whitePixel;
 
     public TextureRegion pixelRegion;
+    public Animation<TextureRegion> cherry;
 
     public ShaderProgram portalShader;
 
@@ -177,6 +178,7 @@ public class Assets implements Disposable {
 
         atlas = mgr.get("sprites/sprites.atlas");
 
+        cherry = new Animation<>(.1f, atlas.findRegions("pets/cat"), Animation.PlayMode.LOOP);
         // Initialize asset helpers
 
         // String replacement
