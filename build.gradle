@@ -7,11 +7,19 @@ buildscript {
     google()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
     maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://jitpack.io' }
   }
   dependencies {
     classpath "io.freefair.gradle:lombok-plugin:8.3"
     classpath "org.docstr:gwt-gradle-plugin:$gwtPluginVersion"
+    classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+  }
+}
 
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+task texturePacker {
+  doLast {
+    TexturePacker.processIfModified("${project.rootDir}/sprites", "${project.rootDir}/assets/sprites", "sprites")
   }
 }
 
@@ -34,6 +42,7 @@ configure(subprojects) {
   sourceCompatibility = 17
   compileJava {
     options.incremental = true
+    dependsOn texturePacker
   }
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
   // The article can be helpful when using assets.txt in your project.

@@ -1,0 +1,33 @@
+- ** [HTML6/WebGL](https://lando.systems/games/ld55-LINKHERE) **
+- ** [Desktop/Java](https://lando.systems/games/ld55-LINKHERE) **
+- ** [Source](https://github.com/bploeckelman/LudumDare55) **
+# Game Name: Subtitle ️#
+
+
+
+# Controls:
+---
+
+
+
+# About the Team:
+---
+
+[LandoSystems](https://lando.systems) is a group of jammers from Madison, Wisconsin that varies in size from 2 to 12 people. This is the team's 30th Ludum Dare game!! :tada:
+
+# Team Members:
+---
+
+
+Code:
+- Doug Graham [dsgraham](https://twitter.com/dsgraham) :elephant: [dsgraham on mastodon](https://mastodon.gamedev.place/@dsgraham)
+- Brian Ploeckelman [PalpatinesSmile](https://twitter.com/PalpatinesSmile) :elephant: [brian on mastodon](https://mastodon.gamedev.place/@brian)
+- Jeffrey Hwang :elephant: [jeffreyhwang on mastodon](https://mastodon.gamedev.place/@jeffreyhwang)
+- Brian Rossman
+- ???
+
+Art:
+- Matt Neumann
+
+Music, Writing, Other Stuff:
+- Pete V

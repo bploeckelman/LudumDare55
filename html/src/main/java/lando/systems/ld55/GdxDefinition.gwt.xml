@@ -8,16 +8,23 @@
   <inherits name="com.badlogic.gdx.controllers.controllers-gwt" />
   <inherits name="com.github.tommyettinger.textratypist" />
   <inherits name="com.kotcrab.vis.vis-ui" />
-  <inherits name="com.rafaskoberg.gdx.typinglabel.typinglabel" />
+<!--  <inherits name="com.rafaskoberg.gdx.typinglabel.typinglabel" />-->
   <inherits name="com.ray3k.tenpatch.tenpatch" />
   <inherits name="formic" />
   <inherits name="guacamole_gdx_gwt" />
-  <inherits name="lando.systems.ld55.Main" />
   <inherits name="regexodus.regexodus" />
   <inherits name="space.earlygrey.shapedrawer" />
+  <inherits name="lando.systems.ld55.Main" />
+
+  <!-- TODO - add things to the reflection cache as needed
+  <extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld55.???"/>
+  -->
+
   <entry-point class="lando.systems.ld55.gwt.GwtLauncher" />
+
   <set-configuration-property name="gdx.assetpath" value="../assets" />
   <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
+
   <!-- These two lines reduce the work GWT has to do during compilation and also shrink output size. -->
   <set-property name="user.agent" value="gecko1_8, safari"/>
   <collapse-property name="user.agent" values="*" />
