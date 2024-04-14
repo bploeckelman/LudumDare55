@@ -39,7 +39,7 @@ public class GameScreen extends BaseScreen{
         Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         worldCamera.unproject(touchPos);
         if (Gdx.input.justTouched() && gameBoard.hoverTile == null) {
-            particles.portal(touchPos.x, touchPos.y, 20f);
+            particles.tinySmoke(touchPos.x, touchPos.y);
             Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
         }
 
