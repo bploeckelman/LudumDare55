@@ -29,6 +29,7 @@ public class GameBoard extends InputAdapter {
     public Array<GameTile> tiles = new Array<>();
     public Array<Portal> portalAnimations = new Array<>();
     public Array<GamePiece> gamePieces = new Array<>();
+    public GamePiece selectedPiece;
 
     public final int tilesWide;
     public final int tilesHigh;
@@ -79,11 +80,13 @@ public class GameBoard extends InputAdapter {
             GamePiece gamePiece = getGamePiece(hoverTile);
             if (gamePiece == null) {
                 // TODO: this is test we need full UI to do this right
-                GamePiece piece = new GamePiece(gameScreen.assets.cherry, gameScreen.assets.cherry, GamePiece.Owner.Player);
+                GamePiece piece = new Pawn(gameScreen.assets, GamePiece.Owner.Player);
                 gameScreen.actionManager.addAction(new SpawnAction(this, piece, hoverTile));
-//            portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
             } else {
-                gamePiece.toggleSelect();
+                if (selectedPiece != null) {
+                    selectedPiece.toggleSelect(this);
+                }
+                selectedPiece = gamePiece.toggleSelect(this);
             }
 
             return true;
@@ -250,6 +253,10 @@ public class GameBoard extends InputAdapter {
 
         for (GamePiece gp : gamePieces) {
             gp.render(batch);
+        }
+
+        if (selectedPiece != null) {
+            selectedPiece.renderMovement(batch);
         }
     }
 }

@@ -1,5 +1,6 @@
 package lando.systems.ld55.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -7,17 +8,23 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
+import lando.systems.ld55.assets.Assets;
 
-public class GamePiece {
+public abstract class GamePiece {
     public enum Owner {Player, Enemy}
 
     private final int TILE_OFFSET_Y = 10;
     public Owner owner;
 
+    private final Assets assets;
     private final Animation<TextureRegion> idle;
     private final Animation<TextureRegion> attack;
+    private final int directions;
+    private final int maxMovement;
+    private Array<GameTile> moveTiles = new Array<>();
 
     private float animState = 0;
     private float selectedAnimState = 0;
@@ -39,11 +46,15 @@ public class GamePiece {
 
     public ActionBase currentAction;
 
-    public GamePiece(Animation<TextureRegion> idle, Animation<TextureRegion> attack, Owner owner) {
+    public GamePiece(Assets assets, Owner owner, Animation<TextureRegion> idle, Animation<TextureRegion> attack, int directions, int maxMovement) {
         this.owner = owner;
+        this.assets = assets;
         this.idle = idle;
         this.attack = attack;
         setCurrentAnimation(this.idle);
+
+        this.directions = directions;
+        this.maxMovement = maxMovement;
     }
 
     private void setCurrentAnimation(Animation<TextureRegion> animation) {
@@ -58,11 +69,18 @@ public class GamePiece {
         return false;
     }
 
-    public void toggleSelect() {
-        if (isMoving) return;
+    public GamePiece toggleSelect(GameBoard gameBoard) {
+        if (isMoving) return null;
 
-        selected = !selected;
         selectedAnimState = 0;
+        selected = !selected;
+        if (selected) {
+            addMoveTiles(gameBoard);
+        } else {
+            moveTiles.clear();
+        }
+
+        return selected ? this : null;
     }
 
     public void setTile(GameTile tile) {
@@ -124,6 +142,19 @@ public class GamePiece {
         }
     }
 
+    public void renderMovement(SpriteBatch batch) {
+        var alpha = 0.7f;
+        for (var t : moveTiles) {
+            var bounds = t.bounds;
+
+            var color = Color.RED;
+            batch.setColor(color.r, color.g, color.b, alpha);
+            batch.draw(assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
+        }
+
+        batch.setColor(Color.WHITE);
+    }
+
     private float getYOffset() {
         float anim = 0;
         float yAdjust = 1;
@@ -135,5 +166,52 @@ public class GamePiece {
             yAdjust = 30;
         }
         return yAdjust * MathUtils.sin(anim);
+    }
+
+    private void addMoveTiles(GameBoard gameBoard) {
+        if (currentTile == null) { return; }
+
+        for (int i = 0; i < maxMovement; i++) {
+            if (hasDirection(Direction.Top)) {
+                addMoveTile(gameBoard,0, i + 1);
+            }
+
+            if (hasDirection(Direction.TopRight)) {
+                addMoveTile(gameBoard,i + 1, i + 1);
+            }
+
+            if (hasDirection(Direction.Right)) {
+                addMoveTile(gameBoard,i + 1, 0);
+            }
+
+            if (hasDirection(Direction.BottomRight)) {
+                addMoveTile(gameBoard,i + 1, -i - 1);
+            }
+
+            if (hasDirection(Direction.Bottom)) {
+                addMoveTile(gameBoard,0, -i - 1);
+            }
+
+            if (hasDirection(Direction.BottomLeft)) {
+                addMoveTile(gameBoard,-i - 1, -i - 1);
+            }
+            if (hasDirection(Direction.Left)) {
+                addMoveTile(gameBoard,-i - 1, 0);
+            }
+            if (hasDirection(Direction.TopLeft)) {
+                addMoveTile(gameBoard,i + 1, -i - 1);
+            }
+        }
+    }
+
+    private void addMoveTile(GameBoard gameBoard, int x, int y) {
+        GameTile tile = gameBoard.getTileRelative(currentTile, x, y);
+        if (tile != null && tile.valid) {
+            moveTiles.add(tile);
+        }
+    }
+
+    private boolean hasDirection(int direction) {
+        return (directions & direction) == direction;
     }
 }
