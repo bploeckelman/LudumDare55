@@ -24,12 +24,12 @@ public class GamePiece {
     private final Vector2 position = new Vector2();
     private boolean selected = false;
 
-    private GameTile currentTile;
+    public GameTile currentTile;
 
     private GameTile moveTile;
     private final Vector2 startPosition = new Vector2();
     private final Vector2 movePosition = new Vector2();
-    private boolean isMoving = false;
+    public boolean isMoving = false;
     private float moveAnimState = 0;
     private float moveSeconds = 1; // seconds
 
