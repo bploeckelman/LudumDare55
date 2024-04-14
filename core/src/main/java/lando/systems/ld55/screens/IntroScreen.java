@@ -1,20 +1,15 @@
-package lando.systems.ld54.screens;
+package lando.systems.ld55.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.particles.Particles;
-import lando.systems.ld55.screens.BaseScreen;
-import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.utils.typinglabel.TypingLabel;
 
 public class IntroScreen extends BaseScreen {

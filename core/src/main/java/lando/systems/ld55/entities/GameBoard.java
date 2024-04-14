@@ -90,7 +90,7 @@ public class GameBoard extends InputAdapter {
         if (hoverTile != null) {
             GamePiece gamePiece = getGamePiece(hoverTile);
             if (gamePiece == null) {
-                if (gameScreen.getCurrentGameMode()== GameScreen.GameMode.Summon && hoverTile.summonable) {
+                if (gameScreen.currentGameMode == GameScreen.GameMode.Summon && hoverTile.summonable) {
                     radialMenu = new RadialMenu(this, hoverTile, RadialMenu.MenuType.Summon);
                 }
             } else {
@@ -210,7 +210,7 @@ public class GameBoard extends InputAdapter {
         }
         // TEST ---------------
 
-        if (gameScreen.getCurrentGameMode()== GameScreen.GameMode.Summon){
+        if (gameScreen.currentGameMode == GameScreen.GameMode.Summon){
             // set summonable tiles
             for (int y = 0; y < tilesHigh; y++){
                 boolean summonable = true;
@@ -276,7 +276,7 @@ public class GameBoard extends InputAdapter {
 
         // Ony draw when we are in planning mode
         if (gameScreen.actionManager.getCurrentPhase() == ActionManager.Phase.CollectActions) {
-            if (gameScreen.getCurrentGameMode() == GameScreen.GameMode.Summon){
+            if (gameScreen.currentGameMode == GameScreen.GameMode.Summon){
                 for (GameTile t : tiles) {
                     if (t.summonable){
                         var texture = gameScreen.assets.whitePixel;
@@ -299,7 +299,7 @@ public class GameBoard extends InputAdapter {
                 var bounds = hoverTile.bounds;
                 batch.setColor(color.r, color.g, color.b, alpha);
                 batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-                if (gameScreen.getCurrentGameMode() == GameScreen.GameMode.Move){
+                if (gameScreen.currentGameMode == GameScreen.GameMode.Move){
                     // prep to draw overlays for tiles in pattern
                     var tileOverlays = getTileOverlaysForPattern(hoverTile, currentPattern);
                     for (var overlay : tileOverlays) {

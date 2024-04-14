@@ -20,8 +20,9 @@ public class GameScreen extends BaseScreen{
     public Particles particles;
     public ActionManager actionManager;
     public GameScreenUI ui;
+
     public enum GameMode { None, Summon, Move }
-    private GameMode currentGameMode = GameMode.None;
+    public GameMode currentGameMode = GameMode.Summon;
 
     public GameScreen() {
         gameBoard = new GameBoard(this, 22, 10);
@@ -30,14 +31,6 @@ public class GameScreen extends BaseScreen{
         ui = new GameScreenUI(this);
         Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
         Main.game.audioManager.playMusic(AudioManager.Musics.mainMusic);
-    }
-
-    public void setMode(GameMode mode) {
-        currentGameMode = mode;
-    }
-
-    public GameMode getCurrentGameMode() {
-        return currentGameMode;
     }
 
     @Override

@@ -9,9 +9,11 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld55.assets.Assets;
 
 public class ImageButton {
     public NinePatch background;
+    public NinePatch backgroundDefault;
     public Animation<TextureRegion> image;
     public Animation<TextureRegion> imageHovered;
     public Animation<TextureRegion> imagePressed;
@@ -27,6 +29,7 @@ public class ImageButton {
     public boolean pressed = false;
     public boolean disabled = false;
     public boolean wasPressed = false;
+    public boolean active = false; // for 'checkbox' style
 
     public ImageButton(float x, float y, TextureRegion image, TextureRegion imageHovered, TextureRegion imagePressed, TextureRegion imageDisabled) {
         this(x, y, image.getRegionWidth(), image.getRegionHeight(), image, imageHovered, imagePressed, imageDisabled);
@@ -98,16 +101,36 @@ public class ImageButton {
     private void updateKeyFrame() {
         color.set(Color.WHITE);
         keyframe = image.getKeyFrame(stateTime);
+        if (backgroundDefault != null) {
+            background = backgroundDefault;
+        }
 
         if (disabled) {
-            if (imageDisabled != null) keyframe = imageDisabled.getKeyFrame(stateTime);
-            else                       color.set(Color.DARK_GRAY);
-        } else if (pressed) {
-            if (imagePressed != null) keyframe = imagePressed.getKeyFrame(stateTime);
-            else                      color.set(Color.LIME);
+            if (imageDisabled != null) {
+                keyframe = imageDisabled.getKeyFrame(stateTime);
+            } else {
+                color.set(Color.DARK_GRAY);
+                if (background != null) {
+                    background = Assets.NinePatches.plain_dim;
+                }
+            }
+        } else if (pressed || active) {
+            color.set(Color.LIME);
+            if (imagePressed != null) {
+                keyframe = imagePressed.getKeyFrame(stateTime);
+            }
+            if (background != null) {
+                background = Assets.NinePatches.glass_green;
+            }
         } else if (hovered) {
-            if (imageHovered != null) keyframe = imageHovered.getKeyFrame(stateTime);
-            else                      color.set(Color.SKY);
+            if (imageHovered != null) {
+                keyframe = imageHovered.getKeyFrame(stateTime);
+            } else {
+                color.set(Color.SKY);
+                if (background != null) {
+                    background = Assets.NinePatches.glass_blue;
+                }
+            }
         }
     }
 }

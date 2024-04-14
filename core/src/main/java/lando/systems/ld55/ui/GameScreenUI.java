@@ -27,19 +27,13 @@ public class GameScreenUI {
 
         var summonIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/pawns");
         summonButton = new ImageButton(20, 280 - 70, 50, 50, summonIcon, null, null, null);
-        summonButton.background = Assets.Patch.glass_dim.ninePatch;
-        summonButton.onClick = () -> {
-            screen.setMode(GameScreen.GameMode.Summon);
-            Gdx.app.log("summon", "clicked");
-        };
+        summonButton.backgroundDefault = Assets.Patch.glass_dim.ninePatch;
+        summonButton.onClick = () -> screen.currentGameMode = GameScreen.GameMode.Summon;
 
         var moveIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/arrow_diagonal_cross");
         moveButton = new ImageButton(20, 280 - 130, 50, 50, moveIcon, null, null, null);
-        moveButton.background = Assets.Patch.glass_dim.ninePatch;
-        moveButton.onClick = () -> {
-            screen.setMode(GameScreen.GameMode.Move);
-            Gdx.app.log("move", "clicked");
-        };
+        moveButton.backgroundDefault = Assets.Patch.glass_dim.ninePatch;
+        moveButton.onClick = () -> screen.currentGameMode = GameScreen.GameMode.Move;
     }
 
     public void update(float dt) {
@@ -49,6 +43,9 @@ public class GameScreenUI {
         var pressed = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
         var disabled = screen.actionManager.getCurrentPhase() != ActionManager.Phase.CollectActions;
         endTurnButton.update(dt, touchPos, pressed, disabled);
+
+        summonButton.active = screen.currentGameMode == GameScreen.GameMode.Summon;
+        moveButton.active = screen.currentGameMode == GameScreen.GameMode.Move;
 
         summonButton.update(dt, touchPos, pressed, false);
         moveButton.update(dt, touchPos, pressed, false);
