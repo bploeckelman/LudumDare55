@@ -73,7 +73,9 @@ public class IntroScreen extends BaseScreen {
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             worldCamera.unproject(touchPos);
             particles.levelUpEffect(touchPos.x, touchPos.y);
-            if (!typingLabel.hasEnded()) {
+            if (transitionAlpha < 1f) {
+                transitionAlpha = 1f;
+            } else if (!typingLabel.hasEnded()) {
                 typingLabel.skipToTheEnd();
             } else {
                 currentPage++;
