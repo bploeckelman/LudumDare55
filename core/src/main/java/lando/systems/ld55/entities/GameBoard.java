@@ -125,6 +125,7 @@ public class GameBoard extends InputAdapter {
         }
         if (hoverTile != null) {
             GamePiece gamePiece = getGamePiece(hoverTile);
+            if (gamePiece != null && gamePiece.owner != GamePiece.Owner.Player) gamePiece = null;
             if (gamePiece == null) {
                 if (gameScreen.currentGameMode == GameScreen.GameMode.Summon && hoverTile.summonable) {
                     radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.Summon);
