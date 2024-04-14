@@ -18,16 +18,20 @@
 # Team Members:
 ---
 
-
 Code:
 - Doug Graham [dsgraham](https://twitter.com/dsgraham) :elephant: [dsgraham on mastodon](https://mastodon.gamedev.place/@dsgraham)
 - Brian Ploeckelman [PalpatinesSmile](https://twitter.com/PalpatinesSmile) :elephant: [brian on mastodon](https://mastodon.gamedev.place/@brian)
 - Jeffrey Hwang :elephant: [jeffreyhwang on mastodon](https://mastodon.gamedev.place/@jeffreyhwang)
 - Brian Rossman
-- ???
 
 Art:
 - Matt Neumann
 
-Music, Writing, Other Stuff:
+Music, Writing, Assorted Coolness:
 - Pete V
+- Luke Bain
+
+
+### Attribution:
+---
+- [kenney.nl](https://kenney.nl/) - misc ui elements and icons
