@@ -12,11 +12,21 @@ import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.assets.Assets;
+import lando.systems.ld55.ui.HealthBar;
 
 public class GamePiece {
     public enum Owner {Player, Enemy}
     public enum Type {
-        Pawn, Knight, Bishop, Rook, Queen;
+        Pawn(1),
+        Knight(2),
+        Bishop(3),
+        Rook(4),
+        Queen(5);
+
+        public int defaultMaxHealth; //called default Max Health because they can potentially be leveled up
+        Type(int defaultMaxHealth) {
+            this.defaultMaxHealth = defaultMaxHealth;
+        }
 
         public static Type random() {
             var types = values();
@@ -33,6 +43,7 @@ public class GamePiece {
         var alignment = owner == Owner.Player ? 0 : 1;
         var direction = Direction.Left;
         var movement = 0;
+        var maxHealth = type.defaultMaxHealth;
         Array<Animation<TextureRegion>> animGroup;
         switch (type) {
             case Knight:
@@ -68,7 +79,7 @@ public class GamePiece {
                 movement = 4;
                 break;
         }
-        return new GamePiece(assets, owner, animGroup.get(0), animGroup.get(1), direction, movement);
+        return new GamePiece(assets, owner, animGroup.get(0), animGroup.get(1), direction, movement, maxHealth);
     }
 
     private final int TILE_OFFSET_Y = 10;
@@ -103,8 +114,12 @@ public class GamePiece {
     private float moveAnimState = 0;
 
     public ActionBase currentAction;
+    public int maxHealth;
+    public int currentHealth;
 
-    public GamePiece(Assets assets, Owner owner, Animation<TextureRegion> idle, Animation<TextureRegion> attack, int directions, int maxMovement) {
+    public HealthBar healthBar;
+
+    public GamePiece(Assets assets, Owner owner, Animation<TextureRegion> idle, Animation<TextureRegion> attack, int directions, int maxMovement, int maxHealth) {
         this.owner = owner;
         this.assets = assets;
         this.idle = idle;
@@ -113,6 +128,9 @@ public class GamePiece {
 
         this.directions = directions;
         this.maxMovement = maxMovement;
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
+        healthBar = new HealthBar(assets, bounds.x, bounds.y + bounds.height + 10, maxHealth);
     }
 
     private void setCurrentAnimation(Animation<TextureRegion> animation) {
@@ -171,6 +189,7 @@ public class GamePiece {
     public void setPosition(float x, float y) {
         position.set(x, y);
         bounds.setPosition(x - bounds.width / 2, y);
+        healthBar.updatePosition(bounds.x, bounds.y + bounds.height + 10);
     }
 
     public void moveToTile(GameTile tile) {
@@ -227,6 +246,7 @@ public class GamePiece {
         if (currentAction != null && currentAction instanceof MoveAction) {
             currentAction.render(batch);
         }
+        healthBar.render(batch);
     }
 
     public void renderMovement(SpriteBatch batch) {
