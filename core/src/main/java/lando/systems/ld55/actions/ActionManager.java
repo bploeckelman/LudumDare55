@@ -96,7 +96,6 @@ public class ActionManager {
         }
 
         Gdx.app.log("ActionManager", "Moving to Action Resolution Phase");
-        gameScreen.currentGameMode = GameScreen.GameMode.Move;
         phase = Phase.ResolveActions;
         currentAction = 0;
     }

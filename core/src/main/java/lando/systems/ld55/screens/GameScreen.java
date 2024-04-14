@@ -28,8 +28,6 @@ public class GameScreen extends BaseScreen{
     public GameScreenUI ui;
     private StyleManager styleManager = new StyleManager();
 
-    public enum GameMode { None, Summon, Move }
-    public GameMode currentGameMode = GameMode.Summon;
 
     public GameScreen() {
         gameBoard = new GameBoard(this, 22, 10);

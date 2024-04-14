@@ -13,8 +13,8 @@ public class GameScreenUI {
 
     public final GameScreen screen;
     public final ImageButton endTurnButton;
-    public final ImageButton summonButton;
-    public final ImageButton moveButton;
+//    public final ImageButton summonButton;
+//    public final ImageButton moveButton;
     public final Vector3 touchPos = new Vector3();
 
     public GameScreenUI(GameScreen screen) {
@@ -29,15 +29,15 @@ public class GameScreenUI {
             screen.actionManager.endTurn();
         };
 
-        var summonIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/pawns");
-        summonButton = new ImageButton(20, 280 - 70, 50, 50, summonIcon, null, null, null);
-        summonButton.backgroundDefault = Assets.Patch.glass_dim.ninePatch;
-        summonButton.onClick = () -> screen.currentGameMode = GameScreen.GameMode.Summon;
-
-        var moveIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/arrow_diagonal_cross");
-        moveButton = new ImageButton(20, 280 - 130, 50, 50, moveIcon, null, null, null);
-        moveButton.backgroundDefault = Assets.Patch.glass_dim.ninePatch;
-        moveButton.onClick = () -> screen.currentGameMode = GameScreen.GameMode.Move;
+//        var summonIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/pawns");
+//        summonButton = new ImageButton(20, 280 - 70, 50, 50, summonIcon, null, null, null);
+//        summonButton.backgroundDefault = Assets.Patch.glass_dim.ninePatch;
+//        summonButton.onClick = () -> screen.currentGameMode = GameScreen.GameMode.Summon;
+//
+//        var moveIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/arrow_diagonal_cross");
+//        moveButton = new ImageButton(20, 280 - 130, 50, 50, moveIcon, null, null, null);
+//        moveButton.backgroundDefault = Assets.Patch.glass_dim.ninePatch;
+//        moveButton.onClick = () -> screen.currentGameMode = GameScreen.GameMode.Move;
     }
 
     public void update(float dt) {
@@ -48,16 +48,16 @@ public class GameScreenUI {
         var disabled = screen.actionManager.getCurrentPhase() != ActionManager.Phase.CollectActions;
         endTurnButton.update(dt, touchPos, pressed, disabled);
 
-        summonButton.active = screen.currentGameMode == GameScreen.GameMode.Summon;
-        moveButton.active = screen.currentGameMode == GameScreen.GameMode.Move;
+//        summonButton.active = screen.currentGameMode == GameScreen.GameMode.Summon;
+//        moveButton.active = screen.currentGameMode == GameScreen.GameMode.Move;
 
-        summonButton.update(dt, touchPos, pressed, false);
-        moveButton.update(dt, touchPos, pressed, false);
+//        summonButton.update(dt, touchPos, pressed, false);
+//        moveButton.update(dt, touchPos, pressed, false);
     }
 
     public void render(SpriteBatch batch) {
         endTurnButton.render(batch);
-        summonButton.render(batch);
-        moveButton.render(batch);
+//        summonButton.render(batch);
+//        moveButton.render(batch);
     }
 }

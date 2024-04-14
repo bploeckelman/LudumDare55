@@ -94,7 +94,7 @@ public class GameBoard extends InputAdapter {
     }
 
     private void removeThis() {
-         var types = new GamePiece.Type[] { GamePiece.Type.Pawn, GamePiece.Type.Bishop, GamePiece.Type.Queen, GamePiece.Type.Knight, GamePiece.Type.Rook };
+        var types = new GamePiece.Type[] { GamePiece.Type.Pawn, GamePiece.Type.Bishop, GamePiece.Type.Queen, GamePiece.Type.Knight, GamePiece.Type.Rook };
         int y = 2;
         for (var type : types) {
             var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Enemy);
@@ -127,7 +127,7 @@ public class GameBoard extends InputAdapter {
             GamePiece gamePiece = getGamePiece(hoverTile);
             if (gamePiece != null && gamePiece.owner != GamePiece.Owner.Player) gamePiece = null;
             if (gamePiece == null) {
-                if (gameScreen.currentGameMode == GameScreen.GameMode.Summon && hoverTile.summonable) {
+                if (hoverTile.summonable) {
                     radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.Summon);
                 } else {
                     // Move mode
@@ -143,18 +143,16 @@ public class GameBoard extends InputAdapter {
                     }
                 }
             } else {
-                if (gameScreen.currentGameMode == GameScreen.GameMode.Move){
-                    if (selectedPiece != gamePiece) {
-                        if (selectedPiece != null) {
-                            selectedPiece.deselect(this);
-                        }
-                        selectedPiece = gamePiece.select(this);
-                        if (selectedPiece.currentAction != null && selectedPiece.currentAction instanceof MoveAction){
-                            radialMenu = new RadialMenu(this, hoverTile, selectedPiece, RadialMenu.MenuType.CancelMove);
-                        }
+
+                if (selectedPiece != gamePiece) {
+                    if (selectedPiece != null) {
+                        selectedPiece.deselect(this);
+                    }
+                    selectedPiece = gamePiece.select(this);
+                    if (selectedPiece.currentAction != null && selectedPiece.currentAction instanceof MoveAction){
+                        radialMenu = new RadialMenu(this, hoverTile, selectedPiece, RadialMenu.MenuType.CancelMove);
                     }
                 }
-
             }
 
             return true;
@@ -181,7 +179,7 @@ public class GameBoard extends InputAdapter {
 
     public GameTile getTileAt(int x, int y) {
         if (x < 0 || x >= tilesWide
-         || y < 0 || y >= tilesHigh) {
+            || y < 0 || y >= tilesHigh) {
             return null;
         }
         int i = x + y * tilesWide;
@@ -267,24 +265,24 @@ public class GameBoard extends InputAdapter {
         }
         // TEST ---------------
 
-        if (gameScreen.currentGameMode == GameScreen.GameMode.Summon){
-            // set summonable tiles
-            for (int y = 0; y < tilesHigh; y++){
-                boolean summonable = true;
-                for (int x = 0; x < tilesWide; x++) {
-                    GameTile t = getTileAt(x, y);
-                    if (t != null) {
-                        for(GamePiece piece : gamePieces){
-                            if (piece.currentTile == t){
-                                summonable = false;
-                            }
+
+        // set summonable tiles
+        for (int y = 0; y < tilesHigh; y++){
+            boolean summonable = true;
+            for (int x = 0; x < tilesWide; x++) {
+                GameTile t = getTileAt(x, y);
+                if (t != null) {
+                    for(GamePiece piece : gamePieces){
+                        if (piece.currentTile == t){
+                            summonable = false;
                         }
-                        t.summonable = summonable;
-                        summonable = false;
                     }
+                    t.summonable = summonable;
+                    summonable = false;
                 }
             }
         }
+
 
         hoverTile = null;
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -334,17 +332,16 @@ public class GameBoard extends InputAdapter {
 
         // Ony draw when we are in planning mode
         if (gameScreen.actionManager.getCurrentPhase() == ActionManager.Phase.CollectActions) {
-            if (gameScreen.currentGameMode == GameScreen.GameMode.Summon){
-                for (GameTile t : tiles) {
-                    if (t.summonable){
-                        var texture = gameScreen.assets.whitePixel;
-                        var alpha = 0.4f;
-                        var bounds = t.bounds;
-                        var color = Color.CYAN;
-                        batch.setColor(color.r, color.g, color.b, alpha);
-                        batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-                    }
+            for (GameTile t : tiles) {
+                if (t.summonable){
+                    var texture = gameScreen.assets.whitePixel;
+                    var alpha = 0.4f;
+                    var bounds = t.bounds;
+                    var color = Color.CYAN;
+                    batch.setColor(color.r, color.g, color.b, alpha);
+                    batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
                 }
+
             }
 
             // draw hover overlays (work in progress)
@@ -357,22 +354,21 @@ public class GameBoard extends InputAdapter {
                 var bounds = hoverTile.bounds;
                 batch.setColor(color.r, color.g, color.b, alpha);
                 batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-                if (gameScreen.currentGameMode == GameScreen.GameMode.Move){
-                    // prep to draw overlays for tiles in pattern
-                    var tileOverlays = getTileOverlaysForPattern(hoverTile, currentPattern);
-                    for (var overlay : tileOverlays) {
-                        bounds = overlay.tile.bounds;
+                // prep to draw overlays for tiles in pattern
+                var tileOverlays = getTileOverlaysForPattern(hoverTile, currentPattern);
+                for (var overlay : tileOverlays) {
+                    bounds = overlay.tile.bounds;
 
-                        color = Color.RED;
-                        batch.setColor(color.r, color.g, color.b, alpha);
-                        batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+                    color = Color.RED;
+                    batch.setColor(color.r, color.g, color.b, alpha);
+                    batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
 
-                        color = overlay.color;
-                        bounds = overlay.bounds;
-                        batch.setColor(color.r, color.g, color.b, 1f);
-                        batch.draw(overlay.anim.getKeyFrame(0), bounds.x, bounds.y, bounds.width, bounds.height);
-                    }
+                    color = overlay.color;
+                    bounds = overlay.bounds;
+                    batch.setColor(color.r, color.g, color.b, 1f);
+                    batch.draw(overlay.anim.getKeyFrame(0), bounds.x, bounds.y, bounds.width, bounds.height);
                 }
+
             }
         }
 
