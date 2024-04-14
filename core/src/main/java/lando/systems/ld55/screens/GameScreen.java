@@ -1,22 +1,15 @@
 package lando.systems.ld55.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.ScreenUtils;
-import lando.systems.ld55.Main;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
-import lando.systems.ld55.Config;
+import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionManager;
-import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
-import lando.systems.ld55.entities.GamePiece;
-import lando.systems.ld55.entities.GameTile;
 import lando.systems.ld55.particles.Particles;
 
 public class GameScreen extends BaseScreen{
@@ -25,8 +18,7 @@ public class GameScreen extends BaseScreen{
     public ActionManager actionManager;
 
     public GameScreen() {
-        // TODO bring in size or level etc
-        gameBoard = new GameBoard(this, 10);
+        gameBoard = new GameBoard(this, 22, 10);
         particles = new Particles(assets);
         actionManager = new ActionManager();
         Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));

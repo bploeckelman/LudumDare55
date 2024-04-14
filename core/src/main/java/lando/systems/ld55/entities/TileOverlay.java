@@ -15,7 +15,7 @@ public class TileOverlay {
     public GameTile tile;
 
     // different things that could be drawn or impact the drawing, not all are required
-    public Color color = Color.WHITE.cpy();
+    public Color color;
     public NinePatch patch;
     public Animation<TextureRegion> anim;
     public NinePatch outlinePatch;

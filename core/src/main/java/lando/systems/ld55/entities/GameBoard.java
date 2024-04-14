@@ -17,8 +17,10 @@ import java.util.List;
 
 public class GameBoard extends InputAdapter {
 
-    public static float topMargin = 80;
-    public static float bottomMargin = 40;
+    public static float marginLeft = 112;
+    public static float marginRight = 112;
+    public static float marginTop = 120;
+    public static float marginBottom = 120;
 
     public GameTile hoverTile;
     public Rectangle boardRegion;
@@ -27,6 +29,7 @@ public class GameBoard extends InputAdapter {
     public Array<GamePiece> gamePieces = new Array<>();
 
     public final int tilesWide;
+    public final int tilesHigh;
     public final GameScreen gameScreen;
     public final Vector3 screenPosition = new Vector3();
 
@@ -34,27 +37,38 @@ public class GameBoard extends InputAdapter {
     public Pattern currentPattern = Pattern.QUEEN_ATK;
     // TEMP -------------
 
-    public GameBoard(GameScreen gameScreen, int tilesWide) {
+    public GameBoard(GameScreen gameScreen, int tilesWide, int tilesHigh) {
         this.gameScreen = gameScreen;
         this.tilesWide = tilesWide;
+        this.tilesHigh = tilesHigh;
 
-        // NOTE - adjusting to line up current board with level layout image,
-        //  still need to allow for rectangular board, and to have tiles marked as 'unused' for corners
-//        float boardSize = Config.Screen.window_height - (topMargin + bottomMargin);
-//        float tileSize = boardsize/tilesWide;
-//        float leftEdge = (Config.Screen.window_width - boardsize)/2f;
-//        Vector2 boardStartPoint = new Vector2(leftEdge, bottomMargin);
-        var tileSize = 48f;
-        var boardSize = tileSize * tilesWide;
-        var boardStartPoint = new Vector2(400, 120);
-        boardRegion = new Rectangle(boardStartPoint.x, boardStartPoint.y, boardSize, boardSize);
+        var cornerDepth = 3; // 'cutout' 3 tiles deep in each corner on both axes
+        var boardWidth = gameScreen.worldCamera.viewportWidth - (marginLeft + marginRight);
+        var boardHeight = gameScreen.worldCamera.viewportHeight - (marginTop + marginBottom);
+        // these should be the same...
+        var tileSize = boardWidth / tilesWide;
+//        var tileSize = boardHeight / tilesHigh;
+        var boardStartPoint = new Vector2(marginLeft, marginBottom);
+        boardRegion = new Rectangle(boardStartPoint.x, boardStartPoint.y, boardWidth, boardHeight);
 
-        for (int y = 0; y < tilesWide; y++) {
+        for (int y = 0; y < tilesHigh; y++) {
             for (int x = 0; x < tilesWide; x++) {
-                Rectangle rect = new Rectangle(boardStartPoint.x + (x * tileSize), boardStartPoint.y + (y * tileSize), tileSize, tileSize);
-                tiles.add(new GameTile(x, y, rect));
+                var rect = new Rectangle(
+                    boardStartPoint.x + (x * tileSize),
+                    boardStartPoint.y + (y * tileSize),
+                    tileSize, tileSize);
+                var tile = new GameTile(x, y, rect);
+                tile.valid = !isCornerTile(x, y, cornerDepth);
+                tiles.add(tile);
             }
         }
+    }
+
+    private boolean isCornerTile(int x, int y, int cornerDepth) {
+        return (x + y < cornerDepth)                   // bottom left
+            || (x + (tilesHigh - y - 1) < cornerDepth) // bottom right
+            || ((tilesWide - x - 1) + y < cornerDepth) // top left
+            || ((tilesWide - x - 1) + (tilesHigh - y - 1) < cornerDepth); // top right
     }
 
     @Override
@@ -89,11 +103,12 @@ public class GameBoard extends InputAdapter {
 
     public GameTile getTileAt(int x, int y) {
         if (x < 0 || x >= tilesWide
-         || y < 0 || y >= tilesWide) {
+         || y < 0 || y >= tilesHigh) {
             return null;
         }
         int i = x + y * tilesWide;
-        return tiles.get(i);
+        var tile = tiles.get(i);
+        return (tile.valid) ? tile : null;
     }
 
     public GameTile getTileRelative(GameTile tile, int offsetX, int offsetY) {
@@ -164,7 +179,10 @@ public class GameBoard extends InputAdapter {
         // TEST ---------------
 
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-        hoverTile = getTileAtScreenPos(screenPosition);
+        var tile = getTileAtScreenPos(screenPosition);
+        if (tile != null && tile.valid) {
+            hoverTile = tile;
+        }
 
         for (int i = portalAnimations.size -1; i >= 0; i--) {
             Portal p = portalAnimations.get(i);

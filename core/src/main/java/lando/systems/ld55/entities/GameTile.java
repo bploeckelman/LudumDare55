@@ -6,21 +6,25 @@ import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld55.Main;
 
 public class GameTile {
-    public Rectangle bounds;
     public int x;
     public int y;
-    public GameTile(int x, int y, Rectangle rect) {
+    public boolean valid;
+    public Rectangle bounds;
 
-        // TODO store this in an object?
+    public GameTile(int x, int y, Rectangle rect) {
         this.x = x;
         this.y = y;
+        this.valid = true;
         this.bounds = rect;
     }
 
     public void update(float dt) {
 
     }
+
     public void render(SpriteBatch batch) {
+        if (!valid) return;
+
         // Temp color stuff
         Color c = Color.DARK_GRAY;
         if ((x + y) % 2 == 0) {
