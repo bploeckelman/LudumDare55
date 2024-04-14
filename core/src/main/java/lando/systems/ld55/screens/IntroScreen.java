@@ -88,10 +88,11 @@ public class IntroScreen extends BaseScreen {
                 }
             }
         }
-        typingLabel.update(dt);
         particles.update(dt);
         if (transitionAlpha < 1f) {
             transitionAlpha = MathUtils.clamp(transitionAlpha + dt, 0f, 1f);
+        } else {
+            typingLabel.update(dt);
         }
     }
 
@@ -111,7 +112,7 @@ public class IntroScreen extends BaseScreen {
         batch.draw(backgroundTexture, 0, 0, windowCamera.viewportWidth, windowCamera.viewportHeight);
 
         // Center parchment calculation (adjust offsets if needed)
-        batch.draw(parchmentTexture, windowCamera.viewportWidth * .1f, windowCamera.viewportHeight * .1f, windowCamera.viewportWidth * .9f, windowCamera.viewportHeight * .9f);
+        batch.draw(parchmentTexture, windowCamera.viewportWidth * .1f, windowCamera.viewportHeight * .1f, windowCamera.viewportWidth * .9f, windowCamera.viewportHeight * .9f * transitionAlpha);
 
         typingLabel.render(batch);
 
