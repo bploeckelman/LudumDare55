@@ -205,8 +205,8 @@ public class Assets implements Disposable {
             mgr.load("audio/sounds/idle-click.wav", Sound.class);
             mgr.load("audio/sounds/level-up.wav", Sound.class);
 
-            mgr.load("audio/music/introMusic.ogg", Music.class);
-            mgr.load("audio/music/mainMusic.ogg", Music.class);
+            mgr.load("audio/music/intro-music.ogg", Music.class);
+            mgr.load("audio/music/main-music.ogg", Music.class);
         }
 
         if (load == Load.SYNC) {
@@ -374,8 +374,8 @@ public class Assets implements Disposable {
         idleClick = mgr.get("audio/sounds/idle-click.wav", Sound.class);
         levelUp = mgr.get("audio/sounds/level-up.wav", Sound.class);
 
-        introMusic = mgr.get("audio/music/introMusic.ogg", Music.class);
-        mainMusic = mgr.get("audio/music/mainMusic.ogg", Music.class);
+        introMusic = mgr.get("audio/music/intro-music.ogg", Music.class);
+        mainMusic = mgr.get("audio/music/main-music.ogg", Music.class);
 
         initialized = true;
         return 1;
