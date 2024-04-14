@@ -26,7 +26,8 @@ public class GameScreen extends BaseScreen{
     public Particles particles;
     public ActionManager actionManager;
     public GameScreenUI ui;
-    private StyleManager styleManager = new StyleManager();
+    private final StyleManager styleManager = new StyleManager();
+    private float gameOverTime = 5;
 
 
     public GameScreen() {
@@ -60,6 +61,15 @@ public class GameScreen extends BaseScreen{
     }
 
     public void update(float dt) {
+        if (gameOver) {
+            gameOverTime -= dt;
+            if (gameOverTime < 0) {
+                game.setScreen(new CreditScreen());
+                return;
+            }
+        }
+
+
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
@@ -136,8 +146,22 @@ public class GameScreen extends BaseScreen{
             }
             font.getData().setScale(1f);
 
+            if (gameOver) {
+                layout.setText(font, win ? "YOU WIN!" : "LOSER", Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+                font.draw(batch, layout, 0, windowCamera.viewportHeight / 2);
+            }
+
             particles.draw(batch, Particles.Layer.FOREGROUND);
         }
         batch.end();
+    }
+
+    private boolean gameOver = false;
+    private boolean win = false;
+    public void gameOver(boolean win) {
+        if (gameOver) return;
+        gameOver = true;
+        this.win = win;
+        particles.gameOver(win);
     }
 }

@@ -58,6 +58,9 @@ public class GameBoard extends InputAdapter {
 
     private RadialMenu radialMenu;
 
+    private final Array<GameTile> loseTiles = new Array<>();
+    private final Array<GameTile> winTiles = new Array<>();
+
     // TEMP -------------
     public Pattern currentPattern = Pattern.QUEEN_ATK;
     // TEMP -------------
@@ -83,6 +86,14 @@ public class GameBoard extends InputAdapter {
                 var tile = new GameTile(x, y, rect);
                 tile.valid = !isCornerTile(x, y, cornerDepth);
                 tiles.add(tile);
+
+                if (tile.valid) {
+                    if (x == 0)  {
+                        loseTiles.add(tile);
+                    } else if (x == tilesWide -1) {
+                        winTiles.add(tile);
+                    }
+                }
             }
         }
 
@@ -97,20 +108,24 @@ public class GameBoard extends InputAdapter {
     }
 
     private void removeThis() {
-        var types = new GamePiece.Type[] { GamePiece.Type.Pawn, GamePiece.Type.Bishop, GamePiece.Type.Queen, GamePiece.Type.Knight, GamePiece.Type.Rook };
-        int y = 2;
-        for (var type : types) {
-            var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Enemy);
-            gp.setTile(getTileAt(18, y++));
-            gamePieces.add(gp);
-        }
-
-        y = 2;
-        for (var type : types) {
-            var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Player);
-            gp.setTile(getTileAt(14, y++));
-            gamePieces.add(gp);
-        }
+//        var types = new GamePiece.Type[] { GamePiece.Type.Pawn, GamePiece.Type.Bishop, GamePiece.Type.Queen, GamePiece.Type.Knight, GamePiece.Type.Rook };
+//        int y = 2;
+//        for (var type : types) {
+//            var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Enemy);
+//            gp.setTile(getTileAt(14, y++));
+//            gamePieces.add(gp);
+//        }
+//
+//        y = 2;
+//        for (var type : types) {
+//            var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Player);
+//            gp.setTile(getTileAt(18, y++));
+//            gamePieces.add(gp);
+//        }
+        // LET'S GO BANANA
+        var gp = GamePiece.getGamePiece(gameScreen.assets, GamePiece.Type.Pawn, GamePiece.Owner.Player);
+        gp.setTile(getTileAt(20, 5));
+        gamePieces.add(gp);
     }
 
     private boolean isCornerTile(int x, int y, int cornerDepth) {
@@ -316,6 +331,15 @@ public class GameBoard extends InputAdapter {
             gp.update(dt);
             if (gp.isDead()) {
                 gamePieces.removeIndex(i);
+            }
+
+            // slow down animation when landing on end tile and blow shit up
+            if (gp.owner == GamePiece.Owner.Enemy) {
+                if (loseTiles.contains(gp.currentTile, true)) {
+                    gameScreen.gameOver(false);
+                }
+            } else if (winTiles.contains(gp.currentTile, true)) {
+                gameScreen.gameOver(true);
             }
         }
 

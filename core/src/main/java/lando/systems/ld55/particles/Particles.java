@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
+import lando.systems.ld55.Config;
 import lando.systems.ld55.assets.Assets;
 
 public class Particles implements Disposable {
@@ -173,4 +174,25 @@ public class Particles implements Disposable {
         }
     }
 
+    public void gameOver(boolean win) {
+        for (int i = 0; i < 5000; i++) {
+            float angle = MathUtils.random(0f, 360f);
+            float speed = MathUtils.random(200f, 500f);
+            float x = (Config.Screen.window_width / 2f) + MathUtils.random(-100f, 100f);
+            float y = (Config.Screen.window_height / 2f) + MathUtils.random(-100f, 100f);
+            float size = MathUtils.random(60f, 120f);
+            float color = MathUtils.random(.3f, 1f);
+            activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+                .animation(win ? assets.yoda : assets.cherry)
+                .startPos(x, y)
+                .velocity(MathUtils.cosDeg(angle) * speed, MathUtils.sinDeg(angle) * speed)
+                .startColor(color, color, color, 1f)
+                .endColor(0, 0, 0, 0)
+                .startSize(size)
+                .endSize(5f)
+                .timeToLive(MathUtils.random(2f, 6f))
+                .init()
+            );
+        }
+    }
 }

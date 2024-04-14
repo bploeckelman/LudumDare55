@@ -61,6 +61,7 @@ public class Assets implements Disposable {
     public TextureRegion closeButton;
 
     public Animation<TextureRegion> cherry;
+    public Animation<TextureRegion> yoda;
     public Animation<TextureRegion> spawnEvilIdle;
     public Animation<TextureRegion> spawnEvilActive;
     public Animation<TextureRegion> spawnGoodIdle;
@@ -228,6 +229,7 @@ public class Assets implements Disposable {
         atlas = mgr.get("sprites/sprites.atlas");
 
         cherry = new Animation<>(.1f, atlas.findRegions("pets/cat"), Animation.PlayMode.LOOP);
+        yoda = new Animation<>(.1f, atlas.findRegions("pets/ross-dog"), Animation.PlayMode.LOOP);
         spawnEvilIdle = new Animation<>(0.2f, atlas.findRegions("stage/spawn-evil-idle/spawn-evil-idle"), Animation.PlayMode.LOOP);
         spawnEvilActive = new Animation<>(0.2f, atlas.findRegions("stage/spawn-evil-active/spawn-evil-active"), Animation.PlayMode.LOOP_PINGPONG);
         spawnGoodIdle = new Animation<>(0.15f, atlas.findRegions("stage/spawn-idle/spawn-idle"), Animation.PlayMode.LOOP);
