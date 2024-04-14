@@ -77,6 +77,8 @@ public class GamePiece {
     private final Assets assets;
     private final Animation<TextureRegion> idle;
     private final Animation<TextureRegion> attack;
+    private boolean isAttacking = false;
+    private float attackTime = 0;
     private final int directions;
     private final int maxMovement;
     public Array<GameTile> moveTiles = new Array<>();
@@ -124,6 +126,10 @@ public class GamePiece {
         return false;
     }
 
+    public void attack() {
+        setCurrentAnimation(attack);
+        attackTime = attack.getAnimationDuration();
+    }
 
     public GamePiece select(GameBoard gameBoard) {
         selected = true;
@@ -182,10 +188,17 @@ public class GamePiece {
         if (selected) {
             selectedAnimState += dt;
         }
+        if (isAttacking) {
+            if (animState > attackTime + 0.25f) {
+                isAttacking = false;
+                setCurrentAnimation(idle);
+            }
+        }
         if (isMoving) {
             // TODO: handle a collision (melee attack) here
             updateMovement(dt);
         }
+
         if (currentAction != null && currentAction.isCompleted()){
             currentAction = null;
         }
