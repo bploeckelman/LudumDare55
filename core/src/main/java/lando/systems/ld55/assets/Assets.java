@@ -90,6 +90,7 @@ public class Assets implements Disposable {
     public Sound levelUp;
 
     public Music introMusic;
+    public Music mainMusic;
 
     public enum Patch {
         debug, panel, metal, glass,
@@ -185,6 +186,7 @@ public class Assets implements Disposable {
             mgr.load("audio/sounds/level-up.wav", Sound.class);
 
             mgr.load("audio/music/introMusic.ogg", Music.class);
+            mgr.load("audio/music/mainMusic.ogg", Music.class);
         }
 
         if (load == Load.SYNC) {
@@ -325,6 +327,7 @@ public class Assets implements Disposable {
         levelUp = mgr.get("audio/sounds/level-up.wav", Sound.class);
 
         introMusic = mgr.get("audio/music/introMusic.ogg", Music.class);
+        mainMusic = mgr.get("audio/music/mainMusic.ogg", Music.class);
 
         initialized = true;
         return 1;

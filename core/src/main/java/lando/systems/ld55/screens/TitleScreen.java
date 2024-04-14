@@ -24,7 +24,7 @@ public class TitleScreen extends BaseScreen {
 
     public TitleScreen() {
         Gdx.input.setInputProcessor(uiStage);
-        Main.game.audioManager.playMusic(AudioManager.Musics.introMusic);
+        Main.game.audioManager.playMusic(AudioManager.Musics.mainMusic);
         particles = new Particles(assets);
         titleScreenUI = new TitleScreenUI(worldCamera.viewportWidth - 500f, 200, 300f, 75f, assets.fontAbandoned, TitleScreenUI.ButtonOrientation.VERTICAL);
         Events.get().subscribe(EventType.TRANSITION_TO_GAME, (type, data) -> transitionToGameScreen());

@@ -31,6 +31,9 @@ public class GameScreen extends BaseScreen{
     }
 
     public void update(float dt) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+        }
         gameBoard.update(dt);
         particles.update(dt);
         actionManager.update(dt);
