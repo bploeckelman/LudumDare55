@@ -93,12 +93,18 @@ public class GameBoard extends InputAdapter {
     }
 
     private void removeThis() {
-        var owner = GamePiece.Owner.Enemy;
-        var types = new GamePiece.Type[] { GamePiece.Type.Pawn, GamePiece.Type.Bishop, GamePiece.Type.Knight, GamePiece.Type.Queen, GamePiece.Type.Knight, GamePiece.Type.Rook };
-        int y = 3;
+         var types = new GamePiece.Type[] { GamePiece.Type.Pawn, GamePiece.Type.Bishop, GamePiece.Type.Queen, GamePiece.Type.Knight, GamePiece.Type.Rook };
+        int y = 2;
         for (var type : types) {
             var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Enemy);
             gp.setTile(getTileAt(18, y++));
+            gamePieces.add(gp);
+        }
+
+        y = 2;
+        for (var type : types) {
+            var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Player);
+            gp.setTile(getTileAt(14, y++));
             gamePieces.add(gp);
         }
     }

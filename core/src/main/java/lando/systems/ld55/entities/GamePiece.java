@@ -252,11 +252,13 @@ public class GamePiece {
             if (hasDirection(Direction.BottomLeft)) {
                 addMoveTile(gameBoard,-i - 1, -i - 1);
             }
+
             if (hasDirection(Direction.Left)) {
                 addMoveTile(gameBoard,-i - 1, 0);
             }
+
             if (hasDirection(Direction.TopLeft)) {
-                addMoveTile(gameBoard,i + 1, -i - 1);
+                addMoveTile(gameBoard,-i - 1, i + 1);
             }
         }
     }
