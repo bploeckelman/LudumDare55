@@ -156,7 +156,7 @@ public class GameScreen extends BaseScreen{
         batch.end();
     }
 
-    private boolean gameOver = false;
+    public boolean gameOver = false;
     private boolean win = false;
     public void gameOver(boolean win) {
         if (gameOver) return;

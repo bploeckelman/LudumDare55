@@ -261,6 +261,7 @@ public class GameBoard extends InputAdapter {
     }
 
     public void update(float dt) {
+        if (gameScreen.gameOver) { return; }
         // TEST ---------------
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             var nextPattern = currentPattern.next__TEST();
