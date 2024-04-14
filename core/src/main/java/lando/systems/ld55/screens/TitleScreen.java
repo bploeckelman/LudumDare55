@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
+import lando.systems.ld54.screens.IntroScreen;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.particles.Particles;
@@ -90,7 +91,7 @@ public class TitleScreen extends BaseScreen {
     private void transitionToGameScreen() {
         if (Gdx.input.justTouched() && !exitingScreen ) {
             exitingScreen = true;
-            game.setScreen(new GameScreen());
+            game.setScreen(new IntroScreen());
         }
     }
 

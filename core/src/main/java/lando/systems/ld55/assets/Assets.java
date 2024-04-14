@@ -46,12 +46,15 @@ public class Assets implements Disposable {
     public BitmapFont largeFont;
     public BitmapFont fontAbandoned;
     public BitmapFont fontZektonSmall;
+    public BitmapFont fontTreasureMap;
 
     public Texture pixel;
     public Texture gdx;
     public Texture noiseTexture;
     public Texture whitePixel;
     public Texture levelLayout;
+    public Texture introBackground;
+    public Texture parchment;
 
     public TextureRegion pixelRegion;
     public TextureRegion closeButton;
@@ -179,6 +182,8 @@ public class Assets implements Disposable {
             mgr.load("images/noise.png", Texture.class);
             mgr.load("images/pixel.png", Texture.class);
             mgr.load("images/level-layout.png", Texture.class);
+            mgr.load("images/intro-background.png", Texture.class);
+            mgr.load("images/parchment.png", Texture.class);
 
             mgr.load("fonts/outfit-medium-20px.fnt", BitmapFont.class);
             mgr.load("fonts/outfit-medium-40px.fnt", BitmapFont.class);
@@ -227,6 +232,8 @@ public class Assets implements Disposable {
         noiseTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         noiseTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         levelLayout = mgr.get("images/level-layout.png");
+        introBackground = mgr.get("images/intro-background.png");
+        parchment = mgr.get("images/parchment.png");
 
         // Fonts
         smallFont = mgr.get("fonts/outfit-medium-20px.fnt");
@@ -239,6 +246,9 @@ public class Assets implements Disposable {
         var ttfParameter = new FreeTypeFontGenerator.FreeTypeFontParameter() {{ size = 40; }};
         var ttfGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Abandoned-Bold.ttf"));
         fontAbandoned = ttfGenerator.generateFont(ttfParameter);
+
+        ttfGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Treamd.ttf"));
+        fontTreasureMap = ttfGenerator.generateFont(ttfParameter);
         ttfGenerator.dispose();
         var ttfParameterSmall = new FreeTypeFontGenerator.FreeTypeFontParameter() {{size = 40; borderWidth = 0f; shadowOffsetX = 2; shadowOffsetY = 2;}};
         ttfGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/zekton.ttf"));
