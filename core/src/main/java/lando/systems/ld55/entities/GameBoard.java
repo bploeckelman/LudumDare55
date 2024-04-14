@@ -75,14 +75,20 @@ public class GameBoard extends InputAdapter {
         return getTileAt(tile.x + offsetX, tile.y + offsetY);
     }
 
-    public List<GameTile> getTilesForPattern(GameTile center, Pattern pattern) {
-        var tiles = new ArrayList<GameTile>();
-        var centerIndex = Pattern.size / 2;
+    public List<TileOverlay> getTileOverlaysForPattern(GameTile center, Pattern pattern) {
+        var overlays = new ArrayList<TileOverlay>();
 
+        var centerIndex = Pattern.size / 2;
         for (int y = 0; y < Pattern.size; y++) {
             for (int x = 0; x < Pattern.size; x++) {
                 char ch = pattern.vals[y][x];
                 if (ch == ' ' || ch == 'x') continue;
+
+                // get the damage amount based on the digit for this tile in the pattern
+                int damage = 1;
+                if (Character.isDigit(ch)) {
+                    damage = Character.digit(ch, 10);
+                }
 
                 // NOTE - game board y coord is inverted relative to pattern array coords
                 int invY = Pattern.size - 1 - y;
@@ -93,11 +99,23 @@ public class GameBoard extends InputAdapter {
 
                 var tile = getTileRelative(center, offsetX, offsetY);
                 if (tile != null) {
-                    tiles.add(tile);
+                    var margin = 15f;
+                    var anim = gameScreen.assets.numbers.get(damage);
+                    var overlay = TileOverlay.builder()
+                        .tile(tile)
+                        .color(Color.BLUE.cpy())
+                        .anim(anim)
+                        .bounds(new Rectangle(
+                            tile.bounds.x + margin,
+                            tile.bounds.y + margin,
+                            tile.bounds.width - 2 * margin,
+                            tile.bounds.height - 2 * margin))
+                        .build();
+                    overlays.add(overlay);
                 }
             }
         }
-        return tiles;
+        return overlays;
     }
 
     public GameTile getTileAtScreenPos(Vector3 screenPos) {
@@ -146,16 +164,25 @@ public class GameBoard extends InputAdapter {
             var color = Color.LIME;
             var alpha = 0.4f;
 
+            // draw overlay for hovered tile
             var bounds = hoverTile.bounds;
             batch.setColor(color.r, color.g, color.b, alpha);
             batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
 
-            // find neighbor tiles (with pattern)
-            color = Color.RED;
-            batch.setColor(color.r, color.g, color.b, alpha);
-            var tiles = getTilesForPattern(hoverTile, currentPattern);
-            for (var tile : tiles) {
-                batch.draw(texture, tile.bounds.x, tile.bounds.y, tile.bounds.width, tile.bounds.height);
+            // prep to draw overlays for tiles in pattern
+
+            var tileOverlays = getTileOverlaysForPattern(hoverTile, currentPattern);
+            for (var overlay : tileOverlays) {
+                bounds = overlay.tile.bounds;
+
+                color = Color.RED;
+                batch.setColor(color.r, color.g, color.b, alpha);
+                batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+
+                color = overlay.color;
+                bounds = overlay.bounds;
+                batch.setColor(color.r, color.g, color.b, 1f);
+                batch.draw(overlay.anim.getKeyFrame(0), bounds.x, bounds.y, bounds.width, bounds.height);
             }
         }
         batch.setColor(Color.WHITE);

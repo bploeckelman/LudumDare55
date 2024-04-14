@@ -20,6 +20,9 @@ import com.badlogic.gdx.utils.I18NBundle;
 import lando.systems.ld55.Config;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Assets implements Disposable {
 
     public enum Load { ASYNC, SYNC }
@@ -50,6 +53,7 @@ public class Assets implements Disposable {
 
     public TextureRegion pixelRegion;
     public Animation<TextureRegion> cherry;
+    public List<Animation<TextureRegion>> numbers;
 
     public ShaderProgram portalShader;
 
@@ -189,6 +193,13 @@ public class Assets implements Disposable {
         atlas = mgr.get("sprites/sprites.atlas");
 
         cherry = new Animation<>(.1f, atlas.findRegions("pets/cat"), Animation.PlayMode.LOOP);
+
+        numbers = new ArrayList<>();
+        for (int i = 0; i <= 9; ++i) {
+            var anim = new Animation<TextureRegion>(0.1f, atlas.findRegions("particles/font-points-" + i));
+            numbers.add(anim);
+        }
+
         // Initialize asset helpers
 
         // String replacement
