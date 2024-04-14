@@ -3,6 +3,7 @@ package lando.systems.ld55.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
@@ -72,8 +73,6 @@ public class GameScreen extends BaseScreen{
         {
             particles.draw(batch, Particles.Layer.BACKGROUND);
             gameBoard.render(batch);
-            ui.render(batch); // TODO(brian) - should technically be in windowCam, but then particles draw under it
-            particles.draw(batch, Particles.Layer.FOREGROUND);
             actionManager.render(batch);
         }
         batch.end();
@@ -81,25 +80,35 @@ public class GameScreen extends BaseScreen{
         batch.setProjectionMatrix(windowCamera.combined);
         batch.begin();
         {
-            ActionManager.Phase actionPhase = actionManager.getCurrentPhase();
-            String phaseString = "Ohh Ohh";
-            switch(actionPhase){
-                case CollectActions:
-                    phaseString = "Planning";
-                    break;
-                case ResolveActions:
-                    phaseString = "Resolving Actions";
-                    break;
-                case Attack:
-                    phaseString = "Attacking";
-                    break;
+            ui.render(batch);
+
+            var font = assets.fontAbandonedMed;
+            var layout = assets.layout;
+            layout.setText(font, "--- [Turn Order] ---", Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+            font.draw(batch, layout, 0, 50);
+
+            font = assets.font;
+            var phase = actionManager.getCurrentPhase();
+            var turnLabel = "Turn: " + (actionManager.getTurnNumber() +1);
+            var phaseLabel = "Ohh Ohh";
+            switch(phase){
+                case CollectActions: phaseLabel = "Planning"; break;
+                case ResolveActions: phaseLabel = "Resolving Actions"; break;
+                case Attack:         phaseLabel = "Attacking"; break;
             }
-            phaseString = "Phase: " + phaseString;
-            String turnString = "Turn: " + (actionManager.getTurnNumber() +1);
-            assets.font.getData().setScale(.5f);
-            assets.font.draw(batch, phaseString, 0, windowCamera.viewportHeight - 20, windowCamera.viewportWidth, Align.center, true);
-            assets.font.draw(batch, turnString, 0, windowCamera.viewportHeight - 40, windowCamera.viewportWidth, Align.center, true);
-            assets.font.getData().setScale(1f);
+            phaseLabel = "Phase: " + phaseLabel;
+
+            font.getData().setScale(.5f);
+            {
+                layout.setText(font, phaseLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+                font.draw(batch, layout, 0, windowCamera.viewportHeight - 20);
+
+                layout.setText(font, turnLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+                font.draw(batch, layout, 0, windowCamera.viewportHeight - 40);
+            }
+            font.getData().setScale(1f);
+
+            particles.draw(batch, Particles.Layer.FOREGROUND);
         }
         batch.end();
     }
