@@ -57,8 +57,6 @@ public class GameScreen extends BaseScreen{
         }
 
         if(Gdx.input.justTouched() && gameBoard.hoverTile != null) {
-            Gdx.app.log("clicked","clicked");
-            Gdx.app.log("tile",gameBoard.hoverTile.toString());
             Main.game.audioManager.playSound(AudioManager.Sounds.error_sound, .3f);
         }
     }
