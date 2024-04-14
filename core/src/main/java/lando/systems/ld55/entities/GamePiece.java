@@ -72,6 +72,8 @@ public class GamePiece {
     }
 
     private final int TILE_OFFSET_Y = 10;
+    public final static float moveSeconds = 1; // seconds
+
     public Owner owner;
 
     private final Assets assets;
@@ -89,7 +91,7 @@ public class GamePiece {
     private TextureRegion keyframe;
 
     private final Rectangle bounds = new Rectangle();
-    private final Vector2 position = new Vector2();
+    public final Vector2 position = new Vector2();
     private boolean selected = false;
 
     public GameTile currentTile;
@@ -99,7 +101,6 @@ public class GamePiece {
     private final Vector2 movePosition = new Vector2();
     public boolean isMoving = false;
     private float moveAnimState = 0;
-    private float moveSeconds = 1; // seconds
 
     public ActionBase currentAction;
 
@@ -167,7 +168,7 @@ public class GamePiece {
         isMoving = false;
     }
 
-    private void setPosition(float x, float y) {
+    public void setPosition(float x, float y) {
         position.set(x, y);
         bounds.setPosition(x - bounds.width / 2, y);
     }

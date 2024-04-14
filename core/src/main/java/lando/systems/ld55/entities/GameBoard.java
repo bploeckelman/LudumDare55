@@ -162,7 +162,7 @@ public class GameBoard extends InputAdapter {
         return false;
     }
 
-    private GamePiece getGamePiece(GameTile tile) {
+    public GamePiece getGamePiece(GameTile tile) {
         for (GamePiece gp : gamePieces) {
             if (gp.currentTile == tile) {
                 return gp;
