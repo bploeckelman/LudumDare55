@@ -130,7 +130,7 @@ public class GamePiece {
         this.maxMovement = maxMovement;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
-        healthBar = new HealthBar(assets, bounds.x, bounds.y + bounds.height + 10, maxHealth);
+        healthBar = new HealthBar(assets, position.x, position.y + 60f, maxHealth);
     }
 
     private void setCurrentAnimation(Animation<TextureRegion> animation) {
@@ -189,7 +189,7 @@ public class GamePiece {
     public void setPosition(float x, float y) {
         position.set(x, y);
         bounds.setPosition(x - bounds.width / 2, y);
-        healthBar.updatePosition(bounds.x, bounds.y + bounds.height + 10);
+        healthBar.updatePosition(position.x, position.y + 60f);
     }
 
     public void moveToTile(GameTile tile) {

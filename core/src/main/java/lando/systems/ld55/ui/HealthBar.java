@@ -8,7 +8,7 @@ import lando.systems.ld55.assets.Assets;
 
 public class HealthBar {
     private final static float BASE_BOX_WIDTH = 30;
-    private final static float BASE_BOX_HEIGHT = 15;
+    private final static float BASE_BOX_HEIGHT = 10;
     private final static float BAR_BORDER_SIZE = 2;
     private final static float BOX_BORDER_SIZE = 2;
 
@@ -18,22 +18,24 @@ public class HealthBar {
     private final Texture boxBorder;
     private final Texture boxFill;
 
-    private Rectangle barBounds;
+    public Rectangle barBounds;
     public int maxHealth;
     public int currentHealth;
+    public float barWidth;
 
     public HealthBar(Assets assets, float x, float y, int maxHealth) {
-        this.boxBorder = assets.pixel;  // Assuming a black pixel for border
-        this.boxFill = assets.pixel;    // Assuming a green pixel for fill
+        this.boxBorder = assets.pixel;
+        this.boxFill = assets.pixel;
         updatePosition(x, y);
         boxWidth = BASE_BOX_WIDTH / maxHealth + BASE_BOX_WIDTH * .2f;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
+        this.barWidth = boxWidth * maxHealth + BAR_BORDER_SIZE * 2 - BOX_BORDER_SIZE * (maxHealth - 1);
     }
 
     public void updatePosition(float x, float y) {
-        float barWidth = (boxWidth) * maxHealth + BAR_BORDER_SIZE * 2 - BOX_BORDER_SIZE * (maxHealth - 1);
-        barBounds = new Rectangle(x - BAR_BORDER_SIZE, y - BAR_BORDER_SIZE, barWidth, BASE_BOX_HEIGHT + BAR_BORDER_SIZE * 2);
+        barWidth = boxWidth * maxHealth + BAR_BORDER_SIZE * 2 - BOX_BORDER_SIZE * (maxHealth - 1);
+        barBounds = new Rectangle(x - BAR_BORDER_SIZE - barWidth / 2f, y - BAR_BORDER_SIZE, barWidth, BASE_BOX_HEIGHT + BAR_BORDER_SIZE * 2);
         //barBounds.setPosition(x - BAR_BORDER_SIZE, y - BAR_BORDER_SIZE);
     }
 
