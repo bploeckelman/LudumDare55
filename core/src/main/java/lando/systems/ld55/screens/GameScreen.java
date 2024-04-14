@@ -46,7 +46,7 @@ public class GameScreen extends BaseScreen{
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
             if (gamePiece.currentAction == null) {
-                MoveAction moveAction = new MoveAction(gameBoard, gamePiece, gameBoard.getTileAt(MathUtils.random(10), MathUtils.random(10)));
+                MoveAction moveAction = new MoveAction(gameBoard, gamePiece, gameBoard.getTileAt(MathUtils.random(9), MathUtils.random(9)));
                 gamePiece.currentAction = moveAction;
                 actionManager.addAction(moveAction);
             }

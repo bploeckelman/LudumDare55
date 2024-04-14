@@ -1,6 +1,10 @@
 package lando.systems.ld55.actions;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import lando.systems.ld55.Main;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
@@ -14,6 +18,9 @@ public class MoveAction extends ActionBase {
     GameBoard board;
 
     public MoveAction(GameBoard board, GamePiece piece, GameTile targetTile) {
+        if (targetTile == null){
+            Gdx.app.log("MoveAction", "TargetTile was null");
+        }
         Gdx.app.log("MoveAction", "Move action crated");
         this.piece = piece;
         this.targetTile = targetTile;
@@ -36,6 +43,8 @@ public class MoveAction extends ActionBase {
         if (!piece.isMoving && piece.currentTile != nextTile) {
             piece.moveToTile(nextTile);
         }
+
+
     }
 
     @Override
@@ -46,4 +55,24 @@ public class MoveAction extends ActionBase {
         nextTile = board.getTileAt(nextX, nextY);
 
     }
+
+    Vector2 startPos = new Vector2();
+    Vector2 endPos = new Vector2();
+    Vector2 delta = new Vector2();
+    @Override
+    public void render(SpriteBatch batch) {
+        startPos.set(piece.currentTile.bounds.getCenter(startPos));
+        if (targetTile != null) {
+            endPos.set(targetTile.bounds.getCenter(endPos));
+        } else {
+            endPos.set(startPos);
+        }
+        delta.set(endPos).sub(startPos);
+
+        float width = 1f;
+        batch.setColor(Color.YELLOW);
+        batch.draw(Main.game.assets.pixelRegion, startPos.x, startPos.y - width/2f, 0, width/2f, delta.len(), width, 1, 1, delta.angle());
+    }
+
+
 }

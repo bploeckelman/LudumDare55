@@ -1,5 +1,6 @@
 package lando.systems.ld55.actions;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
 
@@ -32,6 +33,11 @@ public class SpawnAction extends ActionBase {
 
     @Override
     public void reset() {
+
+    }
+
+    @Override
+    public void render(SpriteBatch batch) {
 
     }
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld55.actions.ActionBase;
+import lando.systems.ld55.actions.MoveAction;
 
 public class GamePiece {
 
@@ -117,6 +118,10 @@ public class GamePiece {
 
         float yOffset = getYOffset();
         batch.draw(keyframe, bounds.x, bounds.y + yOffset, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, 1, 1, 0);
+
+        if (currentAction != null && currentAction instanceof MoveAction) {
+            currentAction.render(batch);
+        }
     }
 
     private float getYOffset() {

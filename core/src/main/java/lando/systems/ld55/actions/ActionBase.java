@@ -1,5 +1,7 @@
 package lando.systems.ld55.actions;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 public abstract class ActionBase {
 
     /**
@@ -20,4 +22,6 @@ public abstract class ActionBase {
      * Used to reset the action after the queue is cleared
      */
     public abstract void reset();
+
+    public abstract void render(SpriteBatch batch);
 }
