@@ -28,6 +28,7 @@ public class TitleScreen extends BaseScreen {
         particles = new Particles(assets);
         titleScreenUI = new TitleScreenUI(worldCamera.viewportWidth - 500f, 200, 300f, 75f, assets.fontAbandoned, TitleScreenUI.ButtonOrientation.VERTICAL);
         Events.get().subscribe(EventType.TRANSITION_TO_GAME, (type, data) -> transitionToGameScreen());
+        Events.get().subscribe(EventType.TRANSITION_TO_CREDITS, (type, data) -> transitionToCreditsScreen());
         Events.get().subscribe(EventType.MEANINGLESS_CLICK, (type, data) -> meaninglessClickEffect((float)data[0], (float)data[1]));
     }
 
@@ -91,6 +92,14 @@ public class TitleScreen extends BaseScreen {
             exitingScreen = true;
             game.setScreen(new GameScreen());
         }
+    }
+
+    private void transitionToCreditsScreen() {
+        Main.game.audioManager.playSound(AudioManager.Sounds.level_up);
+//        if (Gdx.input.justTouched() && !exitingScreen ) {
+//            exitingScreen = true;
+//            game.setScreen(new GameScreen());
+//        }
     }
 
     private void meaninglessClickEffect(float x, float y) {

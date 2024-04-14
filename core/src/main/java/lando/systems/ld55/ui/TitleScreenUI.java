@@ -52,9 +52,7 @@ public class TitleScreenUI {
         settingsButton.setOnClickAction(() -> {
             Gdx.app.log("TitleScreenUI", "Settings Button Clicked");
         });
-        creditButton.setOnClickAction(() -> {
-            Gdx.app.log("TitleScreenUI", "Credit Button Clicked");
-        });
+        creditButton.setOnClickAction(() -> Events.get().dispatch(EventType.TRANSITION_TO_CREDITS));
     }
 
     public void update(float x, float y) {
