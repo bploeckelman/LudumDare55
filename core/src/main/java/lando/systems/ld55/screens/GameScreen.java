@@ -5,9 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.actions.MoveAction;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
@@ -43,6 +46,14 @@ public class GameScreen extends BaseScreen{
         particles.update(dt);
         gamePiece.update(dt);
         actionManager.update(dt);
+
+        // useless click effect outside of board that can be removed if needed.
+        Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        worldCamera.unproject(touchPos);
+        if (Gdx.input.justTouched() && gameBoard.hoverTile == null) {
+            particles.tinySmoke(touchPos.x, touchPos.y);
+            Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
+        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
             if (gamePiece.currentAction == null) {
