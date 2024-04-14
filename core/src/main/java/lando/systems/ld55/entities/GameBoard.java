@@ -1,5 +1,6 @@
 package lando.systems.ld55.entities;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -23,6 +24,7 @@ public class GameBoard extends InputAdapter {
     public Rectangle boardRegion;
     public Array<GameTile> tiles = new Array<>();
     public Array<Portal> portalAnimations = new Array<>();
+    public Array<GamePiece> gamePieces = new Array<>();
 
     public final int tilesWide;
     public final GameScreen gameScreen;
@@ -58,13 +60,17 @@ public class GameBoard extends InputAdapter {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (hoverTile != null) {
-            gameScreen.selectTile(hoverTile);
+            addGamePiece(new GamePiece(gameScreen.assets.cherry, gameScreen.assets.cherry), hoverTile);
             portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
             return true;
         }
         return false;
     }
 
+    public void addGamePiece(GamePiece gamePiece, GameTile tile) {
+       gamePiece.setTile(tile);
+       gamePieces.add(gamePiece);
+    }
 
     public GameTile getTileAt(int x, int y) {
         if (x < 0 || x >= tilesWide
@@ -152,6 +158,14 @@ public class GameBoard extends InputAdapter {
                 portalAnimations.removeIndex(i);
             }
         }
+
+        for (int i = gamePieces.size -1; i >= 0; i--) {
+            GamePiece gp = gamePieces.get(i);
+            gp.update(dt);
+            if (gp.isDead()) {
+                gamePieces.removeIndex(i);
+            }
+        }
     }
 
     public void render(SpriteBatch batch) {
@@ -191,6 +205,11 @@ public class GameBoard extends InputAdapter {
                 batch.draw(overlay.anim.getKeyFrame(0), bounds.x, bounds.y, bounds.width, bounds.height);
             }
         }
+
         batch.setColor(Color.WHITE);
+
+        for (GamePiece gp : gamePieces) {
+            gp.render(batch);
+        }
     }
 }

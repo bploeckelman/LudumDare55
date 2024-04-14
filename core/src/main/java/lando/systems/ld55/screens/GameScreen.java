@@ -19,15 +19,12 @@ import lando.systems.ld55.particles.Particles;
 public class GameScreen extends BaseScreen{
     public GameBoard gameBoard;
     public Particles particles;
-    public GamePiece gamePiece;
     public ActionManager actionManager;
 
     public GameScreen() {
         // TODO bring in size or level etc
         gameBoard = new GameBoard(this, 10);
         particles = new Particles(assets);
-        gamePiece = new GamePiece(assets.cherry, assets.cherry);
-        gamePiece.setTile(gameBoard.getTileAt(1, 1));
         actionManager = new ActionManager();
         Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
     }
@@ -37,14 +34,9 @@ public class GameScreen extends BaseScreen{
 
     }
 
-    public void selectTile(GameTile tile) {
-        gamePiece.selectTile(tile);
-    }
-
     public void update(float dt) {
         gameBoard.update(dt);
         particles.update(dt);
-        gamePiece.update(dt);
         actionManager.update(dt);
 
         // useless click effect outside of board that can be removed if needed.
@@ -55,16 +47,16 @@ public class GameScreen extends BaseScreen{
             Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
-            if (gamePiece.currentAction == null) {
-                MoveAction moveAction = new MoveAction(gameBoard, gamePiece, gameBoard.getTileAt(MathUtils.random(9), MathUtils.random(9)));
-                gamePiece.currentAction = moveAction;
-                actionManager.addAction(moveAction);
-            }
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.O)) {
-            actionManager.endTurn();
-        }
+        // if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
+        //     if (gamePiece.currentAction == null) {
+        //         MoveAction moveAction = new MoveAction(gameBoard, gamePiece, gameBoard.getTileAt(MathUtils.random(9), MathUtils.random(9)));
+        //         gamePiece.currentAction = moveAction;
+        //         actionManager.addAction(moveAction);
+        //     }
+        // }
+        // if (Gdx.input.isKeyJustPressed(Input.Keys.O)) {
+        //     actionManager.endTurn();
+        // }
     }
 
     @Override
@@ -83,8 +75,6 @@ public class GameScreen extends BaseScreen{
             gameBoard.render(batch);
             particles.draw(batch, Particles.Layer.FOREGROUND);
         }
-
-        gamePiece.render(batch);
         batch.end();
     }
 }

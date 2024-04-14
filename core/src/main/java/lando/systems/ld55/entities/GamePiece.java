@@ -51,6 +51,10 @@ public class GamePiece {
         bounds.setHeight(keyframe.getRegionHeight());
     }
 
+    public boolean isDead() {
+        return false;
+    }
+
     public void selectTile(GameTile tile) {
 //        if (isMoving) return;
 //
