@@ -60,6 +60,7 @@ public class HealthBar {
             boolean isFilled = i < currentHealth;
             drawBox(batch, boxX, barBounds.y + BOX_BORDER_SIZE, isFilled);
         }
+        batch.setColor(Color.WHITE);
     }
 
     private void drawBox(SpriteBatch batch, float x, float y, boolean filled) {

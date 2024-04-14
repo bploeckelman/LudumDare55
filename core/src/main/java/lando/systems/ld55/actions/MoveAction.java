@@ -68,7 +68,8 @@ public class MoveAction extends ActionBase {
                 if (blockingPiece.owner != piece.owner){
                     // Attack
                     // TODO: Melee attack sound
-                    // TODO: do damage
+                    // TODO: Do we do damage to both sides?
+                    blockingPiece.currentHealth-=1;
                 } else {
                     // friendly,  TODO: bounce sound
                 }

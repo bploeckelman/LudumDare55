@@ -142,7 +142,7 @@ public class GamePiece {
     }
 
     public boolean isDead() {
-        return false;
+        return currentHealth <= 0;
     }
 
     public void attack() {
@@ -222,6 +222,7 @@ public class GamePiece {
         if (currentAction != null && currentAction.isCompleted()){
             currentAction = null;
         }
+        healthBar.updateCurrentHealth(currentHealth);
     }
 
     private void updateMovement(float dt) {
