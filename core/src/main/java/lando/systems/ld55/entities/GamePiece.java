@@ -11,8 +11,10 @@ import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
 
 public class GamePiece {
+    public enum Owner {Player, Enemy}
 
     private final int TILE_OFFSET_Y = 10;
+    public Owner owner;
 
     private final Animation<TextureRegion> idle;
     private final Animation<TextureRegion> attack;
@@ -37,7 +39,8 @@ public class GamePiece {
 
     public ActionBase currentAction;
 
-    public GamePiece(Animation<TextureRegion> idle, Animation<TextureRegion> attack) {
+    public GamePiece(Animation<TextureRegion> idle, Animation<TextureRegion> attack, Owner owner) {
+        this.owner = owner;
         this.idle = idle;
         this.attack = attack;
         setCurrentAnimation(this.idle);

@@ -79,7 +79,7 @@ public class GameBoard extends InputAdapter {
             GamePiece gamePiece = getGamePiece(hoverTile);
             if (gamePiece == null) {
                 // TODO: this is test we need full UI to do this right
-                GamePiece piece = new GamePiece(gameScreen.assets.cherry, gameScreen.assets.cherry);
+                GamePiece piece = new GamePiece(gameScreen.assets.cherry, gameScreen.assets.cherry, GamePiece.Owner.Player);
                 gameScreen.actionManager.addAction(new SpawnAction(this, piece, hoverTile));
 //            portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
             } else {
