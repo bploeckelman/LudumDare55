@@ -1,11 +1,14 @@
 package lando.systems.ld55.ui.radial;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.entities.GameBoard;
+import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
 
 import javax.imageio.stream.ImageOutputStream;
@@ -34,9 +37,13 @@ public class RadialMenu {
         buttons.add(new RadialCloseButton(this));
         switch (type) {
             case Summon:
+                buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Pawn));
+                buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Knight));
+                buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Rook));
+                buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Bishop));
+                buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Queen));
                 break;
             case CancelMove:
-                buttons.add(new RadialCloseButton(this));
                 buttons.add(new RadialCloseButton(this));
                 break;
         }
@@ -80,6 +87,9 @@ public class RadialMenu {
             tempVec2.add(centerVec2);
             b.update(tempVec2, currentProgress, dt);
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            exitMenu();
+        }
     }
 
     Vector3 mosPos = new Vector3();
@@ -89,8 +99,11 @@ public class RadialMenu {
         board.gameScreen.worldCamera.unproject(mosPos);
 
         for (RadialButton button : buttons) {
+            if (!button.enabled) continue;
+
             if (button.inButton(mosPos.x, mosPos.y)){
                 button.onClick();
+                exitMenu();
                 return true;
             }
         }
@@ -103,7 +116,7 @@ public class RadialMenu {
         }
 
 
-        return false;
+        return true;
     }
 
     public void render(SpriteBatch batch) {

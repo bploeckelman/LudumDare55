@@ -45,6 +45,7 @@ public class Assets implements Disposable {
     public BitmapFont smallFont;
     public BitmapFont largeFont;
     public BitmapFont fontAbandoned;
+    public BitmapFont fontZektonSmall;
 
     public Texture pixel;
     public Texture gdx;
@@ -238,6 +239,11 @@ public class Assets implements Disposable {
         var ttfParameter = new FreeTypeFontGenerator.FreeTypeFontParameter() {{ size = 40; }};
         var ttfGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Abandoned-Bold.ttf"));
         fontAbandoned = ttfGenerator.generateFont(ttfParameter);
+        ttfGenerator.dispose();
+        var ttfParameterSmall = new FreeTypeFontGenerator.FreeTypeFontParameter() {{size = 40; borderWidth = 0f; shadowOffsetX = 2; shadowOffsetY = 2;}};
+        ttfGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/zekton.ttf"));
+        fontZektonSmall = ttfGenerator.generateFont(ttfParameterSmall);
+        fontZektonSmall.setUseIntegerPositions(false);
         ttfGenerator.dispose();
 
         inputPrompts = new InputPrompts(this);

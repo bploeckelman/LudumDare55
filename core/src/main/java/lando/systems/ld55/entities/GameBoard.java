@@ -196,6 +196,9 @@ public class GameBoard extends InputAdapter {
         if (hoverTile != null && Gdx.input.isKeyJustPressed(Input.Keys.L)){
             radialMenu = new RadialMenu(this, hoverTile, RadialMenu.MenuType.CancelMove);
         }
+        if (hoverTile != null && Gdx.input.isKeyJustPressed(Input.Keys.S)){
+            radialMenu = new RadialMenu(this, hoverTile, RadialMenu.MenuType.Summon);
+        }
         // TEST ---------------
 
         hoverTile = null;

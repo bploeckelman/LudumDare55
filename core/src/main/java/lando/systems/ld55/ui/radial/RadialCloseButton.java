@@ -8,7 +8,7 @@ public class RadialCloseButton extends RadialButton{
     RadialMenu menu;
 
     public RadialCloseButton(RadialMenu menu) {
-        super(Main.game.assets.closeButton, "Close Menu");
+        super(Main.game.assets.closeButton, "Close\nMenu", true);
         this.menu = menu;
     }
     @Override

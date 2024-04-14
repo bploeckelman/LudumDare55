@@ -13,7 +13,7 @@ import lando.systems.ld55.Main;
 
 public class RadialButton {
 
-    public static float MAX_RADIUS = 40f;
+    public static float MAX_RADIUS = 35f;
 
     public String text;
     public TextureRegion textureRegion;
@@ -21,15 +21,17 @@ public class RadialButton {
     public float radius;
     private BitmapFont font;
     private GlyphLayout layout;
+    public boolean enabled;
 
 
-    public RadialButton(TextureRegion region, String text) {
+    public RadialButton(TextureRegion region, String text, boolean enabled) {
         this.text = text;
         this.textureRegion = region;
         this.centerPosition = new Vector2();
         this.radius = 0;
-        font = Main.game.assets.smallFont;
+        font = Main.game.assets.fontZektonSmall;
         layout = Main.game.assets.layout;
+        this.enabled = enabled;
     }
 
     public void update(Vector2 centerPosition, float sizePercent, float dt) {
@@ -38,12 +40,20 @@ public class RadialButton {
     }
 
     public void render(SpriteBatch batch) {
-        batch.setColor(Color.CORAL);
+        if (enabled) {
+            batch.setColor(Color.CORAL);
+        } else {
+            batch.setColor(.4f, 0, 0, 1f);
+        }
         batch.draw(textureRegion, centerPosition.x - radius, centerPosition.y - radius, radius*2f, radius * 2f);
         batch.setColor(Color.WHITE);
 
-        font.getData().setScale(radius/MAX_RADIUS * .8f);
-        layout.setText(font, text, Color.WHITE, radius + radius, Align.center, true);
+        float textWidth = radius + radius - 10;
+
+        font.getData().setScale(radius/MAX_RADIUS);
+        layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
+        font.getData().setScale((radius/MAX_RADIUS * textWidth)/layout.width);
+        layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
         font.draw(batch, text, centerPosition.x - radius, centerPosition.y + layout.height/2f, radius +radius, Align.center, true);
         font.getData().setScale(1f);
 
