@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.screens.GameScreen;
 
 /**
  * Used to keep track of actions that are queued and allow for turns to be taken
@@ -18,12 +19,14 @@ public class ActionManager {
     Array<ActionBase> actionQueue = new Array<>();
     int currentAction;
     private Phase phase = Phase.CollectActions;
+    private GameScreen gameScreen;
 
 
-    public ActionManager() {
+    public ActionManager(GameScreen screen) {
         turnNumber = 0;
         playerActionsAvailable = ActionsPerTurn;
         phase = Phase.CollectActions;
+        this.gameScreen = screen;
     }
 
     public void update(float dt) {
@@ -90,7 +93,9 @@ public class ActionManager {
             Gdx.app.log("ActionManager", "Calling end turn when not in the right phase");
             return;
         }
+
         Gdx.app.log("ActionManager", "Moving to Action Resolution Phase");
+        gameScreen.setMode(GameScreen.GameMode.Move);
         phase = Phase.ResolveActions;
         currentAction = 0;
     }

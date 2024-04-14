@@ -12,6 +12,7 @@ public class GameTile {
     public boolean valid;
     public Rectangle bounds;
     public Vector2 center;
+    public boolean summonable;
 
     public GameTile(int x, int y, Rectangle rect) {
         this.x = x;

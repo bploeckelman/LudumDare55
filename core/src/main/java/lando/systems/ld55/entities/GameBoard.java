@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionBase;
+import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.actions.SpawnAction;
 import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.ui.radial.RadialMenu;
@@ -89,9 +90,9 @@ public class GameBoard extends InputAdapter {
         if (hoverTile != null) {
             GamePiece gamePiece = getGamePiece(hoverTile);
             if (gamePiece == null) {
-                // TODO: this is test we need full UI to do this right
-                GamePiece piece = new Pawn(gameScreen.assets, GamePiece.Owner.Player);
-                gameScreen.actionManager.addAction(new SpawnAction(this, piece, hoverTile));
+                if (gameScreen.getCurrentGameMode()== GameScreen.GameMode.Summon && hoverTile.summonable) {
+                    radialMenu = new RadialMenu(this, hoverTile, RadialMenu.MenuType.Summon);
+                }
             } else {
                 if (selectedPiece != null) {
                     selectedPiece.toggleSelect(this);
@@ -209,6 +210,25 @@ public class GameBoard extends InputAdapter {
         }
         // TEST ---------------
 
+        if (gameScreen.getCurrentGameMode()== GameScreen.GameMode.Summon){
+            // set summonable tiles
+            for (int y = 0; y < tilesHigh; y++){
+                boolean summonable = true;
+                for (int x = 0; x < tilesWide; x++) {
+                    GameTile t = getTileAt(x, y);
+                    if (t != null) {
+                        for(GamePiece piece : gamePieces){
+                            if (piece.currentTile == t){
+                                summonable = false;
+                            }
+                        }
+                        t.summonable = summonable;
+                        summonable = false;
+                    }
+                }
+            }
+        }
+
         hoverTile = null;
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         var tile = getTileAtScreenPos(screenPosition);
@@ -254,31 +274,47 @@ public class GameBoard extends InputAdapter {
         spawnGood.render(batch);
         spawnEvil.render(batch);
 
-        // draw hover overlays (work in progress)
-        if (hoverTile != null){
-            var texture = gameScreen.assets.whitePixel;
-            var color = Color.LIME;
-            var alpha = 0.4f;
+        // Ony draw when we are in planning mode
+        if (gameScreen.actionManager.getCurrentPhase() == ActionManager.Phase.CollectActions) {
+            if (gameScreen.getCurrentGameMode() == GameScreen.GameMode.Summon){
+                for (GameTile t : tiles) {
+                    if (t.summonable){
+                        var texture = gameScreen.assets.whitePixel;
+                        var alpha = 0.4f;
+                        var bounds = t.bounds;
+                        var color = Color.CYAN;
+                        batch.setColor(color.r, color.g, color.b, alpha);
+                        batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+                    }
+                }
+            }
 
-            // draw overlay for hovered tile
-            var bounds = hoverTile.bounds;
-            batch.setColor(color.r, color.g, color.b, alpha);
-            batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+            // draw hover overlays (work in progress)
+            if (hoverTile != null){
+                var texture = gameScreen.assets.whitePixel;
+                var color = Color.LIME;
+                var alpha = 0.4f;
 
-            // prep to draw overlays for tiles in pattern
-
-            var tileOverlays = getTileOverlaysForPattern(hoverTile, currentPattern);
-            for (var overlay : tileOverlays) {
-                bounds = overlay.tile.bounds;
-
-                color = Color.RED;
+                // draw overlay for hovered tile
+                var bounds = hoverTile.bounds;
                 batch.setColor(color.r, color.g, color.b, alpha);
                 batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+                if (gameScreen.getCurrentGameMode() == GameScreen.GameMode.Move){
+                    // prep to draw overlays for tiles in pattern
+                    var tileOverlays = getTileOverlaysForPattern(hoverTile, currentPattern);
+                    for (var overlay : tileOverlays) {
+                        bounds = overlay.tile.bounds;
 
-                color = overlay.color;
-                bounds = overlay.bounds;
-                batch.setColor(color.r, color.g, color.b, 1f);
-                batch.draw(overlay.anim.getKeyFrame(0), bounds.x, bounds.y, bounds.width, bounds.height);
+                        color = Color.RED;
+                        batch.setColor(color.r, color.g, color.b, alpha);
+                        batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
+
+                        color = overlay.color;
+                        bounds = overlay.bounds;
+                        batch.setColor(color.r, color.g, color.b, 1f);
+                        batch.draw(overlay.anim.getKeyFrame(0), bounds.x, bounds.y, bounds.width, bounds.height);
+                    }
+                }
             }
         }
 
