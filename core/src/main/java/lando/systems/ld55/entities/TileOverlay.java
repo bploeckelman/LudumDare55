@@ -12,7 +12,7 @@ import lombok.Data;
 @Builder
 public class TileOverlay {
 
-    public final GameTile tile;
+    public GameTile tile;
 
     // different things that could be drawn or impact the drawing, not all are required
     public Color color = Color.WHITE.cpy();
