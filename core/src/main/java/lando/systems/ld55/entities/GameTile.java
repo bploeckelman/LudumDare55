@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.assets.Assets;
 
 public class GameTile {
     public int x;
@@ -35,8 +36,14 @@ public class GameTile {
         if ((x + y) % 2 == 0) {
             c = Color.LIGHT_GRAY;
         }
-        batch.setColor(c.r, c.g, c.b, 0.2f);
-        batch.draw(Main.game.assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
+        batch.setColor(c.r, c.g, c.b, 0.1f);
+//        batch.draw(Main.game.assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
         batch.setColor(Color.WHITE);
+    }
+
+    public void renderFrameBuffer(SpriteBatch batch) {
+        if (!valid) return;
+        batch.setColor(Color.WHITE);
+        Assets.NinePatches.outline.draw(batch, bounds.x-2, bounds.y-2, bounds.width+2, bounds.height+2);
     }
 }
