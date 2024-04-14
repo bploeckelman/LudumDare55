@@ -4,12 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -21,8 +21,10 @@ import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.actions.SpawnAction;
+import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.ui.radial.RadialMenu;
+import lando.systems.ld55.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,7 @@ public class GameBoard extends InputAdapter {
     public Spawn spawnGood;
     public Spawn spawnEvil;
     public GamePiece selectedPiece;
+    public List<TileOverlayInfo> tileOverlays;
 
     public FrameBuffer gridFB;
     public Texture gridTexture;
@@ -191,8 +194,8 @@ public class GameBoard extends InputAdapter {
         return getTileAt(tile.x + offsetX, tile.y + offsetY);
     }
 
-    public List<TileOverlay> getTileOverlaysForPattern(GameTile center, Pattern pattern) {
-        var overlays = new ArrayList<TileOverlay>();
+    public List<TileOverlayInfo> getTileOverlaysForPattern(GameTile center, Pattern pattern) {
+        var overlays = new ArrayList<TileOverlayInfo>();
 
         var centerIndex = Pattern.size / 2;
         for (int y = 0; y < Pattern.size; y++) {
@@ -215,18 +218,11 @@ public class GameBoard extends InputAdapter {
 
                 var tile = getTileRelative(center, offsetX, offsetY);
                 if (tile != null) {
-                    var margin = 15f;
-                    var anim = gameScreen.assets.numbers.get(damage);
-                    var overlay = TileOverlay.builder()
-                        .tile(tile)
-                        .color(Color.BLUE.cpy())
-                        .anim(anim)
-                        .bounds(new Rectangle(
-                            tile.bounds.x + margin,
-                            tile.bounds.y + margin,
-                            tile.bounds.width - 2 * margin,
-                            tile.bounds.height - 2 * margin))
-                        .build();
+                    var region = MathUtils.randomBoolean() ? TileOverlayAssets.getRandomArrow() : TileOverlayAssets.getRandomRegion();
+                    var overlay = new TileOverlayInfo(tile)
+                        .addLayer("base-panel", 1f, 1, 1, 1, 0.5f, TileOverlayAssets.getRandomPatch(), null, null)
+                        .addLayer("icon", 0.5f, Utils.randomColor(), null, region, null)
+                        ;
                     overlays.add(overlay);
                 }
             }
@@ -250,7 +246,15 @@ public class GameBoard extends InputAdapter {
     public void update(float dt) {
         // TEST ---------------
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            currentPattern = currentPattern.next__TEST();
+            var nextPattern = currentPattern.next__TEST();
+            if (nextPattern != currentPattern) {
+                currentPattern = nextPattern;
+                if (hoverTile != null) {
+                    tileOverlays = getTileOverlaysForPattern(hoverTile, currentPattern);
+                } else {
+                    tileOverlays.clear();
+                }
+            }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             spawnGood.activate();
@@ -283,12 +287,16 @@ public class GameBoard extends InputAdapter {
             }
         }
 
-
-        hoverTile = null;
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         var tile = getTileAtScreenPos(screenPosition);
         if (tile != null && tile.valid) {
+            if (tile != hoverTile) {
+                tileOverlays = getTileOverlaysForPattern(tile, currentPattern);
+            }
             hoverTile = tile;
+        } else {
+            hoverTile = null;
+            tileOverlays.clear();
         }
 
         for (int i = portalAnimations.size -1; i >= 0; i--) {
@@ -344,31 +352,9 @@ public class GameBoard extends InputAdapter {
 
             }
 
-            // draw hover overlays (work in progress)
-            if (hoverTile != null){
-                var texture = gameScreen.assets.whitePixel;
-                var color = Color.LIME;
-                var alpha = 0.4f;
-
-                // draw overlay for hovered tile
-                var bounds = hoverTile.bounds;
-                batch.setColor(color.r, color.g, color.b, alpha);
-                batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-                // prep to draw overlays for tiles in pattern
-                var tileOverlays = getTileOverlaysForPattern(hoverTile, currentPattern);
-                for (var overlay : tileOverlays) {
-                    bounds = overlay.tile.bounds;
-
-                    color = Color.RED;
-                    batch.setColor(color.r, color.g, color.b, alpha);
-                    batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-
-                    color = overlay.color;
-                    bounds = overlay.bounds;
-                    batch.setColor(color.r, color.g, color.b, 1f);
-                    batch.draw(overlay.anim.getKeyFrame(0), bounds.x, bounds.y, bounds.width, bounds.height);
-                }
-
+            // draw tile overlays
+            for (var overlay : tileOverlays) {
+                overlay.render(batch);
             }
         }
 

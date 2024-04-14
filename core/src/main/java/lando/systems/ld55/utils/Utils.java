@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+import java.util.List;
+
 public class Utils {
 
     public static String intToDollarString(int money) {
@@ -14,6 +16,20 @@ public class Utils {
         String source = "$" + Integer.toString(money, 10);
         String moneyString = source.replaceAll(commaRegex, "$1,");
         return moneyString;
+    }
+
+    private static List<Color> colors;
+    public static Color randomColor() {
+        if (colors == null) {
+            colors = List.of(Color.WHITE, Color.LIGHT_GRAY, Color.GRAY, Color.DARK_GRAY, Color.BLACK,
+                Color.BLUE, Color.NAVY, Color.ROYAL, Color.SLATE, Color.SKY, Color.CYAN, Color.TEAL,
+                Color.GREEN, Color.CHARTREUSE, Color.LIME, Color.FOREST, Color.OLIVE,
+                Color.YELLOW, Color.GOLD, Color.GOLDENROD, Color.ORANGE, Color.BROWN, Color.TAN,
+                Color.FIREBRICK, Color.RED, Color.SCARLET, Color.CORAL, Color.SALMON,
+                Color.PINK, Color.MAGENTA, Color.PURPLE, Color.VIOLET, Color.MAROON);
+        }
+        var index = MathUtils.random(colors.size() - 1);
+        return colors.get(index);
     }
 
     public static Color hsvToRgb(float hue, float saturation, float value, Color outColor) {

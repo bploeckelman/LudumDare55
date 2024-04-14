@@ -379,6 +379,7 @@ public class Assets implements Disposable {
         NinePatches.shear                           = new NinePatch(atlas.findRegion("ninepatch/shear"),                   75, 75, 12, 12);
         NinePatches.outline                         = new NinePatch(atlas.findRegion("ninepatch/outline"),                 3,   3,  3,  3);
 
+        TileOverlayAssets.populate(atlas);
 
         // Audio
         coin = mgr.get("audio/sounds/coin.ogg", Sound.class);
