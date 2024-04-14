@@ -36,12 +36,12 @@ public class GameScreen extends BaseScreen{
         actionManager.update(dt);
 
         // useless click effect outside of board that can be removed if needed.
-        Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        worldCamera.unproject(touchPos);
-        if (Gdx.input.justTouched() && gameBoard.hoverTile == null) {
-            particles.tinySmoke(touchPos.x, touchPos.y);
-            Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
-        }
+//        Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+//        worldCamera.unproject(touchPos);
+//        if (Gdx.input.justTouched() && gameBoard.hoverTile == null) {
+//            particles.tinySmoke(touchPos.x, touchPos.y);
+//            Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
+//        }
 
         // if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
         //     if (gamePiece.currentAction == null) {
