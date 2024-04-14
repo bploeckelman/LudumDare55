@@ -12,16 +12,19 @@ import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.particles.Particles;
+import lando.systems.ld55.ui.GameScreenUI;
 
 public class GameScreen extends BaseScreen{
     public GameBoard gameBoard;
     public Particles particles;
     public ActionManager actionManager;
+    public GameScreenUI ui;
 
     public GameScreen() {
         gameBoard = new GameBoard(this, 22, 10);
         particles = new Particles(assets);
         actionManager = new ActionManager();
+        ui = new GameScreenUI(this);
         Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
     }
 
@@ -37,25 +40,15 @@ public class GameScreen extends BaseScreen{
         gameBoard.update(dt);
         particles.update(dt);
         actionManager.update(dt);
+        ui.update(dt);
 
         // useless click effect outside of board that can be removed if needed.
-//        Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-//        worldCamera.unproject(touchPos);
-//        if (Gdx.input.justTouched() && gameBoard.hoverTile == null) {
-//            particles.tinySmoke(touchPos.x, touchPos.y);
-//            Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
-//        }
-
-        // if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
-        //     if (gamePiece.currentAction == null) {
-        //         MoveAction moveAction = new MoveAction(gameBoard, gamePiece, gameBoard.getTileAt(MathUtils.random(9), MathUtils.random(9)));
-        //         gamePiece.currentAction = moveAction;
-        //         actionManager.addAction(moveAction);
-        //     }
-        // }
-         if (Gdx.input.isKeyJustPressed(Input.Keys.O)) {
-             actionManager.endTurn();
-         }
+        var touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        worldCamera.unproject(touchPos);
+        if (Gdx.input.justTouched() && gameBoard.hoverTile == null) {
+            particles.portal(touchPos.x, touchPos.y, 20f);
+            Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
+        }
     }
 
     @Override
@@ -72,6 +65,7 @@ public class GameScreen extends BaseScreen{
         {
             particles.draw(batch, Particles.Layer.BACKGROUND);
             gameBoard.render(batch);
+            ui.render(batch); // TODO(brian) - should technically be in windowCam, but then particles draw under it
             particles.draw(batch, Particles.Layer.FOREGROUND);
             actionManager.render(batch);
         }

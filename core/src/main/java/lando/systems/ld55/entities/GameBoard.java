@@ -1,6 +1,5 @@
 package lando.systems.ld55.entities;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -173,7 +172,7 @@ public class GameBoard extends InputAdapter {
         if (boardRegion.contains(screenPos.x, screenPos.y)){
             // could maybe look this up by index later
             for (GameTile tile : tiles) {
-                if (tile.bounds.contains(screenPos.x, screenPos.y)) {
+                if (tile.bounds.contains(screenPos.x, screenPos.y) && tile.valid) {
                     return tile;
                 }
             }
@@ -188,6 +187,7 @@ public class GameBoard extends InputAdapter {
         }
         // TEST ---------------
 
+        hoverTile = null;
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         var tile = getTileAtScreenPos(screenPosition);
         if (tile != null && tile.valid) {
