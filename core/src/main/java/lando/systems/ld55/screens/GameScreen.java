@@ -8,6 +8,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import lando.systems.ld55.Main;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.ScreenUtils;
+import lando.systems.ld55.Config;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.audio.AudioManager;
@@ -74,6 +77,31 @@ public class GameScreen extends BaseScreen{
             particles.draw(batch, Particles.Layer.BACKGROUND);
             gameBoard.render(batch);
             particles.draw(batch, Particles.Layer.FOREGROUND);
+        }
+        batch.end();
+
+        batch.setProjectionMatrix(windowCamera.combined);
+        batch.begin();
+        {
+            ActionManager.Phase actionPhase = actionManager.getCurrnetPhase();
+            String phaseString = "Ohh Ohh";
+            switch(actionPhase){
+                case CollectActions:
+                    phaseString = "Planning";
+                    break;
+                case ResolveActions:
+                    phaseString = "Resolving Actions";
+                    break;
+                case Attack:
+                    phaseString = "Attacking";
+                    break;
+            }
+            phaseString = "Phase: " + phaseString;
+            String turnString = "Turn: " + (actionManager.getTurnNumber() +1);
+            assets.font.getData().setScale(.5f);
+            assets.font.draw(batch, phaseString, 0, windowCamera.viewportHeight - 20, windowCamera.viewportWidth, Align.center, true);
+            assets.font.draw(batch, turnString, 0, windowCamera.viewportHeight - 40, windowCamera.viewportWidth, Align.center, true);
+            assets.font.getData().setScale(1f);
         }
         batch.end();
     }

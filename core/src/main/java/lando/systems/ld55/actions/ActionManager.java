@@ -80,6 +80,10 @@ public class ActionManager {
         return phase;
     }
 
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
     private void handleAttacks() {
         // TODO: do the actual attacks of people
         phase = Phase.CollectActions;
