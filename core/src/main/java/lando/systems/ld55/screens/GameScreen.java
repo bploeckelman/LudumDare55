@@ -26,6 +26,7 @@ public class GameScreen extends BaseScreen{
         actionManager = new ActionManager();
         ui = new GameScreenUI(this);
         Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
+        Main.game.audioManager.playMusic(AudioManager.Musics.mainMusic);
     }
 
     @Override
