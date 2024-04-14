@@ -3,6 +3,7 @@ package lando.systems.ld55.entities;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld55.Main;
 
 public class GameTile {
@@ -10,12 +11,15 @@ public class GameTile {
     public int y;
     public boolean valid;
     public Rectangle bounds;
+    public Vector2 center;
 
     public GameTile(int x, int y, Rectangle rect) {
         this.x = x;
         this.y = y;
         this.valid = true;
         this.bounds = rect;
+        this.center = new Vector2();
+        this.bounds.getCenter(center);
     }
 
     public void update(float dt) {

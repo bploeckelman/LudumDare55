@@ -53,6 +53,8 @@ public class Assets implements Disposable {
     public Texture levelLayout;
 
     public TextureRegion pixelRegion;
+    public TextureRegion closeButton;
+
     public Animation<TextureRegion> cherry;
     public List<Animation<TextureRegion>> numbers;
 
@@ -210,6 +212,9 @@ public class Assets implements Disposable {
         }
 
         // Initialize asset helpers
+
+        // TextureRegions
+        closeButton = atlas.findRegion("pixel");
 
         // String replacement
         strings = mgr.get("i18n/strings", I18NBundle.class);

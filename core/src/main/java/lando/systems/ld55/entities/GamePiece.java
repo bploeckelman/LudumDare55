@@ -15,6 +15,7 @@ import lando.systems.ld55.assets.Assets;
 
 public abstract class GamePiece {
     public enum Owner {Player, Enemy}
+    public enum Type {Pawn, Knight, Bishop, Rook, Queen}
 
     private final int TILE_OFFSET_Y = 10;
     public Owner owner;

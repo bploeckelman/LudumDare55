@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.SpawnAction;
 import lando.systems.ld55.screens.GameScreen;
+import lando.systems.ld55.ui.radial.RadialMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,8 @@ public class GameBoard extends InputAdapter {
     public final int tilesHigh;
     public final GameScreen gameScreen;
     public final Vector3 screenPosition = new Vector3();
+
+    private RadialMenu radialMenu;
 
     // TEMP -------------
     public Pattern currentPattern = Pattern.QUEEN_ATK;
@@ -75,6 +78,10 @@ public class GameBoard extends InputAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        //TODO work out the logic of when things should be clicked on when we get this sorted
+        if (radialMenu != null && radialMenu.handleClick(screenX, screenY)) {
+            return true;
+        }
         if (hoverTile != null) {
             GamePiece gamePiece = getGamePiece(hoverTile);
             if (gamePiece == null) {
@@ -185,6 +192,10 @@ public class GameBoard extends InputAdapter {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             currentPattern = currentPattern.next__TEST();
         }
+
+        if (hoverTile != null && Gdx.input.isKeyJustPressed(Input.Keys.L)){
+            radialMenu = new RadialMenu(this, hoverTile, RadialMenu.MenuType.CancelMove);
+        }
         // TEST ---------------
 
         hoverTile = null;
@@ -207,6 +218,13 @@ public class GameBoard extends InputAdapter {
             gp.update(dt);
             if (gp.isDead()) {
                 gamePieces.removeIndex(i);
+            }
+        }
+
+        if (radialMenu != null) {
+            radialMenu.update(dt);
+            if (radialMenu.menuComplete()) {
+                radialMenu = null;
             }
         }
     }
@@ -257,6 +275,10 @@ public class GameBoard extends InputAdapter {
 
         if (selectedPiece != null) {
             selectedPiece.renderMovement(batch);
+        }
+
+        if (radialMenu != null) {
+            radialMenu.render(batch);
         }
     }
 }
