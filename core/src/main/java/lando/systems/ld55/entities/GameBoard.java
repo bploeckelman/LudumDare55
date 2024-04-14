@@ -60,11 +60,25 @@ public class GameBoard extends InputAdapter {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (hoverTile != null) {
-            addGamePiece(new GamePiece(gameScreen.assets.cherry, gameScreen.assets.cherry), hoverTile);
-            portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
+            GamePiece gamePiece = getGamePiece(hoverTile);
+            if (gamePiece == null) {
+                addGamePiece(new GamePiece(gameScreen.assets.cherry, gameScreen.assets.cherry), hoverTile);
+                portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
+            } else {
+                gamePiece.toggleSelect();
+            }
             return true;
         }
         return false;
+    }
+
+    private GamePiece getGamePiece(GameTile tile) {
+        for (GamePiece gp : gamePieces) {
+            if (gp.currentTile == tile) {
+                return gp;
+            }
+        }
+        return null;
     }
 
     public void addGamePiece(GamePiece gamePiece, GameTile tile) {

@@ -55,19 +55,11 @@ public class GamePiece {
         return false;
     }
 
-    public void selectTile(GameTile tile) {
-//        if (isMoving) return;
-//
-//        if (currentTile == null) {
-//            setTile(tile);
-//        } else if (currentTile == tile) {
-//            selected = !selected;
-//            selectedAnimState = 0;
-//        } else if (selected) {
-//            moveToTile(tile);
-//        } else {
-//            setTile(tile);
-//        }
+    public void toggleSelect() {
+        if (isMoving) return;
+
+        selected = !selected;
+        selectedAnimState = 0;
     }
 
     public void setTile(GameTile tile) {
