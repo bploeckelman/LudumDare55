@@ -26,7 +26,7 @@ public class GameScreen extends BaseScreen{
     public GameScreen() {
         gameBoard = new GameBoard(this, 22, 10);
         particles = new Particles(assets);
-        actionManager = new ActionManager();
+        actionManager = new ActionManager(this);
         ui = new GameScreenUI(this);
         Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
         Main.game.audioManager.playMusic(AudioManager.Musics.mainMusic);
@@ -34,6 +34,10 @@ public class GameScreen extends BaseScreen{
 
     public void setMode(GameMode mode) {
         currentGameMode = mode;
+    }
+
+    public GameMode getCurrentGameMode() {
+        return currentGameMode;
     }
 
     @Override
