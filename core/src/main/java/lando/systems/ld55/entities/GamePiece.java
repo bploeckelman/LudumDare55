@@ -3,6 +3,7 @@ package lando.systems.ld55.entities;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -18,11 +19,19 @@ public class GamePiece {
     private float selectedAnimState = 0;
     private Animation<TextureRegion> currentAnimation;
     private TextureRegion keyframe;
-    private GameTile currentTile;
-    private GameTile moveTile;
+
     private final Rectangle bounds = new Rectangle();
     private final Vector2 position = new Vector2();
     private boolean selected = false;
+
+    private GameTile currentTile;
+
+    private GameTile moveTile;
+    private final Vector2 startPosition = new Vector2();
+    private final Vector2 movePosition = new Vector2();
+    private boolean isMoving = false;
+    private float moveAnimState = 0;
+    private float moveSeconds = 1; // seconds
 
     public GamePiece(Animation<TextureRegion> idle, Animation<TextureRegion> attack) {
         this.idle = idle;
@@ -38,24 +47,41 @@ public class GamePiece {
         bounds.setHeight(keyframe.getRegionHeight());
     }
 
-    public void setTile(GameTile tile) {
-        if (currentTile == tile) {
+    public void selectTile(GameTile tile) {
+        if (isMoving) return;
+
+        if (currentTile == null) {
+            setTile(tile);
+        } else if (currentTile == tile) {
             selected = !selected;
             selectedAnimState = 0;
+        } else if (selected) {
+            moveToTile(tile);
         } else {
-            currentTile = tile;
-            selected = false;
-            setPosition(tile.bounds.x + tile.bounds.width / 2, tile.bounds.y + TILE_OFFSET_Y);
+            setTile(tile);
         }
     }
 
-    public void toggleSelect() {
-
+    private void setTile(GameTile tile) {
+        currentTile = tile;
+        setPosition(tile.bounds.x + tile.bounds.width / 2, tile.bounds.y + TILE_OFFSET_Y);
+        selected = false;
+        isMoving = false;
     }
 
-    public void setPosition(float x, float y) {
+    private void setPosition(float x, float y) {
         position.set(x, y);
         bounds.setPosition(x - bounds.width / 2, y);
+    }
+
+    public void moveToTile(GameTile tile) {
+        moveTile = tile;
+        startPosition.set(position);
+        movePosition.set(tile.bounds.x + tile.bounds.width / 2, tile.bounds.y + TILE_OFFSET_Y);
+        moveAnimState = 0;
+
+        selected = false;
+        isMoving = true;
     }
 
     public void update(float dt) {
@@ -64,13 +90,39 @@ public class GamePiece {
         if (selected) {
             selectedAnimState += dt;
         }
+        if (isMoving) {
+            updateMovement(dt);
+        }
+    }
+
+    private void updateMovement(float dt) {
+        moveAnimState += dt;
+        if (moveAnimState > moveSeconds) {
+            moveAnimState = moveSeconds;
+            setTile(moveTile);
+        }
+        position.set(startPosition);
+        position.interpolate(movePosition, moveAnimState / moveSeconds, Interpolation.linear);
+        setPosition(position.x, position.y);
     }
 
     public void render(SpriteBatch batch) {
         if (currentTile == null) return;
 
-
-        float yOffset = TILE_OFFSET_Y / 2f * MathUtils.sin(selectedAnimState * 4);
+        float yOffset = getYOffset();
         batch.draw(keyframe, bounds.x, bounds.y + yOffset, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, 1, 1, 0);
+    }
+
+    private float getYOffset() {
+        float anim = 0;
+        float yAdjust = 1;
+        if (selected) {
+            anim = selectedAnimState * 4;
+            yAdjust = TILE_OFFSET_Y / 2f;
+        } else if (isMoving) {
+            anim = moveAnimState / moveSeconds * MathUtils.PI;
+            yAdjust = 30;
+        }
+        return yAdjust * MathUtils.sin(anim);
     }
 }

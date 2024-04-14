@@ -29,7 +29,7 @@ public class GameScreen extends BaseScreen{
     }
 
     public void selectTile(GameTile tile) {
-        gamePiece.setTile(tile);
+        gamePiece.selectTile(tile);
     }
 
     public void update(float dt) {
