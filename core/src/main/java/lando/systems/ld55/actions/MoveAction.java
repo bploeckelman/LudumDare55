@@ -38,12 +38,12 @@ public class MoveAction extends ActionBase {
 
     @Override
     public boolean isCompleted() {
-        return piece.currentTile == targetTile || targetTile == null;
+        return piece.currentTile == targetTile || targetTile == null || piece.isDead();
     }
 
     @Override
     public boolean doneTurn() {
-        return turnOver || (!piece.isMoving && piece.currentTile == nextTile);
+        return turnOver || (!piece.isMoving && piece.currentTile == nextTile || piece.isDead());
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MoveAction extends ActionBase {
                     // Attack
                     // TODO: Melee attack sound
                     // TODO: Do we do damage to both sides?
-                    blockingPiece.currentHealth-=1;
+                    blockingPiece.takeDamage(1);
                 } else {
                     // friendly,  TODO: bounce sound
                 }

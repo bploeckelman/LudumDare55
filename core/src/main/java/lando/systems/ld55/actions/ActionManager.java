@@ -1,16 +1,25 @@
 package lando.systems.ld55.actions;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Timeline;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.entities.EnemyAI;
+import lando.systems.ld55.entities.GamePiece;
+import lando.systems.ld55.entities.TileOverlayInfo;
 import lando.systems.ld55.screens.GameScreen;
+
+import java.util.List;
 
 /**
  * Used to keep track of actions that are queued and allow for turns to be taken
  */
 public class ActionManager {
+    public static final float AttackSpeed = 1f;
     public enum Phase {CollectActions, ResolveActions, Attack}
     private final static int ActionsPerTurn = 3;
 
@@ -21,6 +30,9 @@ public class ActionManager {
     int currentAction;
     private Phase phase = Phase.CollectActions;
     private GameScreen gameScreen;
+    private float attackAccum;
+
+    private Array<GamePiece> attackingUnits = new Array<>();
 
 
     public ActionManager(GameScreen screen) {
@@ -50,7 +62,7 @@ public class ActionManager {
                 break;
             case Attack:
                 // Do Attacks
-                handleAttacks();
+                handleAttacks(dt);
                 break;
         }
     }
@@ -96,8 +108,10 @@ public class ActionManager {
         }
 
         Gdx.app.log("ActionManager", "Moving to Action Resolution Phase");
+        // TODO: Sound for end turn and action resolution starts
         phase = Phase.ResolveActions;
         currentAction = 0;
+        currentAttackerPiece = 0;
     }
 
     public int actionsRemaining() {
@@ -116,9 +130,60 @@ public class ActionManager {
         return turnNumber;
     }
 
-    private void handleAttacks() {
+    int currentAttackerPiece;
+    Array<GamePiece> attackablePieces = new Array<>();
+    private void handleAttacks(float dt) {
+        if (currentAttackerPiece >= attackingUnits.size) {
+            // TODO: Sound when the player can act again
+            phase = Phase.CollectActions;
+            return;
+        }
+
+        attackAccum += dt;
+
         // TODO: do the actual attacks of people
-        phase = Phase.CollectActions;
+        if (attackAccum >= AttackSpeed){
+            Gdx.app.log("ActionManager", "Making an attack for index: " + currentAttackerPiece);
+            GamePiece attackPiece = attackingUnits.get(currentAttackerPiece);
+            if (attackPiece.isDead()) {
+                currentAttackerPiece++;
+                return;
+            }
+            int maxDamage = 0;
+            attackablePieces.clear();
+            List<TileOverlayInfo> attackTiles = gameScreen.gameBoard.getTileOverlaysForPattern(attackPiece.currentTile, attackPiece.pattern);
+            for (GamePiece p : gameScreen.gameBoard.gamePieces){
+                if (p.owner != attackPiece.owner && !p.isDead()){
+                    for (TileOverlayInfo tileInfo : attackTiles){
+                        if (tileInfo.tile == p.currentTile && maxDamage < tileInfo.damageAmount){
+                            attackablePieces.add(p);
+                            maxDamage = tileInfo.damageAmount;
+                        }
+                    }
+                }
+            }
+            currentAttackerPiece++;
+            if (attackablePieces.size > 0){
+                attackPiece.attack();
+                attackAccum = 0;
+                final GamePiece damagedPiece = attackablePieces.random();
+                // TODO: ShootParticles or move this into the piece attack so it can be different per unit
+
+                int finalMaxDamage = maxDamage;
+                Timeline.createSequence()
+                    .pushPause(.2f)
+                    .push(Tween.call(new TweenCallback() {
+                        @Override
+                        public void onEvent(int type, BaseTween<?> source) {
+                            damagedPiece.takeDamage(finalMaxDamage);
+                        }
+                    }))
+                    .start(Main.game.tween);
+            }
+
+        }
+
+
     }
 
     /**
@@ -127,6 +192,7 @@ public class ActionManager {
     private void resetActionQueue() {
         Gdx.app.log("ActionManager", "Finished with Resolving actions, moving to Attack Phase");
         turnNumber++;
+        // TODO: Sound when it moves to Attack phase
         phase = Phase.Attack;
         playerActionsAvailable = ActionsPerTurn;
         for (int i = actionQueue.size-1; i >= 0; i--){
@@ -134,6 +200,17 @@ public class ActionManager {
             action.reset();
             if (action.isCompleted()) {
                 actionQueue.removeIndex(i);
+            }
+        }
+        attackingUnits.clear();
+        for (GamePiece playerPiece : gameScreen.gameBoard.gamePieces) {
+            if (playerPiece.owner == GamePiece.Owner.Player){
+                attackingUnits.add(playerPiece);
+            }
+        }
+        for (GamePiece enemyPiece : gameScreen.gameBoard.gamePieces) {
+            if (enemyPiece.owner == GamePiece.Owner.Enemy) {
+                attackingUnits.add(enemyPiece);
             }
         }
     }

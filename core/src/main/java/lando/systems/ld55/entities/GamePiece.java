@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.assets.Assets;
@@ -79,7 +80,7 @@ public class GamePiece {
                 movement = 4;
                 break;
         }
-        return new GamePiece(assets, owner, animGroup.get(0), animGroup.get(1), direction, movement, maxHealth);
+        return new GamePiece(assets, owner, animGroup.get(0), animGroup.get(1), direction, movement, maxHealth, type);
     }
 
     private final int TILE_OFFSET_Y = 10;
@@ -104,6 +105,8 @@ public class GamePiece {
     private final Rectangle bounds = new Rectangle();
     public final Vector2 position = new Vector2();
     private boolean selected = false;
+    public Pattern pattern;
+    public Type type;
 
     public GameTile currentTile;
 
@@ -119,8 +122,9 @@ public class GamePiece {
 
     public HealthBar healthBar;
 
-    public GamePiece(Assets assets, Owner owner, Animation<TextureRegion> idle, Animation<TextureRegion> attack, int directions, int maxMovement, int maxHealth) {
+    public GamePiece(Assets assets, Owner owner, Animation<TextureRegion> idle, Animation<TextureRegion> attack, int directions, int maxMovement, int maxHealth, Type type) {
         this.owner = owner;
+        this.type = type;
         this.assets = assets;
         this.idle = idle;
         this.attack = attack;
@@ -131,6 +135,23 @@ public class GamePiece {
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
         healthBar = new HealthBar(assets, position.x, position.y + 60f, maxHealth);
+        switch (type) {
+            case Pawn:
+                pattern = Pattern.PAWN_ATK;
+                break;
+            case Knight:
+                pattern = Pattern.ARCHER_ATK;
+                break;
+            case Bishop:
+                pattern = Pattern.BISHOP_ATK;
+                break;
+            case Rook:
+                pattern = Pattern.BISHOP_ATK;
+                break;
+            case Queen:
+                pattern = Pattern.QUEEN_ATK;
+                break;
+        }
     }
 
     private void setCurrentAnimation(Animation<TextureRegion> animation) {
@@ -143,6 +164,12 @@ public class GamePiece {
 
     public boolean isDead() {
         return currentHealth <= 0;
+    }
+
+    public void takeDamage(int amount) {
+        currentHealth -= amount;
+        // TODO: make something cool happen here, health bar floats away as a particle maybe?
+        healthBar.updateCurrentHealth(currentHealth);
     }
 
     public void attack() {
@@ -248,6 +275,13 @@ public class GamePiece {
             currentAction.render(batch);
         }
         healthBar.render(batch);
+        //TEST
+        if (isAttacking){
+            batch.setColor(Color.RED);
+            batch.draw(Main.game.assets.pixelRegion, bounds.x, bounds.y, bounds.width, bounds.height);
+            batch.setColor(Color.WHITE);
+        }
+        //TEST
     }
 
     public void renderMovement(SpriteBatch batch) {
