@@ -19,6 +19,7 @@ import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.ActionManager;
+import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.actions.SpawnAction;
 import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.ui.radial.RadialMenu;
@@ -126,13 +127,33 @@ public class GameBoard extends InputAdapter {
             GamePiece gamePiece = getGamePiece(hoverTile);
             if (gamePiece == null) {
                 if (gameScreen.currentGameMode == GameScreen.GameMode.Summon && hoverTile.summonable) {
-                    radialMenu = new RadialMenu(this, hoverTile, RadialMenu.MenuType.Summon);
+                    radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.Summon);
+                } else {
+                    // Move mode
+                    if (selectedPiece != null) {
+                        // Can we make a move
+                        boolean moved = false;
+                        for (GameTile t : selectedPiece.moveTiles){
+                            if (t == hoverTile){
+                                radialMenu = new RadialMenu(this, hoverTile, selectedPiece, RadialMenu.MenuType.Move);
+                            }
+                        }
+
+                    }
                 }
             } else {
-                if (selectedPiece != null && selectedPiece != gamePiece) {
-                    selectedPiece.toggleSelect(this);
+                if (gameScreen.currentGameMode == GameScreen.GameMode.Move){
+                    if (selectedPiece != gamePiece) {
+                        if (selectedPiece != null) {
+                            selectedPiece.deselect(this);
+                        }
+                        selectedPiece = gamePiece.select(this);
+                        if (selectedPiece.currentAction != null && selectedPiece.currentAction instanceof MoveAction){
+                            radialMenu = new RadialMenu(this, hoverTile, selectedPiece, RadialMenu.MenuType.CancelMove);
+                        }
+                    }
                 }
-                selectedPiece = gamePiece.toggleSelect(this);
+
             }
 
             return true;
@@ -238,10 +259,10 @@ public class GameBoard extends InputAdapter {
         }
 
         if (hoverTile != null && Gdx.input.isKeyJustPressed(Input.Keys.L)){
-            radialMenu = new RadialMenu(this, hoverTile, RadialMenu.MenuType.CancelMove);
+            radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.CancelMove);
         }
         if (hoverTile != null && Gdx.input.isKeyJustPressed(Input.Keys.S)){
-            radialMenu = new RadialMenu(this, hoverTile, RadialMenu.MenuType.Summon);
+            radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.Summon);
         }
         // TEST ---------------
 
@@ -360,7 +381,7 @@ public class GameBoard extends InputAdapter {
             gp.render(batch);
         }
 
-        if (selectedPiece != null) {
+        if (selectedPiece != null && selectedPiece.currentAction == null ) {
             selectedPiece.renderMovement(batch);
         }
 

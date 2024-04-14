@@ -16,7 +16,7 @@ import javax.imageio.stream.ImageOutputStream;
 public class RadialMenu {
     public static float TIME_TO_OPEN = .4f;
     public static float MENU_RADIUS = 90f;
-    public enum MenuType {Summon, CancelMove}
+    public enum MenuType {Summon, CancelMove, Move}
 
     private float currentProgress;
     private float targetProgress;
@@ -27,7 +27,7 @@ public class RadialMenu {
     private Array<RadialButton> buttons;
     private Interpolation interpolation = Interpolation.swingOut;
 
-    public RadialMenu(GameBoard board, GameTile tile, MenuType type) {
+    public RadialMenu(GameBoard board, GameTile tile, GamePiece piece, MenuType type) {
         buttons = new Array<>();
         targetProgress = 1f;
         currentProgress = 0;
@@ -44,13 +44,20 @@ public class RadialMenu {
                 buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Queen));
                 break;
             case CancelMove:
-                buttons.add(new RadialCloseButton(this));
+                buttons.add(new RadialCancelMoveButton(board, piece, tile));
+                break;
+            case Move:
+                buttons.add(new RadialConfirmMoveButton(board, piece, tile));
                 break;
         }
     }
 
     public void exitMenu() {
         targetProgress = 0;
+        if (board.selectedPiece != null) {
+            board.selectedPiece.deselect(board);
+        }
+        board.selectedPiece = null;
     }
 
     public boolean menuComplete() {

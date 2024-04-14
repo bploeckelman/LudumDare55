@@ -40,7 +40,7 @@ public class GamePiece {
                 direction = (owner == Owner.Player)
                     ? Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom
                     : Direction.Top | Direction.TopLeft | Direction.Left | Direction.BottomLeft | Direction.Bottom;
-                movement = 3;
+                movement = 6;
                 break;
             case Bishop:
                 animGroup = assets.bishop.get(alignment);
@@ -65,7 +65,7 @@ public class GamePiece {
                 direction = (owner == Owner.Player)
                     ? Direction.Top | Direction.Right | Direction.Bottom
                     : Direction.Top | Direction.Left | Direction.Bottom;
-                movement = 1;
+                movement = 4;
                 break;
         }
         return new GamePiece(assets, owner, animGroup.get(0), animGroup.get(1), direction, movement);
@@ -79,7 +79,7 @@ public class GamePiece {
     private final Animation<TextureRegion> attack;
     private final int directions;
     private final int maxMovement;
-    private Array<GameTile> moveTiles = new Array<>();
+    public Array<GameTile> moveTiles = new Array<>();
 
     private float animState = 0;
     private float selectedAnimState = 0;
@@ -124,19 +124,35 @@ public class GamePiece {
         return false;
     }
 
-    public GamePiece toggleSelect(GameBoard gameBoard) {
-        if (isMoving) return null;
 
+    public GamePiece select(GameBoard gameBoard) {
+        selected = true;
         selectedAnimState = 0;
-        selected = !selected;
-        if (selected) {
-            addMoveTiles(gameBoard);
-        } else {
-            moveTiles.clear();
-        }
-
-        return selected ? this : null;
+        addMoveTiles(gameBoard);
+        return this;
     }
+
+    public GamePiece deselect(GameBoard gameBoard) {
+        selected = false;
+        selectedAnimState = 0;
+        moveTiles.clear();
+        gameBoard.selectedPiece = null;
+        return this;
+    }
+
+//    public GamePiece toggleSelect(GameBoard gameBoard) {
+//        if (isMoving) return null;
+//
+//        selectedAnimState = 0;
+//        selected = !selected;
+//        if (selected) {
+//            addMoveTiles(gameBoard);
+//        } else {
+//            moveTiles.clear();
+//        }
+//
+//        return selected ? this : null;
+//    }
 
     public void setTile(GameTile tile) {
         currentTile = tile;
