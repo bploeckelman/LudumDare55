@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.assets.Assets;
+import lando.systems.ld55.entities.EnemyAI;
 import lando.systems.ld55.screens.GameScreen;
 
 public class GameScreenUI {
@@ -23,7 +24,10 @@ public class GameScreenUI {
             screen.assets.atlas.findRegion("icons/finish-turn-btn-hovered"),
             screen.assets.atlas.findRegion("icons/finish-turn-btn-pressed"),
             screen.assets.atlas.findRegion("icons/finish-turn-btn-disabled"));
-        endTurnButton.onClick = () -> screen.actionManager.endTurn();
+        endTurnButton.onClick = () -> {
+            EnemyAI.doTurn(screen.gameBoard);
+            screen.actionManager.endTurn();
+        };
 
         var summonIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/pawns");
         summonButton = new ImageButton(20, 280 - 70, 50, 50, summonIcon, null, null, null);

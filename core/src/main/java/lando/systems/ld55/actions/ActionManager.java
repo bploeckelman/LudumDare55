@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.entities.EnemyAI;
 import lando.systems.ld55.screens.GameScreen;
 
 /**
