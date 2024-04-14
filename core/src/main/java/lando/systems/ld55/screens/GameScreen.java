@@ -1,6 +1,7 @@
 package lando.systems.ld55.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -49,9 +50,9 @@ public class GameScreen extends BaseScreen{
         //         actionManager.addAction(moveAction);
         //     }
         // }
-        // if (Gdx.input.isKeyJustPressed(Input.Keys.O)) {
-        //     actionManager.endTurn();
-        // }
+         if (Gdx.input.isKeyJustPressed(Input.Keys.O)) {
+             actionManager.endTurn();
+         }
     }
 
     @Override
@@ -69,6 +70,7 @@ public class GameScreen extends BaseScreen{
             particles.draw(batch, Particles.Layer.BACKGROUND);
             gameBoard.render(batch);
             particles.draw(batch, Particles.Layer.FOREGROUND);
+            actionManager.render(batch);
         }
         batch.end();
 

@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld55.actions.ActionBase;
+import lando.systems.ld55.actions.SpawnAction;
 import lando.systems.ld55.screens.GameScreen;
 
 import java.util.ArrayList;
@@ -76,12 +78,14 @@ public class GameBoard extends InputAdapter {
         if (hoverTile != null) {
             GamePiece gamePiece = getGamePiece(hoverTile);
             if (gamePiece == null) {
-                addGamePiece(new GamePiece(gameScreen.assets.cherry, gameScreen.assets.cherry), hoverTile);
-                portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
-                gameScreen.particles.portal(hoverTile.bounds.x + hoverTile.bounds.width / 2f, hoverTile.bounds.y + hoverTile.bounds.height / 2f, hoverTile.bounds.width / 2f);
+                // TODO: this is test we need full UI to do this right
+                GamePiece piece = new GamePiece(gameScreen.assets.cherry, gameScreen.assets.cherry);
+                gameScreen.actionManager.addAction(new SpawnAction(this, piece, hoverTile));
+//            portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
             } else {
                 gamePiece.toggleSelect();
             }
+
             return true;
         }
         return false;
@@ -93,12 +97,15 @@ public class GameBoard extends InputAdapter {
                 return gp;
             }
         }
+        for (ActionBase action : gameScreen.actionManager.getActionQueue()){
+            if (action instanceof SpawnAction) {
+                SpawnAction spawnAction = (SpawnAction) action;
+                if (spawnAction.spawnTile == tile){
+                    return spawnAction.getPiece();
+                }
+            }
+        }
         return null;
-    }
-
-    public void addGamePiece(GamePiece gamePiece, GameTile tile) {
-       gamePiece.setTile(tile);
-       gamePieces.add(gamePiece);
     }
 
     public GameTile getTileAt(int x, int y) {

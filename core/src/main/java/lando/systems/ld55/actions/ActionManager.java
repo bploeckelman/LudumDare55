@@ -1,7 +1,9 @@
 package lando.systems.ld55.actions;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld55.Main;
 
 /**
  * Used to keep track of actions that are queued and allow for turns to be taken
@@ -49,6 +51,27 @@ public class ActionManager {
         }
     }
 
+    public void render(SpriteBatch batch) {
+        switch (phase){
+            case CollectActions:
+                for (ActionBase action : actionQueue){
+                    if (action instanceof SpawnAction) {
+                        SpawnAction spawnAction = (SpawnAction) action;
+                        batch.draw(Main.game.assets.particles.ring, spawnAction.spawnTile.bounds.x, spawnAction.spawnTile.bounds.y, spawnAction.spawnTile.bounds.width, spawnAction.spawnTile.bounds.height);
+                    }
+                }
+                break;
+            case ResolveActions:
+                if (currentAction < actionQueue.size) {
+                    actionQueue.get(currentAction).render(batch);
+                }
+                break;
+            case Attack:
+                // TODO things to show the attacking
+                break;
+        }
+    }
+
     public void addAction(ActionBase action) {
         actionQueue.add(action);
     }
@@ -74,6 +97,10 @@ public class ActionManager {
 
     public int actionsRemaining() {
         return playerActionsAvailable;
+    }
+
+    public Array<ActionBase> getActionQueue() {
+        return actionQueue;
     }
 
     public Phase getCurrnetPhase() {
