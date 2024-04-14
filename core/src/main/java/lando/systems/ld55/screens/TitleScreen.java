@@ -95,6 +95,7 @@ public class TitleScreen extends BaseScreen {
                 ? new IntroScreen()
                 : new GameScreen();
             game.setScreen(nextScreen);
+            Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
         }
     }
 

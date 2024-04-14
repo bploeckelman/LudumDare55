@@ -106,6 +106,7 @@ public class Assets implements Disposable {
 
     public Sound coin;
     public Sound idleClick;
+    public Sound errorThud;
     public Sound levelUp;
 
     public Music introMusic;
@@ -205,7 +206,9 @@ public class Assets implements Disposable {
 
             mgr.load("audio/sounds/coin.ogg", Sound.class);
             mgr.load("audio/sounds/idle-click.wav", Sound.class);
+            mgr.load("audio/sounds/idle-click.ogg", Sound.class);
             mgr.load("audio/sounds/level-up.wav", Sound.class);
+            mgr.load("audio/sounds/error1.ogg", Sound.class);
 
             mgr.load("audio/music/intro-music.ogg", Music.class);
             mgr.load("audio/music/main-music.ogg", Music.class);
@@ -378,6 +381,7 @@ public class Assets implements Disposable {
         coin = mgr.get("audio/sounds/coin.ogg", Sound.class);
         idleClick = mgr.get("audio/sounds/idle-click.wav", Sound.class);
         levelUp = mgr.get("audio/sounds/level-up.wav", Sound.class);
+        errorThud = mgr.get("audio/sounds/error1.ogg", Sound.class);
 
         introMusic = mgr.get("audio/music/intro-music.ogg", Music.class);
         mainMusic = mgr.get("audio/music/main-music.ogg", Music.class);

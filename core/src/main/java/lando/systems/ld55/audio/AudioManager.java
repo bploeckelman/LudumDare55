@@ -24,6 +24,7 @@ public class AudioManager implements Disposable {
         none
         , coin
         , idle_click
+        , error_sound
         , level_up
     }
 
@@ -50,11 +51,13 @@ public class AudioManager implements Disposable {
         putSound(Sounds.coin, assets.coin);
         putSound(Sounds.idle_click, assets.idleClick);
         putSound(Sounds.level_up, assets.levelUp);
+//        putSound(Sounds.error, assets.errorThud);
+        putSound(Sounds.error_sound, assets.errorThud);
 
         musics.put(Musics.introMusic, assets.introMusic);
         musics.put(Musics.mainMusic, assets.mainMusic);
 
-        musicVolume = new MutableFloat(0.5f);
+        musicVolume = new MutableFloat(0.65f);
         soundVolume = new MutableFloat(0.85f);
 
         isMusicMuted = false;
