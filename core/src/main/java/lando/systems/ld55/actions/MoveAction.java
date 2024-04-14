@@ -1,5 +1,6 @@
 package lando.systems.ld55.actions;
 
+import com.badlogic.gdx.Gdx;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
@@ -13,6 +14,7 @@ public class MoveAction extends ActionBase {
     GameBoard board;
 
     public MoveAction(GameBoard board, GamePiece piece, GameTile targetTile) {
+        Gdx.app.log("MoveAction", "Move action crated");
         this.piece = piece;
         this.targetTile = targetTile;
         this.board = board;

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import lando.systems.ld55.actions.ActionBase;
 
 public class GamePiece {
 
@@ -33,6 +34,8 @@ public class GamePiece {
     private float moveAnimState = 0;
     private float moveSeconds = 1; // seconds
 
+    public ActionBase currentAction;
+
     public GamePiece(Animation<TextureRegion> idle, Animation<TextureRegion> attack) {
         this.idle = idle;
         this.attack = attack;
@@ -48,21 +51,21 @@ public class GamePiece {
     }
 
     public void selectTile(GameTile tile) {
-        if (isMoving) return;
-
-        if (currentTile == null) {
-            setTile(tile);
-        } else if (currentTile == tile) {
-            selected = !selected;
-            selectedAnimState = 0;
-        } else if (selected) {
-            moveToTile(tile);
-        } else {
-            setTile(tile);
-        }
+//        if (isMoving) return;
+//
+//        if (currentTile == null) {
+//            setTile(tile);
+//        } else if (currentTile == tile) {
+//            selected = !selected;
+//            selectedAnimState = 0;
+//        } else if (selected) {
+//            moveToTile(tile);
+//        } else {
+//            setTile(tile);
+//        }
     }
 
-    private void setTile(GameTile tile) {
+    public void setTile(GameTile tile) {
         currentTile = tile;
         setPosition(tile.bounds.x + tile.bounds.width / 2, tile.bounds.y + TILE_OFFSET_Y);
         selected = false;
@@ -92,6 +95,9 @@ public class GamePiece {
         }
         if (isMoving) {
             updateMovement(dt);
+        }
+        if (currentAction != null && currentAction.isCompleted()){
+            currentAction = null;
         }
     }
 

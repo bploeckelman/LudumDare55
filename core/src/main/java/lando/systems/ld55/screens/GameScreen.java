@@ -24,6 +24,7 @@ public class GameScreen extends BaseScreen{
         gameBoard = new GameBoard(this, 10);
         particles = new Particles(assets);
         gamePiece = new GamePiece(assets.cherry, assets.cherry);
+        gamePiece.setTile(gameBoard.getTileAt(1, 1));
         actionManager = new ActionManager();
         Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
     }
@@ -44,8 +45,11 @@ public class GameScreen extends BaseScreen{
         actionManager.update(dt);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)){
-            MoveAction moveAction = new MoveAction(gameBoard, gamePiece, gameBoard.getTileAt(MathUtils.random(10), MathUtils.random(10)));
-            actionManager.addAction(moveAction);
+            if (gamePiece.currentAction == null) {
+                MoveAction moveAction = new MoveAction(gameBoard, gamePiece, gameBoard.getTileAt(MathUtils.random(10), MathUtils.random(10)));
+                gamePiece.currentAction = moveAction;
+                actionManager.addAction(moveAction);
+            }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.O)) {
             actionManager.endTurn();
