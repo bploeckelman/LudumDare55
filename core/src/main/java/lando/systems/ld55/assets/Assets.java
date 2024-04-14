@@ -70,6 +70,11 @@ public class Assets implements Disposable {
     public Animation<TextureRegion> candleEvil;
     public List<Animation<TextureRegion>> numbers;
 
+    // random shit
+    public Animation<TextureRegion> babe1;
+    public Animation<TextureRegion> babe2;
+    public Animation<TextureRegion> organGrinder;
+
     public Array<Array<Animation<TextureRegion>>> king = new Array<>();
     public Array<Array<Animation<TextureRegion>>> pawn = new Array<>();;
     public Array<Array<Animation<TextureRegion>>> knight = new Array<>();
@@ -236,6 +241,10 @@ public class Assets implements Disposable {
         spawnGoodActive = new Animation<>(0.15f, atlas.findRegions("stage/spawn-idle/spawn-idle"), Animation.PlayMode.LOOP_PINGPONG);
         candle = new Animation<>(0.15f, atlas.findRegions("stage/candlestick-idle/candlestick-idle"), Animation.PlayMode.LOOP);
         candleEvil = new Animation<>(0.15f, atlas.findRegions("stage/candlestick-evil-idle/candlestick-evil-idle"), Animation.PlayMode.LOOP);
+
+        babe1 = new Animation<TextureRegion>(0.1f, atlas.findRegions("optional/babe-a-wave"), Animation.PlayMode.LOOP);
+        babe2 = new Animation<TextureRegion>(0.1f, atlas.findRegions("optional/babe-b-wave"), Animation.PlayMode.LOOP);
+        organGrinder = new Animation<TextureRegion>(0.2f, atlas.findRegions("optional/organ-grinder"), Animation.PlayMode.LOOP);
 
         numbers = new ArrayList<>();
         for (int i = 0; i <= 9; ++i) {

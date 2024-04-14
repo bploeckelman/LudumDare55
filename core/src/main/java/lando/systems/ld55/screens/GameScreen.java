@@ -45,14 +45,18 @@ public class GameScreen extends BaseScreen{
         float x = Config.Screen.window_width / 2f - width;
         float div = width / 5;
         float y = 75;
-        styleManager.add(assets.candle, x += div, y);
-        styleManager.add(assets.candle, x += div, y);
-        styleManager.add(assets.candle, x += div, y);
-        styleManager.add(assets.candle, x += div, y);
-        styleManager.add(assets.candleEvil, x += div * 2, y);
-        styleManager.add(assets.candleEvil, x += div, y);
-        styleManager.add(assets.candleEvil, x += div, y);
-        styleManager.add(assets.candleEvil, x += div, y);
+        styleManager.add(assets.candle, x += div, y, 0);
+        styleManager.add(assets.candle, x += div, y, 0);
+        styleManager.add(assets.candle, x += div, y, 0);
+        styleManager.add(assets.candle, x += div, y, 0);
+        styleManager.add(assets.candleEvil, x += div * 2, y, 0);
+        styleManager.add(assets.candleEvil, x += div, y, 0);
+        styleManager.add(assets.candleEvil, x += div, y, 0);
+        styleManager.add(assets.candleEvil, x += div, y, 0);
+
+        styleManager.add(assets.babe1, 233, Config.Screen.window_height - 689);
+        styleManager.add(assets.organGrinder, 206, Config.Screen.window_height - 157);
+        styleManager.add(assets.babe2, 115, Config.Screen.window_height - 151);
     }
 
     @Override

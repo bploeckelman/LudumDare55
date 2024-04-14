@@ -1,6 +1,5 @@
 package lando.systems.ld55.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,11 +10,16 @@ public class StylePiece {
 
     private final Animation<TextureRegion> animation;
     private final Vector2 position = new Vector2();
-    private float animState = MathUtils.random(1f);
+    private float animState = 0;
 
-    public StylePiece(Animation<TextureRegion> animation, float x, float y) {
+    public StylePiece(Animation<TextureRegion> animation, float x, float y, float animState) {
         this.animation = animation;
         this.position.set(x, y);
+
+        if (animState == -1) {
+            animState = MathUtils.random(1f);
+        }
+        this.animState = animState;
     }
 
     public void update(float dt) {
