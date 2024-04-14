@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.SpawnAction;
 import lando.systems.ld55.screens.GameScreen;
@@ -29,6 +30,8 @@ public class GameBoard extends InputAdapter {
     public Array<GameTile> tiles = new Array<>();
     public Array<Portal> portalAnimations = new Array<>();
     public Array<GamePiece> gamePieces = new Array<>();
+    public Spawn spawnGood;
+    public Spawn spawnEvil;
     public GamePiece selectedPiece;
 
     public final int tilesWide;
@@ -50,9 +53,7 @@ public class GameBoard extends InputAdapter {
         var cornerDepth = 3; // 'cutout' 3 tiles deep in each corner on both axes
         var boardWidth = gameScreen.worldCamera.viewportWidth - (marginLeft + marginRight);
         var boardHeight = gameScreen.worldCamera.viewportHeight - (marginTop + marginBottom);
-        // these should be the same...
-        var tileSize = boardWidth / tilesWide;
-//        var tileSize = boardHeight / tilesHigh;
+        var tileSize = boardWidth / tilesWide; // should be same as (boardHeight / tilesHigh)
         var boardStartPoint = new Vector2(marginLeft, marginBottom);
         boardRegion = new Rectangle(boardStartPoint.x, boardStartPoint.y, boardWidth, boardHeight);
 
@@ -67,6 +68,9 @@ public class GameBoard extends InputAdapter {
                 tiles.add(tile);
             }
         }
+
+        spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 180, 655);
+        spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1115, 195);
     }
 
     private boolean isCornerTile(int x, int y, int cornerDepth) {
@@ -192,6 +196,10 @@ public class GameBoard extends InputAdapter {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             currentPattern = currentPattern.next__TEST();
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            spawnGood.activate();
+            spawnEvil.activate();
+        }
 
         if (hoverTile != null && Gdx.input.isKeyJustPressed(Input.Keys.L)){
             radialMenu = new RadialMenu(this, hoverTile, RadialMenu.MenuType.CancelMove);
@@ -215,6 +223,8 @@ public class GameBoard extends InputAdapter {
                 portalAnimations.removeIndex(i);
             }
         }
+        spawnGood.update(dt);
+        spawnEvil.update(dt);
 
         for (int i = gamePieces.size -1; i >= 0; i--) {
             GamePiece gp = gamePieces.get(i);
@@ -241,6 +251,8 @@ public class GameBoard extends InputAdapter {
         for (Portal p : portalAnimations) {
             p.render(batch);
         }
+        spawnGood.render(batch);
+        spawnEvil.render(batch);
 
         // draw hover overlays (work in progress)
         if (hoverTile != null){
