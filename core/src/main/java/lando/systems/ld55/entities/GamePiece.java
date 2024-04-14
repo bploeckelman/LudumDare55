@@ -189,8 +189,10 @@ public class GamePiece {
     public void render(SpriteBatch batch) {
         if (currentTile == null) return;
 
+        float flip = owner == Owner.Enemy ? -1 : 1;
+
         float yOffset = getYOffset();
-        batch.draw(keyframe, bounds.x, bounds.y + yOffset, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, 1, 1, 0);
+        batch.draw(keyframe, bounds.x, bounds.y + yOffset, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, flip, 1, 0);
 
         if (currentAction != null && currentAction instanceof MoveAction) {
             currentAction.render(batch);

@@ -88,6 +88,19 @@ public class GameBoard extends InputAdapter {
 
         spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 180, 655);
         spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1115, 195);
+
+        removeThis();
+    }
+
+    private void removeThis() {
+        var owner = GamePiece.Owner.Enemy;
+        var types = new GamePiece.Type[] { GamePiece.Type.Pawn, GamePiece.Type.Bishop, GamePiece.Type.Knight, GamePiece.Type.Queen, GamePiece.Type.Knight, GamePiece.Type.Rook };
+        int y = 3;
+        for (var type : types) {
+            var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Enemy);
+            gp.setTile(getTileAt(18, y++));
+            gamePieces.add(gp);
+        }
     }
 
     private boolean isCornerTile(int x, int y, int cornerDepth) {
