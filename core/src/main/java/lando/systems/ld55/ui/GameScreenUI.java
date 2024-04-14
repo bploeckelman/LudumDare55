@@ -28,12 +28,18 @@ public class GameScreenUI {
         var summonIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/pawns");
         summonButton = new ImageButton(20, 280 - 70, 50, 50, summonIcon, null, null, null);
         summonButton.background = Assets.Patch.glass_dim.ninePatch;
-        summonButton.onClick = () -> Gdx.app.log("summon", "clicked");
+        summonButton.onClick = () -> {
+            screen.setMode(GameScreen.GameMode.Summon);
+            Gdx.app.log("summon", "clicked");
+        };
 
         var moveIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/arrow_diagonal_cross");
         moveButton = new ImageButton(20, 280 - 130, 50, 50, moveIcon, null, null, null);
         moveButton.background = Assets.Patch.glass_dim.ninePatch;
-        moveButton.onClick = () -> Gdx.app.log("move", "clicked");
+        moveButton.onClick = () -> {
+            screen.setMode(GameScreen.GameMode.Move);
+            Gdx.app.log("move", "clicked");
+        };
     }
 
     public void update(float dt) {
