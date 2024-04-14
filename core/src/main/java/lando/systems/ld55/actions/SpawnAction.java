@@ -48,6 +48,7 @@ public class SpawnAction extends ActionBase {
             // TODO: do something different for player or enemy
             board.portalAnimations.add(new Portal(spawnTile.bounds, Color.BLUE));
             // TODO: particles
+            board.gameScreen.particles.portal(spawnTile.bounds.x + spawnTile.bounds.width / 2f, spawnTile.bounds.y + spawnTile.bounds.height / 2f, spawnTile.bounds.width / 2f);
         }
 
         if (accum > Portal.animationTime) {
