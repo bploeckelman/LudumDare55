@@ -37,10 +37,12 @@ public class TileOverlayInfo {
     }
 
     public final GameTile tile;
+    public final int damageAmount;
     public final List<Layer> layers = new ArrayList<>();
 
-    public TileOverlayInfo(GameTile tile) {
+    public TileOverlayInfo(GameTile tile, int damageAmount) {
         this.tile = tile;
+        this.damageAmount = damageAmount;
     }
 
     public Layer findLayer(String name) {

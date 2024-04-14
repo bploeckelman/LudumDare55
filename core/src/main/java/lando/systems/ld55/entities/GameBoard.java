@@ -218,10 +218,12 @@ public class GameBoard extends InputAdapter {
 
                 var tile = getTileRelative(center, offsetX, offsetY);
                 if (tile != null) {
+                    var anim = gameScreen.assets.numbers.get(damage);
                     var region = MathUtils.randomBoolean() ? TileOverlayAssets.getRandomArrow() : TileOverlayAssets.getRandomRegion();
-                    var overlay = new TileOverlayInfo(tile)
+                    var overlay = new TileOverlayInfo(tile, damage)
                         .addLayer("base-panel", 1f, 1, 1, 1, 0.5f, TileOverlayAssets.getRandomPatch(), null, null)
-                        .addLayer("icon", 0.5f, Utils.randomColor(), null, region, null)
+//                        .addLayer("icon", 0.5f, Utils.randomColor(), null, region, null)
+                        .addLayer("dmg", 0.33f, Utils.randomColor(), null, null, anim);
                         ;
                     overlays.add(overlay);
                 }
