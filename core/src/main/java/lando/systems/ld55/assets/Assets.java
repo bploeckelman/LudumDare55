@@ -50,6 +50,7 @@ public class Assets implements Disposable {
     public Texture gdx;
     public Texture noiseTexture;
     public Texture whitePixel;
+    public Texture levelLayout;
 
     public TextureRegion pixelRegion;
     public Animation<TextureRegion> cherry;
@@ -172,6 +173,7 @@ public class Assets implements Disposable {
             mgr.load("images/libgdx.png", Texture.class);
             mgr.load("images/noise.png", Texture.class);
             mgr.load("images/pixel.png", Texture.class);
+            mgr.load("images/level-layout.png", Texture.class);
 
             mgr.load("fonts/outfit-medium-20px.fnt", BitmapFont.class);
             mgr.load("fonts/outfit-medium-40px.fnt", BitmapFont.class);
@@ -215,6 +217,7 @@ public class Assets implements Disposable {
         noiseTexture = mgr.get("images/noise.png");
         noiseTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         noiseTexture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+        levelLayout = mgr.get("images/level-layout.png");
 
         // Fonts
         smallFont = mgr.get("fonts/outfit-medium-20px.fnt");

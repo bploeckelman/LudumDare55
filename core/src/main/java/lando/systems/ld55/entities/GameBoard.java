@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import lando.systems.ld55.Config;
 import lando.systems.ld55.screens.GameScreen;
 
 import java.util.ArrayList;
@@ -30,18 +29,23 @@ public class GameBoard extends InputAdapter {
     public final Vector3 screenPosition = new Vector3();
 
     // TEMP -------------
-    public Pattern currentPattern = Pattern.PAWN_ATK;
+    public Pattern currentPattern = Pattern.QUEEN_ATK;
     // TEMP -------------
 
     public GameBoard(GameScreen gameScreen, int tilesWide) {
         this.gameScreen = gameScreen;
         this.tilesWide = tilesWide;
 
-        float boardsize = Config.Screen.window_height - (topMargin + bottomMargin);
-        float tileSize = boardsize/tilesWide;
-        float leftEdge = (Config.Screen.window_width - boardsize)/2f;
-        Vector2 boardStartPoint = new Vector2(leftEdge, bottomMargin);
-        boardRegion = new Rectangle(boardStartPoint.x, boardStartPoint.y, boardsize, boardsize);
+        // NOTE - adjusting to line up current board with level layout image,
+        //  still need to allow for rectangular board, and to have tiles marked as 'unused' for corners
+//        float boardSize = Config.Screen.window_height - (topMargin + bottomMargin);
+//        float tileSize = boardsize/tilesWide;
+//        float leftEdge = (Config.Screen.window_width - boardsize)/2f;
+//        Vector2 boardStartPoint = new Vector2(leftEdge, bottomMargin);
+        var tileSize = 48f;
+        var boardSize = tileSize * tilesWide;
+        var boardStartPoint = new Vector2(400, 120);
+        boardRegion = new Rectangle(boardStartPoint.x, boardStartPoint.y, boardSize, boardSize);
 
         for (int y = 0; y < tilesWide; y++) {
             for (int x = 0; x < tilesWide; x++) {
@@ -151,6 +155,8 @@ public class GameBoard extends InputAdapter {
     }
 
     public void render(SpriteBatch batch) {
+        batch.draw(gameScreen.assets.levelLayout, 0, 0, gameScreen.worldCamera.viewportWidth, gameScreen.worldCamera.viewportHeight);
+
         for (GameTile tile : tiles) {
             tile.render(batch);
         }

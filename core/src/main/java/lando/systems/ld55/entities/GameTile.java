@@ -23,9 +23,10 @@ public class GameTile {
     public void render(SpriteBatch batch) {
         // Temp color stuff
         Color c = Color.DARK_GRAY;
-        if ((x + y) % 2 == 0)
+        if ((x + y) % 2 == 0) {
             c = Color.LIGHT_GRAY;
-        batch.setColor(c);
+        }
+        batch.setColor(c.r, c.g, c.b, 0.5f);
         batch.draw(Main.game.assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
         batch.setColor(Color.WHITE);
     }
