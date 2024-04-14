@@ -94,7 +94,7 @@ public class GameBoard extends InputAdapter {
                     radialMenu = new RadialMenu(this, hoverTile, RadialMenu.MenuType.Summon);
                 }
             } else {
-                if (selectedPiece != null) {
+                if (selectedPiece != null && selectedPiece != gamePiece) {
                     selectedPiece.toggleSelect(this);
                 }
                 selectedPiece = gamePiece.toggleSelect(this);
