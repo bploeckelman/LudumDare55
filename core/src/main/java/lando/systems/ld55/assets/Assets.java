@@ -237,9 +237,9 @@ public class Assets implements Disposable {
         addCharacterImages(king, "king");
         addCharacterImages(pawn, "peasant");
         addCharacterImages(knight, "knight");
-        addCharacterImages(bishop, "archer");
+        addCharacterImages(bishop, "wizard");
         addCharacterImages(rook, "archer");
-        addCharacterImages(queen, "wizard");
+        addCharacterImages(queen, "queen");
 
         // Initialize asset helpers
 
@@ -431,10 +431,10 @@ public class Assets implements Disposable {
 
     private Array<Animation<TextureRegion>> getAnimGroup(String name, String alignment) {
         var animGroup = new Array<Animation<TextureRegion>>();
-        var idleImage = "characters/" + alignment + "/" + name + "/" + name + "-placeholder";
+        var idleImage = "characters/" + alignment + "/" + name + "/" + name + "-idle";
         var actionImage = "characters/" + alignment + "/" + name + "/" + name + "-action";
         animGroup.add(new Animation<>(.1f, atlas.findRegions(idleImage), Animation.PlayMode.LOOP));
-        animGroup.add(new Animation<>(.1f, atlas.findRegions(idleImage), Animation.PlayMode.LOOP));
+        animGroup.add(new Animation<>(.1f, atlas.findRegions(actionImage), Animation.PlayMode.LOOP));
 
         return animGroup;
     }
