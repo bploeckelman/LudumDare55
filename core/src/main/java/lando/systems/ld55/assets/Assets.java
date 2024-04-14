@@ -102,6 +102,7 @@ public class Assets implements Disposable {
     public ShaderProgram starfieldShader;
     public ShaderProgram minimapShader;
     public ShaderProgram wormholeShader;
+    public ShaderProgram gridShader;
 
     public Sound coin;
     public Sound idleClick;
@@ -111,7 +112,7 @@ public class Assets implements Disposable {
     public Music mainMusic;
 
     public enum Patch {
-        debug, panel, metal, glass,
+        debug, panel, metal, glass, outline,
         glass_green, glass_yellow, glass_red, glass_blue, glass_dim, glass_active;
         public NinePatch ninePatch;
         public NinePatchDrawable drawable;
@@ -143,6 +144,7 @@ public class Assets implements Disposable {
         public static NinePatch metal_green;
         public static NinePatch metal_yellow;
         public static NinePatch shear;
+        public static NinePatch outline;
     }
 
     public static class Particles {
@@ -320,6 +322,7 @@ public class Assets implements Disposable {
 
 
         portalShader = loadShader("shaders/default.vert", "shaders/portal.frag");
+        gridShader = loadShader("shaders/default.vert", "shaders/grid.frag");
 
         // initialize patch values
         Patch.debug.ninePatch        = new NinePatch(atlas.findRegion("ninepatch/debug"), 2, 2, 2, 2);
@@ -368,6 +371,8 @@ public class Assets implements Disposable {
         NinePatches.metal_green                     = new NinePatch(atlas.findRegion("ninepatch/metal-green"),             12, 12, 12, 12);
         NinePatches.metal_yellow                    = new NinePatch(atlas.findRegion("ninepatch/metal-yellow"),            12, 12, 12, 12);
         NinePatches.shear                           = new NinePatch(atlas.findRegion("ninepatch/shear"),                   75, 75, 12, 12);
+        NinePatches.outline                         = new NinePatch(atlas.findRegion("ninepatch/outline"),                 3,   3,  3,  3);
+
 
         // Audio
         coin = mgr.get("audio/sounds/coin.ogg", Sound.class);

@@ -58,7 +58,9 @@ public class GameScreen extends BaseScreen{
 
     @Override
     public void renderFrameBuffers(SpriteBatch batch) {
-
+        ScreenUtils.clear(0f, 0f, 0f, 1f);
+        batch.setProjectionMatrix(worldCamera.combined);
+        gameBoard.renderFrameBuffers(batch);
     }
 
     @Override

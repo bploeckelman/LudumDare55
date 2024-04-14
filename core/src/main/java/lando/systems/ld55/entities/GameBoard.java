@@ -4,11 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ScreenUtils;
+import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.ActionManager;
@@ -26,6 +33,8 @@ public class GameBoard extends InputAdapter {
     public static float marginTop = 120;
     public static float marginBottom = 120;
 
+    public static final Color gridColor = new Color(.7f, .7f, .9f, 1f);
+
     public GameTile hoverTile;
     public Rectangle boardRegion;
     public Array<GameTile> tiles = new Array<>();
@@ -34,6 +43,9 @@ public class GameBoard extends InputAdapter {
     public Spawn spawnGood;
     public Spawn spawnEvil;
     public GamePiece selectedPiece;
+
+    public FrameBuffer gridFB;
+    public Texture gridTexture;
 
     public final int tilesWide;
     public final int tilesHigh;
@@ -69,6 +81,10 @@ public class GameBoard extends InputAdapter {
                 tiles.add(tile);
             }
         }
+
+        gridFB = new FrameBuffer(Pixmap.Format.RGBA8888, Config.Screen.window_width, Config.Screen.window_height, true);
+        gridTexture = gridFB.getColorBufferTexture();
+        gridTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 180, 655);
         spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1115, 195);
@@ -268,6 +284,7 @@ public class GameBoard extends InputAdapter {
         for (GameTile tile : tiles) {
             tile.render(batch);
         }
+        renderGrid(batch);
         for (Portal p : portalAnimations) {
             p.render(batch);
         }
@@ -331,5 +348,35 @@ public class GameBoard extends InputAdapter {
         if (radialMenu != null) {
             radialMenu.render(batch);
         }
+    }
+
+    public void renderFrameBuffers(SpriteBatch batch) {
+        gridFB.begin();
+        ScreenUtils.clear(0f, 0f, 0f, 0f);
+        batch.begin();
+        for (GameTile t : tiles){
+            t.renderFrameBuffer(batch);
+        }
+        batch.end();
+        gridFB.end();
+    }
+
+    private void renderGrid(SpriteBatch batch) {
+//        Gdx.gl.glEnable(GL30.GL_BLEND);
+//        batch.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+        ShaderProgram shader = gameScreen.assets.gridShader;
+        batch.end();
+        batch.setShader(shader);
+        batch.begin();
+        batch.setColor(gridColor);
+        shader.setUniformf("u_res", Config.Screen.window_width, Config.Screen.window_height);
+        shader.setUniformf("u_mouse", screenPosition);
+
+        batch.draw(gridTexture, 0, Config.Screen.window_height, Config.Screen.window_width, -Config.Screen.window_height);
+
+        batch.setShader(null);
+        batch.setColor(Color.WHITE);
+        batch.end();
+        batch.begin();
     }
 }
