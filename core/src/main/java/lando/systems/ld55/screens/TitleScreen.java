@@ -11,7 +11,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.ui.TitleScreenUI;
-import lando.systems.ld55.utils.EventManager;
+import lando.systems.ld55.utils.events.EventType;
+import lando.systems.ld55.utils.events.Events;
 
 public class TitleScreen extends BaseScreen {
 
@@ -23,7 +24,7 @@ public class TitleScreen extends BaseScreen {
         Gdx.input.setInputProcessor(uiStage);
         Main.game.audioManager.playMusic(AudioManager.Musics.introMusic);
         titleScreenUI = new TitleScreenUI(worldCamera.viewportWidth - 500f, 200, 300f, 75f, assets.fontAbandoned, TitleScreenUI.ButtonOrientation.VERTICAL);
-        EventManager.get().subscribe("start_game", (eventType, data) -> transitionToGameScreen());
+        Events.get().subscribe(EventType.TRANSITION_TO_GAME, (eventType, data) -> transitionToGameScreen());
     }
 
     @Override

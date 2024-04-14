@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld55.assets.Assets;
-import lando.systems.ld55.utils.EventManager;
+import lando.systems.ld55.utils.events.EventType;
+import lando.systems.ld55.utils.events.Events;
 
 public class TitleScreenUI {
     float x;
@@ -47,7 +48,7 @@ public class TitleScreenUI {
         settingsButton = new Button(settingsBound, "Settings", Assets.NinePatches.glass_yellow, Assets.NinePatches.glass, font);
         creditButton = new Button(creditBound, "Credits", Assets.NinePatches.glass_red, Assets.NinePatches.glass, font);
 
-        startGameButton.setOnClickAction(() -> EventManager.get().dispatch("start_game"));
+        startGameButton.setOnClickAction(() -> Events.get().dispatch(EventType.TRANSITION_TO_GAME));
         settingsButton.setOnClickAction(() -> {
             Gdx.app.log("TitleScreenUI", "Settings Button Clicked");
         });
