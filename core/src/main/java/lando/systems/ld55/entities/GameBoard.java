@@ -64,6 +64,7 @@ public class GameBoard extends InputAdapter {
             if (gamePiece == null) {
                 addGamePiece(new GamePiece(gameScreen.assets.cherry, gameScreen.assets.cherry), hoverTile);
                 portalAnimations.add(new Portal(hoverTile.bounds, Color.BLUE));
+                gameScreen.particles.portal(hoverTile.bounds.x + hoverTile.bounds.width / 2f, hoverTile.bounds.y + hoverTile.bounds.height / 2f, hoverTile.bounds.width / 2f);
             } else {
                 gamePiece.toggleSelect();
             }

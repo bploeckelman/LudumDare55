@@ -119,8 +119,8 @@ public class Particles implements Disposable {
                 .keyframe(assets.particles.stars.getKeyFrame(MathUtils.random(0f, 1f)))
                 .startPos(x, y)
                 .velocityDirection(angle, speed)
-                .startColor(1f, 1f, 0.8f, 1f)
-                .endColor(1f, 1f, 0.8f, 0f)
+                .startColor(.8f, .8f, 1f, 1f)
+                .endColor(.8f, .8f, 0.8f, 0f)
                 .startSize(MathUtils.random(50f, 80f))
                 .endSize(0f)
                 .timeToLive(MathUtils.random(1f, 2f))
@@ -128,4 +128,49 @@ public class Particles implements Disposable {
             );
         }
     }
+
+    public void portal(float x, float y, float radius) {
+        for (int i = 0; i < 50; i++) {
+            float angle = MathUtils.random(0f, 360f);
+            float distance = MathUtils.random(50f, 100f);
+            float offsetX = MathUtils.cosDeg(angle) * distance;
+            float offsetY = MathUtils.sinDeg(angle) * distance;
+            float targetX = x;
+            float targetY = y;
+
+            activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+                .keyframe(assets.particles.stars.getKeyFrame(MathUtils.random(0f, 1f)))
+                .startPos(x + offsetX, y + offsetY)
+                .targetPos(targetX, targetY)  // Target the portal's center
+                .startColor(.5f, .5f, 1f, 1f)
+                .endColor(.9f, .9f, 1f, 0f)
+                .startSize(MathUtils.random(25f, 50f))
+                .endSize(0f)
+                .timeToLive(MathUtils.random(2f, 4f))
+                .init()
+            );
+        }
+
+        for (int i = 0; i < 10; i++) {
+            float angle = MathUtils.random(0f, 360f);
+            float distance = radius + MathUtils.random(-10f, 10f);
+            float offsetX = MathUtils.cosDeg(angle) * distance;
+            float offsetY = MathUtils.sinDeg(angle) * distance;
+
+            activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+                .keyframe(assets.particles.twirls.getKeyFrame(MathUtils.random(0f, 1f)))
+                .startPos(x + offsetX, y + offsetY)
+                .velocity(MathUtils.cosDeg(angle) * 10f, MathUtils.sinDeg(angle) * 10f)
+                .startColor(0.5f, 0.5f, 1f, 0.5f)
+                .endColor(0.8f, 0.8f, 1f, 0f)
+                .startSize(MathUtils.random(25f, 50f))
+                .endSize(0f)
+                .startRotation(0f)
+                .endRotation(MathUtils.random(360, 1440))
+                .timeToLive(MathUtils.random(1f, 3f)) // Short lifespan
+                .init()
+            );
+        }
+    }
+
 }
