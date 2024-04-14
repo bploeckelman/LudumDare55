@@ -429,8 +429,10 @@ public class Assets implements Disposable {
 
     private Array<Animation<TextureRegion>> getAnimGroup(String name, String alignment) {
         var animGroup = new Array<Animation<TextureRegion>>();
-        animGroup.add(new Animation<>(.1f, atlas.findRegions("characters/" + alignment + "/" + name + "-placeholder"), Animation.PlayMode.LOOP));
-        animGroup.add(new Animation<>(.1f, atlas.findRegions("characters/" + alignment + "/" + name + "-action"), Animation.PlayMode.LOOP));
+        var idleImage = "characters/" + alignment + "/" + name + "/" + name + "-placeholder";
+        var actionImage = "characters/" + alignment + "/" + name + "/" + name + "-action";
+        animGroup.add(new Animation<>(.1f, atlas.findRegions(idleImage), Animation.PlayMode.LOOP));
+        animGroup.add(new Animation<>(.1f, atlas.findRegions(idleImage), Animation.PlayMode.LOOP));
 
         return animGroup;
     }

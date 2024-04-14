@@ -7,7 +7,6 @@ import lando.systems.ld55.actions.SpawnAction;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
-import lando.systems.ld55.entities.Pawn;
 
 public class RadialSummonButton extends RadialButton {
     GamePiece.Type pieceType;
@@ -68,33 +67,34 @@ public class RadialSummonButton extends RadialButton {
     @Override
     public void onClick() {
         ActionManager actionManager = board.gameScreen.actionManager;
+        var assets = board.gameScreen.assets;
+        var owner = GamePiece.Owner.Player;
         switch (pieceType) {
             case Pawn:
                 actionManager.playerActionsAvailable -= 1;
-                GamePiece piece = new Pawn(board.gameScreen.assets, GamePiece.Owner.Player);
-                board.gameScreen.actionManager.addAction(new SpawnAction(board, piece, summonTile));
+                board.gameScreen.actionManager.addAction(new SpawnAction(board,
+                    GamePiece.getGamePiece(assets, GamePiece.Type.Pawn, owner), summonTile));
                 break;
             case Knight:
                 actionManager.playerActionsAvailable -= 1;
-                piece = new Pawn(board.gameScreen.assets, GamePiece.Owner.Player);
-                board.gameScreen.actionManager.addAction(new SpawnAction(board, piece, summonTile));
+                board.gameScreen.actionManager.addAction(new SpawnAction(board,
+                    GamePiece.getGamePiece(assets, GamePiece.Type.Knight, owner), summonTile));
                 break;
             case Bishop:
                 actionManager.playerActionsAvailable -= 2;
-                piece = new Pawn(board.gameScreen.assets, GamePiece.Owner.Player);
-                board.gameScreen.actionManager.addAction(new SpawnAction(board, piece, summonTile));
+                board.gameScreen.actionManager.addAction(new SpawnAction(board,
+                    GamePiece.getGamePiece(assets, GamePiece.Type.Bishop, owner), summonTile));
                 break;
             case Rook:
                 actionManager.playerActionsAvailable -= 2;
-                piece = new Pawn(board.gameScreen.assets, GamePiece.Owner.Player);
-                board.gameScreen.actionManager.addAction(new SpawnAction(board, piece, summonTile));
+                board.gameScreen.actionManager.addAction(new SpawnAction(board,
+                    GamePiece.getGamePiece(assets, GamePiece.Type.Rook, owner), summonTile));
                 break;
             case Queen:
                 actionManager.playerActionsAvailable -= 3;
-                piece = new Pawn(board.gameScreen.assets, GamePiece.Owner.Player);
-                board.gameScreen.actionManager.addAction(new SpawnAction(board, piece, summonTile));
+                board.gameScreen.actionManager.addAction(new SpawnAction(board,
+                    GamePiece.getGamePiece(assets, GamePiece.Type.Queen, owner), summonTile));
                 break;
         }
-
     }
 }

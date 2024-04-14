@@ -13,9 +13,63 @@ import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.assets.Assets;
 
-public abstract class GamePiece {
+public class GamePiece {
     public enum Owner {Player, Enemy}
-    public enum Type {Pawn, Knight, Bishop, Rook, Queen}
+    public enum Type {
+        Pawn, Knight, Bishop, Rook, Queen;
+
+        public static Type random() {
+            var types = values();
+            return types[MathUtils.random(types.length - 1)];
+        }
+    }
+
+    public static GamePiece getRandom(Assets assets, Owner owner) {
+        return getGamePiece(assets, Type.random(), owner);
+    }
+
+    public static GamePiece getGamePiece(Assets assets, Type type, Owner owner) {
+        // for now choose alignment based on owner
+        var alignment = owner == Owner.Player ? 0 : 1;
+        var direction = Direction.Left;
+        var movement = 0;
+        Array<Animation<TextureRegion>> animGroup;
+        switch (type) {
+            case Knight:
+                animGroup = assets.knight.get(alignment);
+                direction = (owner == Owner.Player)
+                    ? Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom
+                    : Direction.Top | Direction.TopLeft | Direction.Left | Direction.BottomLeft | Direction.Bottom;
+                movement = 3;
+                break;
+            case Bishop:
+                animGroup = assets.archer.get(alignment);
+                direction = (owner == Owner.Player)
+                    ? Direction.TopRight | Direction.BottomRight
+                    : Direction.TopLeft | Direction.BottomLeft;
+                movement = 10;
+                break;
+            case Rook:
+                animGroup = assets.archer.get(alignment);
+                direction = Direction.Top | Direction.Right | Direction.Bottom | Direction.Left;
+                movement = 10;
+                break;
+            case Queen:
+                animGroup = assets.wizard.get(alignment);
+                direction = Direction.TopLeft | Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom | Direction.BottomLeft | Direction.Left;
+                movement = 10;
+                break;
+            case Pawn:
+            default:
+                animGroup = assets.peasant.get(alignment);
+                direction = (owner == Owner.Player)
+                    ? Direction.Top | Direction.Right | Direction.Bottom
+                    : Direction.Top | Direction.Left | Direction.Bottom;
+                movement = 1;
+                break;
+        }
+        return new GamePiece(assets, owner, animGroup.get(0), animGroup.get(1), direction, movement);
+    }
 
     private final int TILE_OFFSET_Y = 10;
     public Owner owner;
