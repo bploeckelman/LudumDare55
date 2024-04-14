@@ -108,4 +108,24 @@ public class Particles implements Disposable {
             );
         }
     }
+
+    public void levelUpEffect(float x, float y) {
+        // Stars
+        for (int i = 0; i < 30; i++) {
+            float angle = MathUtils.random(0f, 360f);
+            float speed = MathUtils.random(50f, 150f);
+
+            activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+                .keyframe(assets.particles.stars.getKeyFrame(MathUtils.random(0f, 1f)))
+                .startPos(x, y)
+                .velocityDirection(angle, speed)
+                .startColor(1f, 1f, 0.8f, 1f)
+                .endColor(1f, 1f, 0.8f, 0f)
+                .startSize(MathUtils.random(50f, 80f))
+                .endSize(0f)
+                .timeToLive(MathUtils.random(1f, 2f))
+                .init()
+            );
+        }
+    }
 }

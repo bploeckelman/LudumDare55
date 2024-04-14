@@ -135,6 +135,7 @@ public class Assets implements Disposable {
         public TextureRegion blood;
         public TextureRegion sparks;
         public TextureRegion line;
+        public Animation<TextureRegion> stars;
         public Animation<TextureRegion> explosion;
     }
 
@@ -241,7 +242,8 @@ public class Assets implements Disposable {
         particles.sparkle = atlas.findRegion("particles/sparkle");
         particles.dollar  = atlas.findRegion("particles/dollars");
         particles.blood   = atlas.findRegion("characters/blood-stain");
-        particles.sparks  = atlas.findRegion("particles/sparks");
+        particles.sparks  = atlas.findRegion("particles/kenney/spark");
+        particles.stars   = new Animation<>(.1f, atlas.findRegions("particles/kenney/star"), Animation.PlayMode.LOOP);
         particles.line    = atlas.findRegion("particles/line");
 
         // Transition shaders
