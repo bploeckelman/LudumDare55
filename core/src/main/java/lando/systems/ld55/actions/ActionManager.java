@@ -103,7 +103,7 @@ public class ActionManager {
         return actionQueue;
     }
 
-    public Phase getCurrnetPhase() {
+    public Phase getCurrentPhase() {
         return phase;
     }
 

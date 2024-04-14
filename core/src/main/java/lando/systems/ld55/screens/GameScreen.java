@@ -77,7 +77,7 @@ public class GameScreen extends BaseScreen{
         batch.setProjectionMatrix(windowCamera.combined);
         batch.begin();
         {
-            ActionManager.Phase actionPhase = actionManager.getCurrnetPhase();
+            ActionManager.Phase actionPhase = actionManager.getCurrentPhase();
             String phaseString = "Ohh Ohh";
             switch(actionPhase){
                 case CollectActions:
