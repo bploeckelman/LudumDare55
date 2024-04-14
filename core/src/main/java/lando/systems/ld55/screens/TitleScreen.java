@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.audio.AudioManager;
+import lando.systems.ld55.particles.Particles;
 import lando.systems.ld55.ui.TitleScreenUI;
 import lando.systems.ld55.utils.events.EventType;
 import lando.systems.ld55.utils.events.Events;
@@ -19,12 +20,15 @@ public class TitleScreen extends BaseScreen {
     float accum = 0;
     boolean drawUI = true;
     TitleScreenUI titleScreenUI;
+    Particles particles;
 
     public TitleScreen() {
         Gdx.input.setInputProcessor(uiStage);
         Main.game.audioManager.playMusic(AudioManager.Musics.introMusic);
+        particles = new Particles(assets);
         titleScreenUI = new TitleScreenUI(worldCamera.viewportWidth - 500f, 200, 300f, 75f, assets.fontAbandoned, TitleScreenUI.ButtonOrientation.VERTICAL);
-        Events.get().subscribe(EventType.TRANSITION_TO_GAME, (eventType, data) -> transitionToGameScreen());
+        Events.get().subscribe(EventType.TRANSITION_TO_GAME, (type, data) -> transitionToGameScreen());
+        Events.get().subscribe(EventType.MEANINGLESS_CLICK, (type, data) -> meaninglessClickEffect((float)data[0], (float)data[1]));
     }
 
     @Override
@@ -46,6 +50,7 @@ public class TitleScreen extends BaseScreen {
         Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         worldCamera.unproject(touchPos);
         titleScreenUI.update(touchPos.x, touchPos.y);
+        particles.update(dt);
     }
 
     @Override
@@ -64,10 +69,14 @@ public class TitleScreen extends BaseScreen {
             float height = worldCamera.viewportHeight;
             batch.draw(gdx, (width - gdx.getWidth()) / 2f, (height - gdx.getHeight()) / 2f);
 
+            particles.draw(batch, Particles.Layer.BACKGROUND);
+
             var font = assets.fontAbandoned;
             var layout = new GlyphLayout();
             layout.setText(font, "Coming Soon - \nClock Gobblers", Color.WHITE, width, Align.center, true);
             //font.draw(batch, layout, 0, height / 3f);
+
+            particles.draw(batch, Particles.Layer.FOREGROUND);
             if (drawUI) {
                 titleScreenUI.draw(batch);
             }
@@ -82,5 +91,10 @@ public class TitleScreen extends BaseScreen {
             exitingScreen = true;
             game.setScreen(new GameScreen());
         }
+    }
+
+    private void meaninglessClickEffect(float x, float y) {
+        particles.tinySmoke(x, y);
+        Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
     }
 }

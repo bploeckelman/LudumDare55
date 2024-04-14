@@ -66,6 +66,8 @@ public class TitleScreenUI {
                 settingsButton.onClick();
             } else if (creditBound.contains(x, y)) {
                 creditButton.onClick();
+            } else {
+                Events.get().dispatch(EventType.MEANINGLESS_CLICK, x, y);
             }
         }
 

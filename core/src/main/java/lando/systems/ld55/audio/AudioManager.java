@@ -23,6 +23,7 @@ public class AudioManager implements Disposable {
     public enum Sounds {
         none
         , coin
+        , idle_click
     }
 
     public enum Musics {
@@ -45,6 +46,7 @@ public class AudioManager implements Disposable {
         this.tween = tween;
 
         putSound(Sounds.coin, assets.coin);
+        putSound(Sounds.idle_click, assets.idleClick);
 
 
         musics.put(Musics.introMusic, assets.introMusic);

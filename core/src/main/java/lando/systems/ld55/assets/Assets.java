@@ -85,6 +85,7 @@ public class Assets implements Disposable {
     public ShaderProgram wormholeShader;
 
     public Sound coin;
+    public Sound idleClick;
 
     public Music introMusic;
 
@@ -176,6 +177,7 @@ public class Assets implements Disposable {
             mgr.load("fonts/outfit-medium-80px.fnt", BitmapFont.class);
 
             mgr.load("audio/sounds/coin.ogg", Sound.class);
+            mgr.load("audio/sounds/idle-click.wav", Sound.class);
 
             mgr.load("audio/music/introMusic.ogg", Music.class);
         }
@@ -311,6 +313,7 @@ public class Assets implements Disposable {
 
         // Audio
         coin = mgr.get("audio/sounds/coin.ogg", Sound.class);
+        idleClick = mgr.get("audio/sounds/idle-click.wav", Sound.class);
 
         introMusic = mgr.get("audio/music/introMusic.ogg", Music.class);
 

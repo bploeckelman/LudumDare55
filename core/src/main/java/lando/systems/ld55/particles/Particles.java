@@ -86,4 +86,26 @@ public class Particles implements Disposable {
             );
         }
     }
+
+    public void tinySmoke(float inX, float inY) {
+        for (int i = 0; i < 5; i++) {
+            float angle = MathUtils.random(0f, 360f);
+            float speed = MathUtils.random(0f, 10f);
+            float x = inX + MathUtils.random(-10f, 10f);
+            float y = inY + MathUtils.random(-10f, 10f);
+            float size = MathUtils.random(5f, 20f);
+            float color = MathUtils.random(.3f, 1f);
+            activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+                .keyframe(assets.particles.smoke)
+                .startPos(x, y)
+                .velocity(MathUtils.cosDeg(angle) * speed, MathUtils.sinDeg(angle) * speed)
+                .startColor(color, color, color, 1f)
+                .endColor(0, 0, 0, 0)
+                .startSize(size)
+                .endSize(5f)
+                .timeToLive(MathUtils.random(2f, 4f))
+                .init()
+            );
+        }
+    }
 }
