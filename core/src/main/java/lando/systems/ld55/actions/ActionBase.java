@@ -1,6 +1,7 @@
 package lando.systems.ld55.actions;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import lando.systems.ld55.entities.GamePiece;
 
 public abstract class ActionBase {
 
@@ -17,6 +18,8 @@ public abstract class ActionBase {
     public abstract boolean doneTurn();
 
     public abstract void update(float dt);
+
+    public abstract GamePiece getPiece();
 
     /**
      * Used to reset the action after the queue is cleared

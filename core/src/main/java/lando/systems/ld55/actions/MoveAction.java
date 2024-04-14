@@ -48,6 +48,11 @@ public class MoveAction extends ActionBase {
     }
 
     @Override
+    public GamePiece getPiece() {
+        return piece;
+    }
+
+    @Override
     public void reset() {
         moveAmount = 0;
         int nextX = (int)Math.signum(targetTile.x - piece.currentTile.x) + piece.currentTile.x;

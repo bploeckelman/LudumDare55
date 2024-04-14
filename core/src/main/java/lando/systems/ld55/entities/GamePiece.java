@@ -95,6 +95,7 @@ public class GamePiece {
             selectedAnimState += dt;
         }
         if (isMoving) {
+            // TODO: handle a collision (melee attack) here
             updateMovement(dt);
         }
         if (currentAction != null && currentAction.isCompleted()){

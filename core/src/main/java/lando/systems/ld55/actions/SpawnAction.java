@@ -32,6 +32,11 @@ public class SpawnAction extends ActionBase {
     }
 
     @Override
+    public GamePiece getPiece() {
+        return gamePiece;
+    }
+
+    @Override
     public void reset() {
 
     }

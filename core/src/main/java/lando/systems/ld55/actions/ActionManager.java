@@ -11,7 +11,7 @@ public class ActionManager {
     private final static int ActionsPerTurn = 3;
 
     int turnNumber;
-    private int playerActionsAvailable;
+    public int playerActionsAvailable;
 
     Array<ActionBase> actionQueue = new Array<>();
     int currentAction;
@@ -54,9 +54,14 @@ public class ActionManager {
     }
 
     public void removeAction(ActionBase action) {
+        action.getPiece().currentAction = null;
         actionQueue.removeValue(action, true);
     }
 
+    /**
+     * This moves the game from collection actions to resolving them
+     * Add Enemy actions to the queue before calling this
+     */
     public void endTurn() {
         if (phase != Phase.CollectActions) {
             Gdx.app.log("ActionManager", "Calling end turn when not in the right phase");
@@ -76,6 +81,7 @@ public class ActionManager {
     }
 
     private void handleAttacks() {
+        // TODO: do the actual attacks of people
         phase = Phase.CollectActions;
     }
 
