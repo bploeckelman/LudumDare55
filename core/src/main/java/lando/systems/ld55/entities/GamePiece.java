@@ -43,25 +43,25 @@ public class GamePiece {
                 movement = 3;
                 break;
             case Bishop:
-                animGroup = assets.archer.get(alignment);
+                animGroup = assets.bishop.get(alignment);
                 direction = (owner == Owner.Player)
                     ? Direction.TopRight | Direction.BottomRight
                     : Direction.TopLeft | Direction.BottomLeft;
                 movement = 10;
                 break;
             case Rook:
-                animGroup = assets.archer.get(alignment);
+                animGroup = assets.rook.get(alignment);
                 direction = Direction.Top | Direction.Right | Direction.Bottom | Direction.Left;
                 movement = 10;
                 break;
             case Queen:
-                animGroup = assets.wizard.get(alignment);
+                animGroup = assets.queen.get(alignment);
                 direction = Direction.TopLeft | Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom | Direction.BottomLeft | Direction.Left;
                 movement = 10;
                 break;
             case Pawn:
             default:
-                animGroup = assets.peasant.get(alignment);
+                animGroup = assets.pawn.get(alignment);
                 direction = (owner == Owner.Player)
                     ? Direction.Top | Direction.Right | Direction.Bottom
                     : Direction.Top | Direction.Left | Direction.Bottom;

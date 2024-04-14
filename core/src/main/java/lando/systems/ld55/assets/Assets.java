@@ -68,10 +68,11 @@ public class Assets implements Disposable {
     public List<Animation<TextureRegion>> numbers;
 
     public Array<Array<Animation<TextureRegion>>> king = new Array<>();
-    public Array<Array<Animation<TextureRegion>>> archer = new Array<>();
+    public Array<Array<Animation<TextureRegion>>> pawn = new Array<>();;
     public Array<Array<Animation<TextureRegion>>> knight = new Array<>();
-    public Array<Array<Animation<TextureRegion>>> peasant = new Array<>();;
-    public Array<Array<Animation<TextureRegion>>> wizard = new Array<>();
+    public Array<Array<Animation<TextureRegion>>> bishop = new Array<>();
+    public Array<Array<Animation<TextureRegion>>> rook = new Array<>();
+    public Array<Array<Animation<TextureRegion>>> queen = new Array<>();
 
     public ShaderProgram portalShader;
 
@@ -234,10 +235,11 @@ public class Assets implements Disposable {
 
         // characters
         addCharacterImages(king, "king");
-        addCharacterImages(archer, "archer");
+        addCharacterImages(pawn, "peasant");
         addCharacterImages(knight, "knight");
-        addCharacterImages(peasant, "peasant");
-        addCharacterImages(wizard, "wizard");
+        addCharacterImages(bishop, "archer");
+        addCharacterImages(rook, "archer");
+        addCharacterImages(queen, "wizard");
 
         // Initialize asset helpers
 
