@@ -47,9 +47,7 @@ public class TitleScreenUI {
         settingsButton = new Button(settingsBound, "Settings", Assets.NinePatches.glass_yellow, Assets.NinePatches.glass, font);
         creditButton = new Button(creditBound, "Credits", Assets.NinePatches.glass_red, Assets.NinePatches.glass, font);
 
-        startGameButton.setOnClickAction(() -> {
-            EventManager.getInstance().dispatch("start_game");
-        });
+        startGameButton.setOnClickAction(() -> EventManager.get().dispatch("start_game"));
         settingsButton.setOnClickAction(() -> {
             Gdx.app.log("TitleScreenUI", "Settings Button Clicked");
         });

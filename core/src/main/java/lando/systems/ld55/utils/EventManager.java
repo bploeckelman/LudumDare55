@@ -6,19 +6,19 @@ import java.util.Map;
 import java.util.Set;
 
 public class EventManager {
-    private static EventManager instance = new EventManager();
+    private static final EventManager instance = new EventManager();
 
-    private Map<String, Set<EventListener>> listeners = new HashMap<>();
+    private final Map<String, Set<EventListener>> listeners = new HashMap<>();
 
-    public static EventManager getInstance() {
+    public static EventManager get() {
         return instance;
     }
 
-    public void subscribe(String eventType, EventListener listener) {
-        Set<EventListener> eventListeners = listeners.get(eventType);
+    public void subscribe(String type, EventListener listener) {
+        Set<EventListener> eventListeners = listeners.get(type);
         if (eventListeners == null) {
             eventListeners = new HashSet<>();
-            listeners.put(eventType, eventListeners);
+            listeners.put(type, eventListeners);
         }
         eventListeners.add(listener);
     }

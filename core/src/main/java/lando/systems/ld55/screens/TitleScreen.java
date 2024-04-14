@@ -23,9 +23,7 @@ public class TitleScreen extends BaseScreen {
         Gdx.input.setInputProcessor(uiStage);
         Main.game.audioManager.playMusic(AudioManager.Musics.introMusic);
         titleScreenUI = new TitleScreenUI(worldCamera.viewportWidth - 500f, 200, 300f, 75f, assets.fontAbandoned, TitleScreenUI.ButtonOrientation.VERTICAL);
-        EventManager.getInstance().subscribe("start_game", (eventType, data) -> {
-            transitionToGameScreen();
-        });
+        EventManager.get().subscribe("start_game", (eventType, data) -> transitionToGameScreen());
     }
 
     @Override
@@ -69,13 +67,13 @@ public class TitleScreen extends BaseScreen {
             var layout = new GlyphLayout();
             layout.setText(font, "Coming Soon - \nClock Gobblers", Color.WHITE, width, Align.center, true);
             //font.draw(batch, layout, 0, height / 3f);
+            if (drawUI) {
+                titleScreenUI.draw(batch);
+            }
         }
         batch.end();
 
-        if (drawUI) {
-            titleScreenUI.draw(batch);
-            uiStage.draw();
-        }
+
     }
 
     private void transitionToGameScreen() {
