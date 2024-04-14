@@ -34,7 +34,7 @@ public class GameTile {
         if ((x + y) % 2 == 0) {
             c = Color.LIGHT_GRAY;
         }
-        batch.setColor(c.r, c.g, c.b, 0.5f);
+        batch.setColor(c.r, c.g, c.b, 0.2f);
         batch.draw(Main.game.assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
         batch.setColor(Color.WHITE);
     }
