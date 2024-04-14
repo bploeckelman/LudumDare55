@@ -65,6 +65,8 @@ public class Assets implements Disposable {
     public Animation<TextureRegion> spawnEvilActive;
     public Animation<TextureRegion> spawnGoodIdle;
     public Animation<TextureRegion> spawnGoodActive;
+    public Animation<TextureRegion> candle;
+    public Animation<TextureRegion> candleEvil;
     public List<Animation<TextureRegion>> numbers;
 
     public Array<Array<Animation<TextureRegion>>> king = new Array<>();
@@ -231,6 +233,8 @@ public class Assets implements Disposable {
         spawnEvilActive = new Animation<>(0.2f, atlas.findRegions("stage/spawn-evil-active/spawn-evil-active"), Animation.PlayMode.LOOP_PINGPONG);
         spawnGoodIdle = new Animation<>(0.15f, atlas.findRegions("stage/spawn-idle/spawn-idle"), Animation.PlayMode.LOOP);
         spawnGoodActive = new Animation<>(0.15f, atlas.findRegions("stage/spawn-idle/spawn-idle"), Animation.PlayMode.LOOP_PINGPONG);
+        candle = new Animation<>(0.15f, atlas.findRegions("stage/candlestick-idle/candlestick-idle"), Animation.PlayMode.LOOP);
+        candleEvil = new Animation<>(0.15f, atlas.findRegions("stage/candlestick-evil-idle/candlestick-evil-idle"), Animation.PlayMode.LOOP);
 
         numbers = new ArrayList<>();
         for (int i = 0; i <= 9; ++i) {

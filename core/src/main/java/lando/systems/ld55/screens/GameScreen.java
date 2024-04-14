@@ -4,14 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
+import lando.systems.ld55.entities.StyleManager;
+import lando.systems.ld55.entities.StylePiece;
 import lando.systems.ld55.particles.Particles;
 import lando.systems.ld55.ui.GameScreenUI;
 
@@ -20,6 +26,7 @@ public class GameScreen extends BaseScreen{
     public Particles particles;
     public ActionManager actionManager;
     public GameScreenUI ui;
+    private StyleManager styleManager = new StyleManager();
 
     public enum GameMode { None, Summon, Move }
     public GameMode currentGameMode = GameMode.Summon;
@@ -31,6 +38,22 @@ public class GameScreen extends BaseScreen{
         ui = new GameScreenUI(this);
         Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
         Main.game.audioManager.playMusic(AudioManager.Musics.mainMusic);
+        setupStyle();
+    }
+
+    private void setupStyle() {
+        float width = 400;
+        float x = Config.Screen.window_width / 2f - width;
+        float div = width / 5;
+        float y = 75;
+        styleManager.add(assets.candle, x += div, y);
+        styleManager.add(assets.candle, x += div, y);
+        styleManager.add(assets.candle, x += div, y);
+        styleManager.add(assets.candle, x += div, y);
+        styleManager.add(assets.candleEvil, x += div * 2, y);
+        styleManager.add(assets.candleEvil, x += div, y);
+        styleManager.add(assets.candleEvil, x += div, y);
+        styleManager.add(assets.candleEvil, x += div, y);
     }
 
     @Override
@@ -59,6 +82,8 @@ public class GameScreen extends BaseScreen{
         if(Gdx.input.justTouched() && gameBoard.hoverTile != null) {
             Main.game.audioManager.playSound(AudioManager.Sounds.error_sound, .3f);
         }
+
+        styleManager.update(dt);
     }
 
     @Override
@@ -77,6 +102,7 @@ public class GameScreen extends BaseScreen{
         {
             particles.draw(batch, Particles.Layer.BACKGROUND);
             gameBoard.render(batch);
+            styleManager.render(batch);
             actionManager.render(batch);
         }
         batch.end();
