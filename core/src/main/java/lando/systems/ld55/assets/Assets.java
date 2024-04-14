@@ -67,6 +67,12 @@ public class Assets implements Disposable {
     public Animation<TextureRegion> spawnGoodActive;
     public List<Animation<TextureRegion>> numbers;
 
+    public Array<Array<Animation<TextureRegion>>> king = new Array<>();
+    public Array<Array<Animation<TextureRegion>>> archer = new Array<>();
+    public Array<Array<Animation<TextureRegion>>> knight = new Array<>();
+    public Array<Array<Animation<TextureRegion>>> peasant = new Array<>();;
+    public Array<Array<Animation<TextureRegion>>> wizard = new Array<>();
+
     public ShaderProgram portalShader;
 
     public Array<ShaderProgram> randomTransitions;
@@ -225,6 +231,13 @@ public class Assets implements Disposable {
             var anim = new Animation<TextureRegion>(0.1f, atlas.findRegions("particles/font-points-" + i));
             numbers.add(anim);
         }
+
+        // characters
+        addCharacterImages(king, "king");
+        addCharacterImages(archer, "archer");
+        addCharacterImages(knight, "knight");
+        addCharacterImages(peasant, "peasant");
+        addCharacterImages(wizard, "wizard");
 
         // Initialize asset helpers
 
@@ -406,5 +419,19 @@ public class Assets implements Disposable {
     public void storeSoundVolume(float level) {
         preferences.putFloat("sound", level);
         preferences.flush();
+    }
+
+    private void addCharacterImages(Array<Array<Animation<TextureRegion>>> array, String name) {
+        // 0 - good, 1 - evil
+        array.add(getAnimGroup(name, "good"));
+        array.add(getAnimGroup(name, "evil"));
+    }
+
+    private Array<Animation<TextureRegion>> getAnimGroup(String name, String alignment) {
+        var animGroup = new Array<Animation<TextureRegion>>();
+        animGroup.add(new Animation<>(.1f, atlas.findRegions("characters/" + alignment + "/" + name + "-placeholder"), Animation.PlayMode.LOOP));
+        animGroup.add(new Animation<>(.1f, atlas.findRegions("characters/" + alignment + "/" + name + "-action"), Animation.PlayMode.LOOP));
+
+        return animGroup;
     }
 }
