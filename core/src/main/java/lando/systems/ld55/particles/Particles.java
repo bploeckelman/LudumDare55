@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
 import lando.systems.ld55.Config;
 import lando.systems.ld55.assets.Assets;
+import lando.systems.ld55.utils.Callback;
+import lando.systems.ld55.utils.Time;
 
 public class Particles implements Disposable {
 
@@ -250,5 +252,22 @@ public class Particles implements Disposable {
             .timeToLive(20f)
             .init()
         );
+    }
+
+    public void spawnFireball(float x, float y, float targetX, float targetY) {
+        activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+            .keyframe(assets.particles.fires.getKeyFrame(0f))
+            .startPos(x, y)
+            .targetPos(targetX, targetY)
+            .startColor(1f, 0.6f, 0.2f, 1f)
+            .startSize(MathUtils.random(50f, 75f))
+            .startRotation(MathUtils.random(0, 180))
+            .endRotation(MathUtils.random(720, 1440))
+            .acceleration(100f,100f)
+            .accelerationDamping(0.95f)
+            .timeToLive(.5f)
+            .init()
+        );
+        Time.do_after_delay(0.5f, (param) -> { smoke(targetX, targetY); });
     }
 }

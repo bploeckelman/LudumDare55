@@ -13,6 +13,7 @@ import lando.systems.ld55.Stats;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.assets.Assets;
+import lando.systems.ld55.particles.Particles;
 import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.ui.HealthBar;
 
@@ -208,6 +209,12 @@ public class GamePiece {
         setCurrentAnimation(attack);
         attackTime = attack.getAnimationDuration();
         isAttacking = true;
+
+        switch (type) {
+            case Bishop:
+                GameScreen.particles.spawnFireball(position.x, position.y + 5f, attackedPiece.position.x, attackedPiece.position.y + 5f);
+                break;
+        }
     }
 
     public GamePiece select(GameBoard gameBoard) {

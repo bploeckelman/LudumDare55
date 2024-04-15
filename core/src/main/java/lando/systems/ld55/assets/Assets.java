@@ -192,6 +192,9 @@ public class Assets implements Disposable {
         public Animation<TextureRegion> stars;
         public Animation<TextureRegion> twirls;
         public Animation<TextureRegion> splats;
+        public Animation<TextureRegion> fires;
+        public Animation<TextureRegion> magics;
+
     }
 
     public Assets() {
@@ -364,6 +367,8 @@ public class Assets implements Disposable {
         particles.stars   = new Animation<>(.1f, atlas.findRegions("particles/kenney/star"), Animation.PlayMode.LOOP);
         particles.splats   = new Animation<>(.1f, atlas.findRegions("particles/splats/splat"), Animation.PlayMode.LOOP);
         particles.twirls  = new Animation<>(.1f, atlas.findRegions("particles/kenney/twirl"), Animation.PlayMode.LOOP);
+        particles.fires  = new Animation<>(.1f, atlas.findRegions("particles/kenney/fire"), Animation.PlayMode.LOOP);
+        particles.magics  = new Animation<>(.1f, atlas.findRegions("particles/kenney/magic"), Animation.PlayMode.LOOP);
         particles.line    = atlas.findRegion("particles/line");
 
         // Transition shaders
