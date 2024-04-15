@@ -334,6 +334,14 @@ public class GameBoard extends InputAdapter {
             hoverTileOverlay = refreshHoverTileOverlay();
         }
 
+        // NOTE(brian) - this is commented out b/c it might be useful for player to see enemy attack ranges while in radial menu
+        // override hover tile if we are in a radial menu
+//        if (radialMenu != null) {
+//            hoverTile = null;
+//            hoverTileOverlay = null;
+//            attackTileOverlays.clear();
+//        }
+
         for (int i = portalAnimations.size -1; i >= 0; i--) {
             Portal p = portalAnimations.get(i);
             p.update(dt);
