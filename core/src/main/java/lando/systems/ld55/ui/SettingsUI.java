@@ -121,12 +121,16 @@ public class SettingsUI extends Group {
         //settingsWindow.setColor(Color.RED);
 
         Label settingLabel = new Label("Settings", skin);
-//        settingLabel.getStyle().font = assets.abandonedFont50;
+        Label.LabelStyle style = settingLabel.getStyle();
+        style.font = assets.fontAbandoned;
+        style.fontColor = Color.BLACK;
+        settingLabel.setStyle(style);
+        //settingLabel.setFontScale(3f);
         settingsWindow.add(settingLabel).padBottom(40f).padTop(40f);
         settingsWindow.row();
         Label musicVolumeLabel = new Label("Music Volume", skin);
         musicVolumeLabel.setColor(Color.BLACK);
-//        musicVolumeLabel.setFontScale(2f);
+        musicVolumeLabel.setFontScale(.5f);
         settingsWindow.add(musicVolumeLabel).padBottom(10f);
         settingsWindow.row();
         VisSlider musicSlider = new VisSlider(0f, 1f, .01f, false, customCatSliderStyle);
@@ -142,6 +146,7 @@ public class SettingsUI extends Group {
         settingsWindow.row();
         Label soundVolumeLevel = new Label("Sound Volume", skin);
         soundVolumeLevel.setColor(Color.BLACK);
+        soundVolumeLevel.setFontScale(.5f);
         settingsWindow.add(soundVolumeLevel).padBottom(10f);
         settingsWindow.row();
         VisSlider soundSlider = new VisSlider(0f, 1f, .01f, false, customDogSliderStyle);
@@ -158,7 +163,7 @@ public class SettingsUI extends Group {
                 audio.playSound(AudioManager.Sounds.coin);
             }
         });
-        settingsWindow.add(soundSlider).padBottom(10f).width(settingsWindow.getWidth() - 100f);
+        settingsWindow.add(soundSlider).padBottom(5f).width(settingsWindow.getWidth() - 100f);
         settingsWindow.row();
 
         com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle defaultButtonStyle = skin.get("default", com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle.class);
@@ -171,7 +176,7 @@ public class SettingsUI extends Group {
         closeSettingsButton = new ImageButton(skin);
         closeSettingsButton.setStyle(closeButtonStyle);
         closeSettingsButton.setWidth(50f);
-        closeSettingsButton.setHeight(50f);
+        closeSettingsButton.setHeight(25f);
         closeSettingsButton.setPosition(settingsPaneBoundsHidden.x + settingsPaneBoundsHidden.width - closeSettingsButton.getWidth(), settingsPaneBoundsHidden.y + settingsPaneBoundsHidden.height - closeSettingsButton.getHeight());
         closeSettingsButton.setClip(false);
 
@@ -185,7 +190,7 @@ public class SettingsUI extends Group {
         settingsButtonStyle.over = Assets.Patch.glass_dim.drawable;
 
         closeSettingsTextButton = new TextButton("Close Settings", settingsButtonStyle);
-        settingsWindow.add(closeSettingsTextButton).padTop(50f).padBottom(10f).width(settingsWindow.getWidth() - 100f);
+        settingsWindow.add(closeSettingsTextButton).padTop(5f).padBottom(10f).width(settingsWindow.getWidth() - 100f).height(50f);
 
         float showDuration = 0.5f;
         float hideDuration = 0.1f;
