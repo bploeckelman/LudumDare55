@@ -457,6 +457,10 @@ public class GameBoard extends InputAdapter {
             gp.render(batch);
         }
 
+        if (focusPiece != null) {
+            focusPiece.render(batch);
+        }
+
 //        // NOTE - this is showing where a possible move can go to
 //        if (selectedPiece != null && selectedPiece.currentAction == null ) {
 //            selectedPiece.renderMovement(batch);
