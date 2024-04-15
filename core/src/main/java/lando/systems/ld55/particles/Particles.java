@@ -244,12 +244,10 @@ public class Particles implements Disposable {
     public void spawnBloodPuddle(float x, float y) {
         activeParticles.get(Layer.BACKGROUND).add(Particle.initializer(particlePool.obtain())
             .keyframe(assets.particles.splats.getKeyFrame(MathUtils.random(0f, 1f)))
-            .startPos(x, y)
+            .startPos(MathUtils.random(x - 10, x + 10), MathUtils.random(y - 10, y + 10))
             .startColor(0.6f, 0.1f, 0.1f, 1f)
-            .endColor(0.6f, 0.1f, 0.1f, 0f)
-            .startSize(MathUtils.random(20f, 30f))
+            .startSize(MathUtils.random(40f, 50f))
             .endSize(MathUtils.random(60f, 80f))
-            .timeToLive(20f)
             .init()
         );
     }
@@ -268,6 +266,26 @@ public class Particles implements Disposable {
             .timeToLive(.5f)
             .init()
         );
-        Time.do_after_delay(0.5f, (param) -> { smoke(targetX, targetY); });
+        Time.do_after_delay(0.5f, param -> smoke(targetX, targetY));
     }
+
+    public void spawnMagic(float x, float y, float targetX, float targetY) {
+        for (int i = 0; i < 10; i++) {
+            activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+                .keyframe(assets.particles.magics.getKeyFrame(MathUtils.random(1f)))
+                .startPos(x, y)
+                .targetPos(MathUtils.random(targetX - 10f, targetX + 10f), MathUtils.random(targetY - 10f, targetY + 10f))
+                .startColor(0.3f, 0.3f, 1f, 1f)
+                .startSize(MathUtils.random(50f, 75f))
+                .startRotation(MathUtils.random(0, 180))
+                .endRotation(MathUtils.random(720, 1440))
+                .acceleration(100f,100f)
+                .accelerationDamping(0.95f)
+                .timeToLive(.5f)
+                .init()
+            );
+            Time.do_after_delay(0.5f, param -> smoke(targetX, targetY));
+        }
+    }
+
 }

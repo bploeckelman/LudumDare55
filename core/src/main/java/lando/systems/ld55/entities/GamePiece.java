@@ -211,6 +211,9 @@ public class GamePiece {
         isAttacking = true;
 
         switch (type) {
+            case Queen:
+                GameScreen.particles.spawnMagic(position.x, position.y + 5f, attackedPiece.position.x, attackedPiece.position.y + 5f);
+                break;
             case Bishop:
                 GameScreen.particles.spawnFireball(position.x, position.y + 5f, attackedPiece.position.x, attackedPiece.position.y + 5f);
                 break;
