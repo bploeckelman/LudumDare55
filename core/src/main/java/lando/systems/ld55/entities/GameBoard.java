@@ -163,7 +163,7 @@ public class GameBoard extends InputAdapter {
             if (gamePiece != null && gamePiece.summoning) gamePiece = null;
             if (gamePiece != null && gamePiece.owner != GamePiece.Owner.Player) gamePiece = null;
             if (gamePiece == null) {
-                if (hoverTile.summonable) {
+                if (selectedPiece == null && hoverTile.summonable) {
                     radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.Summon);
                 } else {
                     // Move mode
