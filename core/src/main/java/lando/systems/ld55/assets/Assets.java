@@ -121,8 +121,18 @@ public class Assets implements Disposable {
 
     public Sound coin;
     public Sound idleClick;
+    public Sound click;
+    public Sound pew;
     public Sound errorThud;
+    public Sound errorBuzz;
     public Sound levelUp;
+    public Sound hornFanfare;
+    public Sound hit1;
+    public Sound hit2;
+    public Sound hit3;
+    public Sound hit4;
+    public Sound hit5;
+    public Sound hit6;
 
     public Music introMusic;
     public Music mainMusic;
@@ -223,8 +233,18 @@ public class Assets implements Disposable {
 
             mgr.load("audio/sounds/coin.ogg", Sound.class);
             mgr.load("audio/sounds/idle-click.ogg", Sound.class);
+            mgr.load("audio/sounds/pew.ogg", Sound.class);
+            mgr.load("audio/sounds/click1.ogg", Sound.class);
             mgr.load("audio/sounds/level-up.wav", Sound.class);
             mgr.load("audio/sounds/error1.ogg", Sound.class);
+            mgr.load("audio/sounds/error-buzz.ogg", Sound.class);
+            mgr.load("audio/sounds/horn-fanfare.ogg", Sound.class);
+            mgr.load("audio/sounds/hit1.ogg", Sound.class);
+            mgr.load("audio/sounds/hit2.ogg", Sound.class);
+            mgr.load("audio/sounds/hit3.ogg", Sound.class);
+            mgr.load("audio/sounds/hit4.ogg", Sound.class);
+            mgr.load("audio/sounds/hit5.ogg", Sound.class);
+            mgr.load("audio/sounds/hit6.ogg", Sound.class);
 
             mgr.load("audio/music/intro-music.ogg", Music.class);
             mgr.load("audio/music/main-music.ogg", Music.class);
@@ -413,8 +433,18 @@ public class Assets implements Disposable {
         // Audio
         coin = mgr.get("audio/sounds/coin.ogg", Sound.class);
         idleClick = mgr.get("audio/sounds/idle-click.ogg", Sound.class);
+        click = mgr.get("audio/sounds/click1.ogg", Sound.class);
+        pew = mgr.get("audio/sounds/pew.ogg", Sound.class);
         levelUp = mgr.get("audio/sounds/level-up.wav", Sound.class);
         errorThud = mgr.get("audio/sounds/error1.ogg", Sound.class);
+        errorBuzz = mgr.get("audio/sounds/error-buzz.ogg", Sound.class);
+        hornFanfare = mgr.get("audio/sounds/horn-fanfare.ogg", Sound.class);
+        hit1 = mgr.get("audio/sounds/hit1.ogg", Sound.class);
+        hit2 = mgr.get("audio/sounds/hit2.ogg", Sound.class);
+        hit3 = mgr.get("audio/sounds/hit3.ogg", Sound.class);
+        hit4 = mgr.get("audio/sounds/hit4.ogg", Sound.class);
+        hit5 = mgr.get("audio/sounds/hit5.ogg", Sound.class);
+        hit6 = mgr.get("audio/sounds/hit6.ogg", Sound.class);
 
         introMusic = mgr.get("audio/music/intro-music.ogg", Music.class);
         mainMusic = mgr.get("audio/music/main-music.ogg", Music.class);

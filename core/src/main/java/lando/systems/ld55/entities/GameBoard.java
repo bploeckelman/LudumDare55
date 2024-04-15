@@ -21,6 +21,7 @@ import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.actions.SpawnAction;
 import lando.systems.ld55.assets.TileOverlayAssets;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.ui.ActionQueueUI;
 import lando.systems.ld55.ui.radial.RadialMenu;
@@ -159,6 +160,7 @@ public class GameBoard extends InputAdapter {
             if (gamePiece == null) {
                 if (selectedPiece == null && hoverTile.summonable) {
                     radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.Summon);
+                    Main.game.audioManager.playSound(AudioManager.Sounds.click, .5f);
                 } else {
                     // Move mode
                     if (selectedPiece != null) {

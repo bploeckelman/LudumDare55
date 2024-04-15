@@ -25,7 +25,8 @@ public class RadialSummonButton extends RadialButton {
                 if (actionsAvailable >= type.actionsToSpawn) {
                     pointsUsed = type.actionsToSpawn;
                     enabled = true;
-                    this.text = "Pawn\n1 Action";
+//                    this.text = "Pawn\n1 Action";
+                    this.text = "Summon\nPawn\n(1 move)";
                 } else {
                     this.text = "Pawn\nNot enough\nactions";
                 }
@@ -34,7 +35,8 @@ public class RadialSummonButton extends RadialButton {
                 if (actionsAvailable >= type.actionsToSpawn) {
                     pointsUsed = type.actionsToSpawn;
                     enabled = true;
-                    this.text = "Knight\n1 Action";
+//                    this.text = "Knight\n1 Action";
+                    this.text = "Summon\nKnight\n(1 move)";
                 } else {
                     this.text = "Knight\nNot enough\nactions";
                 }
@@ -43,7 +45,7 @@ public class RadialSummonButton extends RadialButton {
                 if (actionsAvailable >= type.actionsToSpawn) {
                     pointsUsed = type.actionsToSpawn;
                     enabled = true;
-                    this.text = "Bishop\n2 Actions";
+                    this.text = "Summon\nBishop\n(2 moves)";
                 } else {
                     this.text = "Bishop\nNot enough\nactions";
                 }
@@ -52,7 +54,7 @@ public class RadialSummonButton extends RadialButton {
                 if (actionsAvailable >= type.actionsToSpawn) {
                     pointsUsed = type.actionsToSpawn;
                     enabled = true;
-                    this.text = "Rook\n2 Actions";
+                    this.text = "Summon\nRook\n(2 moves)";
                 } else {
                     this.text = "Rook\nNot enough\nactions";
                 }
@@ -61,7 +63,7 @@ public class RadialSummonButton extends RadialButton {
                 if (actionsAvailable >= type.actionsToSpawn) {
                     pointsUsed = type.actionsToSpawn;
                     enabled = true;
-                    this.text = "Queen\n3 Actions";
+                    this.text = "Summon\nQueen\n(3 moves)";
                 } else {
                     this.text = "Queen\nNot enough\nactions";
                 }

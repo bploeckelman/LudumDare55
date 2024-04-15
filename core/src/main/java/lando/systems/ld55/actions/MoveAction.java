@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
@@ -78,6 +79,7 @@ public class MoveAction extends ActionBase {
                     blockingPiece.takeDamage(1, board);
                 } else {
                     // friendly,  TODO: bounce sound
+                    Main.game.audioManager.playSound(AudioManager.Sounds.error_sound);
                 }
             }
 

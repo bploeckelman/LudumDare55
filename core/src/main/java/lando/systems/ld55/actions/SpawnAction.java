@@ -3,6 +3,8 @@ package lando.systems.ld55.actions;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import lando.systems.ld55.Main;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
@@ -48,6 +50,7 @@ public class SpawnAction extends ActionBase {
             gamePiece.setTile(spawnTile);
             started = true;
             // TODO: Play portal sound
+            Main.game.audioManager.playSound(AudioManager.Sounds.horn_fanfare);
 
 
             // TODO: particles
