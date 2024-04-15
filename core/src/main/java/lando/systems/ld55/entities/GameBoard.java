@@ -439,10 +439,12 @@ public class GameBoard extends InputAdapter {
                     var isRadialMenuTarget = (radialMenu != null && radialMenu.tile == tile);
                     var panelAlpha = isRadialMenuTarget ? 0.8f : 0.5f;
                     var panelPatch = isRadialMenuTarget ? TileOverlayAssets.panelGreen : TileOverlayAssets.panelBlue;
-                    spawnTileOverlays.add(new TileOverlayInfo(tile, 0)
+                    var overlay = new TileOverlayInfo(tile, 0)
                         .addLayer("base-panel", 0.75f, 1, 1, 1, panelAlpha, panelPatch, null, null)
-                        .addLayer("icon", 0.66f, Color.WHITE, null, TileOverlayAssets.pawnUp, null)
-                    );
+                        .addLayer("icon-pawn", 0.66f, Color.WHITE, null, TileOverlayAssets.pawnPlus, null);
+//                        .addLayer("icon-plus-shadow", 0.6f, Color.BLACK, null, TileOverlayAssets.plus, null)
+//                        .addLayer("icon-plus", 0.5f, Color.GREEN, null, TileOverlayAssets.plus, null);
+                    spawnTileOverlays.add(overlay);
                 }
 
                 // reset flag for next tile

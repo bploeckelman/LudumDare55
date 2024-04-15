@@ -22,12 +22,15 @@ public class TileOverlayAssets {
 
     public static TextureRegion target;
     public static TextureRegion cross;
+    public static TextureRegion plus;
     public static TextureRegion checkmark;
     public static TextureRegion exclamation;
     public static TextureRegion question;
+    public static TextureRegion pawn;
     public static TextureRegion pawns;
     public static TextureRegion pawnUp;
     public static TextureRegion pawnDown;
+    public static TextureRegion pawnPlus;
     public static TextureRegion tokenAdd;
     public static TextureRegion dot;
     public static TextureRegion skull;
@@ -56,12 +59,15 @@ public class TileOverlayAssets {
 
         target      = atlas.findRegion("icons/kenney-ui/target");
         cross       = atlas.findRegion("icons/kenney-ui/cross");
+        plus        = atlas.findRegion("icons/kenney-ui/plus");
         checkmark   = atlas.findRegion("icons/kenney-ui/checkmark");
         exclamation = atlas.findRegion("icons/kenney-ui/exclamation");
         question    = atlas.findRegion("icons/kenney-board-game/dice_question");
+        pawn        = atlas.findRegion("icons/kenney-board-game/pawn");
         pawns       = atlas.findRegion("icons/kenney-board-game/pawns");
         pawnUp      = atlas.findRegion("icons/kenney-board-game/pawn_up");
         pawnDown    = atlas.findRegion("icons/kenney-board-game/pawn_down");
+        pawnPlus    = atlas.findRegion("icons/kenney-board-game/pawn_plus");
         tokenAdd    = atlas.findRegion("icons/kenney-board-game/token_add");
         dot         = atlas.findRegion("icons/kenney-board-game/tag_empty");
         skull       = atlas.findRegion("icons/kenney-board-game/skull");
