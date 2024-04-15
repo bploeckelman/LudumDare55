@@ -1,6 +1,7 @@
 package lando.systems.ld55.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -99,6 +100,7 @@ public class TitleScreen extends BaseScreen {
     }
 
     private void transitionToGameScreen() {
+        if (settingsUI.isSettingShown) { return; }
         if (!exitingScreen ) {
             exitingScreen = true;
             var nextScreen = Config.Debug.show_intro_screen
@@ -111,7 +113,7 @@ public class TitleScreen extends BaseScreen {
     }
 
     private void transitionToCreditsScreen() {
-        Gdx.app.log("TitleScreen", "transitionToCreditsScreen");
+        if (settingsUI.isSettingShown) { return; }
         if (!exitingScreen ) {
             Main.game.audioManager.playSound(AudioManager.Sounds.level_up);
             exitingScreen = true;
@@ -125,6 +127,7 @@ public class TitleScreen extends BaseScreen {
     }
 
     private void meaninglessClickEffect(float x, float y) {
+        if (settingsUI.isSettingShown) { return; }
         particles.tinySmoke(x, y);
         Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
     }

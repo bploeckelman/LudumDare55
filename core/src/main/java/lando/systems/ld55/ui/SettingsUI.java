@@ -51,7 +51,6 @@ public class SettingsUI extends Group {
     }
 
     public void showSettings() {
-        Gdx.app.log("SettingsUI", "showSettings");
         showSettingsPaneAction.reset();
         showCloseSettingsButtonAction.reset();
         greyOutWindow.setZIndex(settingsWindow.getZIndex() + 100);
