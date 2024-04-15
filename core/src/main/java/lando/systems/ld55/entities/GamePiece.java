@@ -202,11 +202,14 @@ public class GamePiece {
                 Stats.enemyUnitsKilled++;
             }
         }
+
         if (currentHealth <= 0 && currentAction != null){
             board.gameScreen.actionManager.removeAction(currentAction);
             currentAction = null;
-
         }
+
+        // make the bar brighter
+        healthAlpha = 1f;
     }
 
     public void attack(GamePiece attackedPiece) {
@@ -237,6 +240,7 @@ public class GamePiece {
         selected = false;
         selectedAnimState = 0;
         moveTiles.clear();
+        gameBoard.playerMoveOverlay.clear();
         gameBoard.selectedPiece = null;
         return this;
     }
