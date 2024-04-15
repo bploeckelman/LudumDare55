@@ -65,6 +65,7 @@ public class RadialMenu {
     Vector2 tempVec2 = new Vector2();
     Vector2 centerVec2 = new Vector2();
     public void update(float dt) {
+        board.gameScreen.actionManager.tempActionPointsUsed(0);
         float windowDelta = dt/TIME_TO_OPEN;
         if (targetProgress < currentProgress) {
             // closing
@@ -95,6 +96,19 @@ public class RadialMenu {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             exitMenu();
         }
+
+        if (targetProgress == 1 && currentProgress == 1) {
+            mosPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            board.gameScreen.worldCamera.unproject(mosPos);
+            for (RadialButton button : buttons) {
+                if (button.inButton(mosPos.x, mosPos.y)) {
+                    if (button.enabled) {
+                        board.gameScreen.actionManager.tempActionPointsUsed(button.pointsUsed);
+                    }
+                }
+            }
+        }
+
     }
 
     Vector3 mosPos = new Vector3();

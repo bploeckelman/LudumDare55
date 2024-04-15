@@ -51,6 +51,7 @@ public class Assets implements Disposable {
 
     public Texture pixel;
     public Texture gdx;
+    public Texture title;
     public Texture noiseTexture;
     public Texture whitePixel;
     public Texture levelLayout;
@@ -208,6 +209,7 @@ public class Assets implements Disposable {
             mgr.load("ui/uiskin.json", Skin.class);
             mgr.load("i18n/strings", I18NBundle.class);
 
+            mgr.load("images/title-image_00.png", Texture.class);
             mgr.load("images/libgdx.png", Texture.class);
             mgr.load("images/noise.png", Texture.class);
             mgr.load("images/pixel.png", Texture.class);
@@ -283,6 +285,7 @@ public class Assets implements Disposable {
         strings = mgr.get("i18n/strings", I18NBundle.class);
 
         // Misc references
+        title = mgr.get("images/title-image_00.png");
         gdx = mgr.get("images/libgdx.png");
         whitePixel = mgr.get("images/pixel.png");
         noiseTexture = mgr.get("images/noise.png");

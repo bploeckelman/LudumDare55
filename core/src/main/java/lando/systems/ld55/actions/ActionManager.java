@@ -26,6 +26,7 @@ public class ActionManager {
 
     int turnNumber;
     public int playerActionsAvailable;
+    public int tempActionPoints;
 
     Array<ActionBase> actionQueue = new Array<>();
     public int currentAction;
@@ -39,6 +40,7 @@ public class ActionManager {
     public ActionManager(GameScreen screen) {
         turnNumber = 0;
         playerActionsAvailable = ActionsPerTurn;
+        tempActionPoints = playerActionsAvailable;
         phase = Phase.CollectActions;
         this.gameScreen = screen;
     }
@@ -96,6 +98,10 @@ public class ActionManager {
     public void removeAction(ActionBase action) {
         action.getPiece().currentAction = null;
         actionQueue.removeValue(action, true);
+    }
+
+    public void tempActionPointsUsed(int value) {
+        this.tempActionPoints = playerActionsAvailable - value;
     }
 
     /**
