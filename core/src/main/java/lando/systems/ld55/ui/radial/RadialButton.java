@@ -35,14 +35,16 @@ public class RadialButton {
 
     public RadialButton(NinePatch background, TextureRegion icon, String text, boolean enabled) {
         this.backgroundEnabled = background;
-        this.backgroundDisabled = TileOverlayAssets.panelRed;
+        this.backgroundDisabled = TileOverlayAssets.panelWhite;
+//        this.backgroundDisabled = TileOverlayAssets.panelRed;
         this.backgroundHovered = TileOverlayAssets.panelBlue;
         this.background = backgroundEnabled;
         this.icon = icon;
         this.text = text;
         this.centerPosition = new Vector2();
         this.radius = 0;
-        this.font = Main.game.assets.fontZektonSmall;
+//        this.font = Main.game.assets.fontZektonSmall;
+        this.font = Main.game.assets.font;
         this.layout = Main.game.assets.layout;
         this.enabled = enabled;
         this.hovered = false;
@@ -54,9 +56,17 @@ public class RadialButton {
     }
 
     public void render(SpriteBatch batch) {
-        if      (!enabled) background = backgroundDisabled;
-        else if (hovered)  background = backgroundHovered;
-        else               background = backgroundEnabled;
+        if (!enabled) {
+            // NOTE(brian) - should probably always be TileOverlayAssets.panelWhite for tinting
+            background = backgroundDisabled;
+            batch.setColor(Color.DARK_GRAY);
+        } else if (hovered) {
+            background = backgroundHovered;
+        } else {
+            // NOTE(brian) - should probably always be TileOverlayAssets.panelWhite for tinting
+            background = backgroundEnabled;
+            batch.setColor(Color.LIGHT_GRAY);
+        }
         background.draw(batch,
             centerPosition.x - radius,
             centerPosition.y - radius,
