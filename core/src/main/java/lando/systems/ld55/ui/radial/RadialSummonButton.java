@@ -1,8 +1,6 @@
 package lando.systems.ld55.ui.radial;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.actions.SpawnAction;
@@ -18,19 +16,30 @@ public class RadialSummonButton extends RadialButton {
     GameTile summonTile;
 
     public RadialSummonButton(GameBoard board, GameTile tile, GamePiece.Type type) {
-        super(TileOverlayAssets.panelWhite, TileOverlayAssets.pawnPlus, "", false);
+        super(TileOverlayAssets.panelWhite,
+            TileOverlayAssets.pawnPlus,
+            "",
+            false);
+
         this.summonTile = tile;
         this.board = board;
         this.pieceType = type;
+
         int actionsAvailable = board.gameScreen.actionManager.playerActionsAvailable;
         if (actionsAvailable >= type.actionsToSpawn) {
             pointsUsed = type.actionsToSpawn;
             enabled = true;
         }
-        Animation<TextureRegion> portrait = board.gameScreen.assets.getPortrait(type, GamePiece.Owner.Player);
+
+        var portrait = board.gameScreen.assets.getPortrait(type, GamePiece.Owner.Player);
         this.icon = portrait.getKeyFrame(0);
-        iconEnabledColor.set(Color.WHITE);
-        iconDisabledColor.set(.8f, .8f, .8f, .1251f);
+        this.iconEnabledColor.set(Color.WHITE);
+        this.iconDisabledColor.set(Color.DARK_GRAY);
+//        iconDisabledColor.set(.8f, .8f, .8f, .1251f);
+
+        this.iconMetaColor.set(Color.LIME);
+        this.iconMeta = TileOverlayAssets.plus;
+        this.iconCost = TileOverlayAssets.numbersOutline.get(type.actionsToSpawn);
     }
 
     @Override

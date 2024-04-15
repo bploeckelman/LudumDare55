@@ -28,6 +28,9 @@ public class TileOverlayAssets {
     public static TextureRegion exclamation;
     public static TextureRegion question;
     public static TextureRegion dollar;
+    public static TextureRegion dollarOutline;
+    public static TextureRegion disabledCross;
+    public static TextureRegion disabledCircle;
     public static TextureRegion pawn;
     public static TextureRegion pawns;
     public static TextureRegion pawnUp;
@@ -43,6 +46,8 @@ public class TileOverlayAssets {
     public static TextureRegion cardX;
 
     public static Array<TextureRegion> tags;
+    public static Array<TextureRegion> numbers;
+    public static Array<TextureRegion> numbersOutline;
 
     public static NinePatch panelWhite;
     public static NinePatch panelRed;
@@ -69,6 +74,9 @@ public class TileOverlayAssets {
         exclamation = atlas.findRegion("icons/kenney-ui/exclamation");
         question    = atlas.findRegion("icons/kenney-board-game/dice_question");
         dollar      = atlas.findRegion("icons/kenney-board-game/dollar");
+        dollarOutline  = atlas.findRegion("icons/kenney-board-game/dollar_outline");
+        disabledCross  = atlas.findRegion("icons/kenney-board-game/flair_small_cross_outline");
+        disabledCircle = atlas.findRegion("icons/kenney-board-game/flair_small_disabled_outline");
         pawn        = atlas.findRegion("icons/kenney-board-game/pawn");
         pawns       = atlas.findRegion("icons/kenney-board-game/pawns");
         pawnUp      = atlas.findRegion("icons/kenney-board-game/pawn_up");
@@ -87,6 +95,14 @@ public class TileOverlayAssets {
         for (int i = 0; i <= 10; i++) {
             var tag = atlas.findRegion("icons/kenney-board-game/tag" + i);
             tags.add(tag);
+        }
+        numbers = new Array<>();
+        numbersOutline = new Array<>();
+        for (int i = 0; i < 10; i++) {
+            var number = atlas.findRegion("icons/kenney-board-game/flair_number" + i);
+            var numberOutline = atlas.findRegion("icons/kenney-board-game/flair_number_" + i + "_outline");
+            numbers.add(number);
+            numbersOutline.add(numberOutline);
         }
 
         var margin = 10;

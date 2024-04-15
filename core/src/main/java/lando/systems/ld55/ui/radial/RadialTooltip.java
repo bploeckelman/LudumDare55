@@ -39,7 +39,8 @@ public class RadialTooltip {
         if (button instanceof RadialSummonButton) {
             assets.font.setColor(Color.WHITE);
             GamePiece.Type type = ((RadialSummonButton) button).pieceType;
-            Assets.NinePatches.glass_blue.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
+            TileOverlayAssets.panelBlue.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
+//            Assets.NinePatches.glass_blue.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
             Animation<TextureRegion> charAnimation = assets.getAnimation(type, GamePiece.Owner.Player);
             assets.font.draw(batch, "Summon "+ type.name(), bounds.x, bounds.y + bounds.height - 10, bounds.width, Align.center, true);
             if (charAnimation != null){

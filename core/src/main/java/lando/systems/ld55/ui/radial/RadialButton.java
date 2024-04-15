@@ -6,19 +6,27 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.assets.TileOverlayAssets;
 
 public class RadialButton {
 
     public static float MAX_RADIUS = 35f;
 
     public Color iconEnabledColor = new Color(.1f,.6f,.2f,1);
-    public Color iconDisabledColor = new Color(.4f, .4f, .4f, .31f);
+    public Color iconDisabledColor = new Color(.4f, .4f, .4f, .81f); // alpha .31 maybe
+    public Color iconMetaColor = Color.WHITE.cpy();
 
     public String text;
     public TextureRegion icon;
+    public TextureRegion iconMeta;
+    public TextureRegion iconCost;
     public NinePatch background;
+    public NinePatch backgroundEnabled;
+    public NinePatch backgroundDisabled;
+    public NinePatch backgroundHovered;
     public Vector2 centerPosition;
     public float radius;
+    public boolean hovered;
     private BitmapFont font;
     private GlyphLayout layout;
     public boolean enabled;
@@ -26,14 +34,18 @@ public class RadialButton {
 
 
     public RadialButton(NinePatch background, TextureRegion icon, String text, boolean enabled) {
-        this.text = text;
-        this.background = background;
+        this.backgroundEnabled = background;
+        this.backgroundDisabled = TileOverlayAssets.panelRed;
+        this.backgroundHovered = TileOverlayAssets.panelBlue;
+        this.background = backgroundEnabled;
         this.icon = icon;
+        this.text = text;
         this.centerPosition = new Vector2();
         this.radius = 0;
-        font = Main.game.assets.fontZektonSmall;
-        layout = Main.game.assets.layout;
+        this.font = Main.game.assets.fontZektonSmall;
+        this.layout = Main.game.assets.layout;
         this.enabled = enabled;
+        this.hovered = false;
     }
 
     public void update(Vector2 centerPosition, float sizePercent, float dt) {
@@ -42,24 +54,83 @@ public class RadialButton {
     }
 
     public void render(SpriteBatch batch) {
-        batch.setColor(0.5f, 0.5f, 0.5f, 1f);
-        if (!enabled) batch.setColor(.3f, .3f, .3f, 1f);
-        background.draw(batch,centerPosition.x - radius, centerPosition.y - radius, radius*2f, radius * 2f);
-        batch.setColor(1, 1, 1, 1);
-
-        if (enabled) {
-            batch.setColor(iconEnabledColor);
-        } else {
-            batch.setColor(iconDisabledColor);
-        }
-
-        var iconRadius = radius * 0.75f;
-        batch.draw(icon, centerPosition.x - iconRadius, centerPosition.y - iconRadius, iconRadius*2f, iconRadius * 2f);
+        if      (!enabled) background = backgroundDisabled;
+        else if (hovered)  background = backgroundHovered;
+        else               background = backgroundEnabled;
+        background.draw(batch,
+            centerPosition.x - radius,
+            centerPosition.y - radius,
+            radius * 2f, radius * 2f);
         batch.setColor(Color.WHITE);
 
+        // very dumb, for special case handling that should be in the button subclasses
+        var summonBtn = (this instanceof RadialSummonButton) ? ((RadialSummonButton) this) : null;
+
+        // draw cost overlay icon thing
+        // TODO(brian) - needs more magic numbers
+        if (iconCost != null) {
+            var margin = 5f;
+            var metaRadius = radius * 0.33f;
+
+            // draw background
+//            var panel = TileOverlayAssets.panelWhite;
+//            batch.setColor(Color.LIGHT_GRAY);
+//            panel.draw(batch,
+//                centerPosition.x - radius + 2,
+//                centerPosition.y - radius + 2,// + 2.5f * metaRadius,
+//                3 * metaRadius, 2.5f * metaRadius);
+//            batch.setColor(Color.WHITE);
+
+            // draw $ icon
+            var dollarIconRadius = radius * 0.3f;
+            var dollarIcon = TileOverlayAssets.dollarOutline;
+            batch.setColor(enabled ? Color.GOLD : Color.DARK_GRAY);
+            batch.draw(dollarIcon,
+                centerPosition.x - radius + 2,
+                centerPosition.y - radius + margin + 1,
+                2 * dollarIconRadius, 2 * dollarIconRadius);
+
+            // draw dollar amount
+            var dollarRadius = radius * 0.6f;
+            var canPay = enabled;
+            if (summonBtn != null) {
+                var actionsCost = summonBtn.pieceType.actionsToSpawn;
+                var actionsAvailable = summonBtn.board.gameScreen.actionManager.playerActionsAvailable;
+                canPay = enabled && actionsCost <= actionsAvailable;
+            }
+            batch.setColor(canPay ? Color.GOLD : Color.DARK_GRAY);
+            batch.draw(iconCost,
+                centerPosition.x - radius - 5,
+                centerPosition.y - radius + 3,
+                2 * dollarRadius, 2 * dollarRadius);
+
+            batch.setColor(Color.WHITE);
+        }
+
+        // portrait (for summon)
+        var iconRadius = radius * 0.9f;
+        var iconColor = enabled ? iconEnabledColor : iconDisabledColor;
+        var iconOffsetY = (summonBtn != null) ? iconRadius / 2f : iconRadius;
+        batch.setColor(iconColor);
+        batch.draw(icon,
+            centerPosition.x - iconRadius,
+            centerPosition.y - iconOffsetY,
+            iconRadius * 2f, iconRadius * 2f);
+        batch.setColor(Color.WHITE);
+
+        if (iconMeta != null) {
+            var margin = 5f;
+            var metaRadius = radius * 0.33f;
+            batch.setColor(enabled ? iconMetaColor : Color.DARK_GRAY);
+            batch.draw(iconMeta,
+                centerPosition.x + radius - margin - 2 * metaRadius,
+                centerPosition.y - radius + margin,
+                2 * metaRadius, 2 * metaRadius);
+            batch.setColor(Color.WHITE);
+        }
+
+        // TODO(brian) - rework text rendering
         float textWidth = radius + radius - 10;
-
-
         if (!text.isEmpty()) {
             font.getData().setScale(radius / MAX_RADIUS);
             layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);

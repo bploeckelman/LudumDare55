@@ -105,8 +105,12 @@ public class RadialMenu {
         if (targetProgress == 1 && currentProgress == 1) {
             mosPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             board.gameScreen.worldCamera.unproject(mosPos);
+
+            // handle hovering over a radial button
             for (RadialButton button : buttons) {
+                button.hovered = false;
                 if (button.inButton(mosPos.x, mosPos.y)) {
+                    button.hovered = true;
                     tooltip.setRadialButton(button);
                     if (button.enabled) {
                         board.gameScreen.actionManager.tempActionPointsUsed(button.pointsUsed);
