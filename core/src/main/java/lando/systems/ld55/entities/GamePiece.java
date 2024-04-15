@@ -446,7 +446,7 @@ public class GamePiece {
     }
     public void bleed() {
         GameScreen.particles.spawnBloodPuddle(position.x, position.y);
-        if (currentHealth <= 0 && MathUtils.random(100) < 25) {
+        if (currentHealth <= 0 && MathUtils.random(100) < 50) {
             bloodDuration = 2;
         } else {
             normalBlood = true;
