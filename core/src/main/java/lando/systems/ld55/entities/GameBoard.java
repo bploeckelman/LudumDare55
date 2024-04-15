@@ -46,7 +46,14 @@ public class GameBoard extends InputAdapter {
     public Spawn spawnGood;
     public Spawn spawnEvil;
     public GamePiece selectedPiece;
+
+    // TODO - remove
     public List<TileOverlayInfo> tileOverlays;
+
+    // track overlays for different things separately
+    public final List<TileOverlayInfo> spawnTileOverlays = new ArrayList<>();
+    public final List<TileOverlayInfo> moveTileOverlays = new ArrayList<>();
+    public final List<TileOverlayInfo> attackTileOverlays = new ArrayList<>();
 
     public FrameBuffer gridFB;
     public Texture gridTexture;
@@ -288,22 +295,7 @@ public class GameBoard extends InputAdapter {
         // TEST ---------------
 
 
-        // set summonable tiles
-        for (int y = 0; y < tilesHigh; y++){
-            boolean summonable = true;
-            for (int x = 0; x < tilesWide; x++) {
-                GameTile t = getTileAt(x, y);
-                if (t != null) {
-                    for(GamePiece piece : gamePieces){
-                        if (piece.currentTile == t){
-                            summonable = false;
-                        }
-                    }
-                    t.summonable = summonable;
-                    summonable = false;
-                }
-            }
-        }
+        refreshSummonableTiles();
 
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         var tile = getTileAtScreenPos(screenPosition);
@@ -383,6 +375,9 @@ public class GameBoard extends InputAdapter {
             for (var overlay : tileOverlays) {
                 overlay.render(batch);
             }
+            for (var overlay : spawnTileOverlays) {
+                overlay.render(batch);
+            }
         }
 
         batch.setColor(Color.WHITE);
@@ -428,5 +423,42 @@ public class GameBoard extends InputAdapter {
         batch.setColor(Color.WHITE);
         batch.end();
         batch.begin();
+    }
+
+    private void refreshSummonableTiles() {
+        spawnTileOverlays.clear();
+
+        for (int y = 0; y < tilesHigh; y++) {
+            var summonable = true;
+
+            for (int x = 0; x < tilesWide; x++) {
+                // only consider valid tiles
+                var tile = getTileAt(x, y);
+                if (tile == null) continue;
+
+                // can't summon if the tile has a piece on it
+                for (var piece : gamePieces) {
+                    if (piece.currentTile == tile) {
+                        summonable = false;
+                        break;
+                    }
+                }
+                tile.summonable = summonable;
+
+                // setup the overlay for this tile
+                if (tile.summonable) {
+                    var isRadialMenuTarget = (radialMenu != null && radialMenu.tile == tile);
+                    var panelAlpha = isRadialMenuTarget ? 0.8f : 0.5f;
+                    var panelPatch = isRadialMenuTarget ? TileOverlayAssets.panelGreen : TileOverlayAssets.panelBlue;
+                    spawnTileOverlays.add(new TileOverlayInfo(tile, 0)
+                        .addLayer("base-panel", 1f, 1, 1, 1, panelAlpha, panelPatch, null, null)
+                        .addLayer("icon", 0.66f, Color.WHITE, null, TileOverlayAssets.pawnUp, null)
+                    );
+                }
+
+                // reset flag for next tile
+                summonable = false;
+            }
+        }
     }
 }

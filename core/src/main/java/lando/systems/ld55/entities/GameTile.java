@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import lando.systems.ld55.Main;
 import lando.systems.ld55.assets.Assets;
 
 public class GameTile {
@@ -31,14 +30,14 @@ public class GameTile {
     public void render(SpriteBatch batch) {
         if (!valid) return;
 
-        // Temp color stuff
-        Color c = Color.DARK_GRAY;
-        if ((x + y) % 2 == 0) {
-            c = Color.LIGHT_GRAY;
-        }
-        batch.setColor(c.r, c.g, c.b, 0.1f);
+        // Temp color stuff, should be handled by the TileOverlayInfo items
+//        Color c = Color.DARK_GRAY;
+//        if ((x + y) % 2 == 0) {
+//            c = Color.LIGHT_GRAY;
+//        }
+//        batch.setColor(c.r, c.g, c.b, 0.1f);
 //        batch.draw(Main.game.assets.whitePixel, bounds.x, bounds.y, bounds.width, bounds.height);
-        batch.setColor(Color.WHITE);
+//        batch.setColor(Color.WHITE);
     }
 
     public void renderFrameBuffer(SpriteBatch batch) {

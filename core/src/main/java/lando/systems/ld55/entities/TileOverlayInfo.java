@@ -24,6 +24,7 @@ public class TileOverlayInfo {
         public float stateTime;
 
         // TODO - text option? would need font, string, maybe bounds? possibly a bunch of other settings too
+        // NOTE - no text, better to use 'icons/kenney-board-game/tag_#' for numers
 
         public Layer(String name, Color color, Rectangle bounds, NinePatch patch, TextureRegion region, Animation<TextureRegion> anim) {
             this.name = name;

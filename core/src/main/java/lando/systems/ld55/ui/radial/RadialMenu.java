@@ -11,8 +11,6 @@ import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
 
-import javax.imageio.stream.ImageOutputStream;
-
 public class RadialMenu {
     public static float TIME_TO_OPEN = .4f;
     public static float MENU_RADIUS = 90f;
@@ -22,7 +20,7 @@ public class RadialMenu {
     private float targetProgress;
     private GameBoard board;
     private MenuType type;
-    private GameTile tile;
+    public GameTile tile;
 
     private Array<RadialButton> buttons;
     private Interpolation interpolation = Interpolation.swingOut;
