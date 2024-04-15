@@ -172,7 +172,8 @@ public class GamePiece {
         healthBar.updateCurrentHealth(currentHealth);
     }
 
-    public void attack() {
+    public void attack(GamePiece attackedPiece) {
+        // TODO: do types attack particles and sounds
         setCurrentAnimation(attack);
         attackTime = attack.getAnimationDuration();
     }

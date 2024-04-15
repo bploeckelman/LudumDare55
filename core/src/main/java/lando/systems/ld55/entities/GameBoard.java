@@ -308,6 +308,7 @@ public class GameBoard extends InputAdapter {
             hoverTile = null;
             tileOverlays.clear();
         }
+        // TODO: Check here for action hover
 
         for (int i = portalAnimations.size -1; i >= 0; i--) {
             Portal p = portalAnimations.get(i);

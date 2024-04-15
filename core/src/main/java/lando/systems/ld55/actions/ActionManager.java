@@ -164,10 +164,9 @@ public class ActionManager {
             }
             currentAttackerPiece++;
             if (attackablePieces.size > 0){
-                attackPiece.attack();
                 attackAccum = 0;
                 final GamePiece damagedPiece = attackablePieces.random();
-                // TODO: ShootParticles or move this into the piece attack so it can be different per unit
+                attackPiece.attack(damagedPiece);
 
                 int finalMaxDamage = maxDamage;
                 Timeline.createSequence()
