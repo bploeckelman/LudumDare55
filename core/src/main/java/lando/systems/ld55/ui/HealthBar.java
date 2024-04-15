@@ -12,8 +12,8 @@ public class HealthBar {
     private final static float BAR_BORDER_SIZE = 1;
     private final static float BOX_BORDER_SIZE = 1;
 
-    private float boxWidth = BASE_BOX_WIDTH;
-    private float boxHeight = BASE_BOX_HEIGHT;
+    public float boxWidth = BASE_BOX_WIDTH;
+    public float boxHeight = BASE_BOX_HEIGHT;
 
     private final Texture boxBorder;
     private final Texture boxFill;
@@ -33,9 +33,20 @@ public class HealthBar {
         this.barWidth = boxWidth * maxHealth + BAR_BORDER_SIZE * 2 - BOX_BORDER_SIZE * (maxHealth - 1);
     }
 
+    public HealthBar(HealthBar other, float x, float y) {
+        this.boxBorder = other.boxBorder;
+        this.boxFill = other.boxFill;
+        this.maxHealth = other.maxHealth;
+        this.currentHealth = other.currentHealth;
+        this.barWidth = other.barWidth;
+        this.barBounds = new Rectangle(other.barBounds);
+        barBounds.setPosition(x - BAR_BORDER_SIZE, y - BAR_BORDER_SIZE);
+    }
+
     public void updatePosition(float x, float y) {
         barWidth = boxWidth * maxHealth + BAR_BORDER_SIZE * 2 - BOX_BORDER_SIZE * (maxHealth - 1);
-        barBounds = new Rectangle(x - BAR_BORDER_SIZE - barWidth / 2f, y - BAR_BORDER_SIZE, barWidth, BASE_BOX_HEIGHT + BAR_BORDER_SIZE * 2);
+        barBounds = new Rectangle(x - BAR_BORDER_SIZE - barWidth / 2f, y - BAR_BORDER_SIZE, barWidth, boxHeight + BAR_BORDER_SIZE * 2);
+//        barBounds = new Rectangle(x - BAR_BORDER_SIZE - barWidth / 2f, y - BAR_BORDER_SIZE, barWidth, BASE_BOX_HEIGHT + BAR_BORDER_SIZE * 2);
         //barBounds.setPosition(x - BAR_BORDER_SIZE, y - BAR_BORDER_SIZE);
     }
 

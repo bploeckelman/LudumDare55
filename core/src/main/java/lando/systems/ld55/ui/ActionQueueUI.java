@@ -10,9 +10,9 @@ import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.entities.GameBoard;
 
 public class ActionQueueUI {
-    ActionManager actionManager;
-    GameBoard gameBoard;
-    Array<ActionItemUI> turnOrderUIItems;
+    public ActionManager actionManager;
+    public GameBoard gameBoard;
+    public Array<ActionItemUI> turnOrderUIItems;
     public ActionItemUI hoveredAction;
 
     public ActionQueueUI(ActionManager manager, GameBoard board) {

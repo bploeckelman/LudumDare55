@@ -9,10 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionManager;
+import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.assets.Assets;
 import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.audio.AudioManager;
@@ -26,10 +28,13 @@ public class GameScreenUI {
 
     public final GameScreen screen;
     public final ImageButton endTurnButton;
-    public final Rectangle settingsButtonPanelBound;
     public final ImageButton settingsButton;
+    public final Rectangle settingsButtonPanelBound;
+
     public final NinePatch profilePanel;
     public final Rectangle profilePanelBounds;
+    public HealthBar profileHealthBar;
+
     public final NinePatch actionsPanel;
     public final Rectangle actionsPanelBounds;
     public final Array<ActionPoint> actionPoints;
@@ -137,17 +142,19 @@ public class GameScreenUI {
         // draw profile panel
         var board = screen.gameBoard;
         if (board.hoverTile != null) {
-            var creature = board.getGamePiece(board.hoverTile);
-            if (creature != null) {
+            var piece = board.getGamePiece(board.hoverTile);
+            if (piece == null) {
+                profileHealthBar = null;
+            } else {
                 var panel = profilePanelBounds;
-                batch.setColor(creature.owner.color);
+                batch.setColor(piece.owner.color);
                 profilePanel.draw(batch, panel.x, panel.y, panel.width, panel.height);
                 batch.setColor(Color.WHITE);
 
-                var margin = 0;
-                var portrait = creature.portrait.getKeyFrame(0);
+                var margin = 0; // NOTE(brian) - this is intentional, in case we want to tweak sizing/positioning
+                var portrait = piece.portrait.getKeyFrame(0);
                 var size = panel.width - margin * 2;
-                var flip = creature.owner == GamePiece.Owner.Enemy ? -1f : 1f;
+                var flip = piece.owner == GamePiece.Owner.Enemy ? -1f : 1f;
                 batch.draw(portrait,
                     panel.x + margin,
                     panel.y + (panel.height - size) / 2f,
@@ -155,8 +162,62 @@ public class GameScreenUI {
                     size, size,
                     flip, 1, 0);
 
-                // TODO(brian) - draw other creature info in lower profile view panel thing
-                //   name, health, has move action queued, position in turn order, etc...
+                // draw other creature info in lower profile view panel thing
+                // name, health, has move action queued, position in turn order, etc...
+                var hMargin = 3f;
+                var lineSpacing = 20f;
+                var leftMin = 1080f;
+                var leftMax = 1185f;
+                var right = 1265f;
+                var width = (right - leftMax) - (2 * hMargin);
+                var widthBig = (right - leftMin) - (2 * hMargin);
+                var bottom = 20f;
+                var top = 135f;
+                var yPos = top - 10f;
+                var font = screen.assets.font;
+                var layout = screen.assets.layout;
+
+                // figure out where/if this creature is in the turn order
+                var isMoving = false;
+                var turn = -1;
+                for (int i = 0; i < board.actionQueueUI.turnOrderUIItems.size; i++) {
+                    var item = board.actionQueueUI.turnOrderUIItems.get(i);
+                    if (item.action.getPiece() == piece) {
+                        isMoving = (item.action instanceof MoveAction);
+                        turn = i;
+                        break;
+                    }
+                }
+                var turnColor = (turn == -1) ? Color.GRAY: Color.WHITE;
+                //var turnStr = (turn == -1) ? "No action" : "Turn #" + (turn + 1);
+                var turnStr = (isMoving) ? "Move #" + (turn + 1) : "No Action";
+
+                font.getData().setScale(0.5f);
+                {
+                    // piece owner name
+                    layout.setText(font, piece.owner.name(), piece.owner.color, width, Align.right, false);
+                    font.draw(batch, layout, leftMax, yPos);
+                    yPos -= layout.height + lineSpacing;
+
+                    // piece type name
+                    layout.setText(font, piece.type.name(), Color.WHITE, width, Align.right, false);
+                    font.draw(batch, layout, leftMax, yPos);
+                    yPos -= layout.height + lineSpacing;
+
+                    // position in turn order
+                    layout.setText(font, turnStr, turnColor, widthBig, Align.right, false);
+                    font.draw(batch, layout, leftMin, yPos);
+                    yPos -= layout.height + lineSpacing;
+
+                    // health bar
+                    var x = leftMax;
+                    var y = bottom + margin;
+                    profileHealthBar = new HealthBar(piece.healthBar, x, y);
+                    profileHealthBar.boxHeight *= 2;
+                    profileHealthBar.updatePosition(x, y);
+                    profileHealthBar.render(batch, 1f);
+                }
+                font.getData().setScale(1f);
             }
         }
 
