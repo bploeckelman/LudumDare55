@@ -11,12 +11,14 @@ import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.particles.Particles;
 import lando.systems.ld55.ui.SettingsUI;
 import lando.systems.ld55.ui.TitleScreenUI;
+import lando.systems.ld55.utils.Time;
 import lando.systems.ld55.utils.events.EventType;
 import lando.systems.ld55.utils.events.Events;
 
 public class TitleScreen extends BaseScreen {
 
     float accum = 0;
+    float fanfareTimer = 0;
     boolean drawUI = true;
     TitleScreenUI titleScreenUI;
     SettingsUI settingsUI;
@@ -56,12 +58,25 @@ public class TitleScreen extends BaseScreen {
     public void update(float dt) {
         super.update(dt);
         accum+=dt;
+        fanfareTimer += dt;
 
         Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         worldCamera.unproject(touchPos);
         titleScreenUI.update(touchPos.x, touchPos.y);
         settingsUI.act(dt);
         particles.update(dt);
+
+        if (fanfareTimer < .05f) {
+            particles.fanfareConfetti(70f, 470f);
+            particles.fanfareConfetti(100f, 500f);
+            particles.fanfareConfetti(130f, 530f);
+            particles.bloodFountain(960f, 520f);
+            particles.bloodFountain(1100f, 470f);
+            particles.bloodFountain(1050f, 400f);
+
+        } else if (fanfareTimer > 2.3f) {
+            fanfareTimer = 0f;
+        }
     }
 
     @Override
@@ -131,6 +146,7 @@ public class TitleScreen extends BaseScreen {
     private void meaninglessClickEffect(float x, float y) {
         if (settingsUI.isSettingShown) { return; }
         particles.tinySmoke(x, y);
+        particles.fanfareConfetti(x, y);
         Main.game.audioManager.playSound(AudioManager.Sounds.click);
     }
 
