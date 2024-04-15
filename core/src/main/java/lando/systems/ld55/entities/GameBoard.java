@@ -46,10 +46,8 @@ public class GameBoard extends InputAdapter {
     public Spawn spawnEvil;
     public GamePiece selectedPiece;
 
-    // TODO - remove
-    public List<TileOverlayInfo> tileOverlays;
-
     // track overlays for different things separately
+    public TileOverlayInfo hoverTileOverlay = null;
     public final List<TileOverlayInfo> spawnTileOverlays = new ArrayList<>();
     public final List<TileOverlayInfo> moveTileOverlays = new ArrayList<>();
     public final List<TileOverlayInfo> attackTileOverlays = new ArrayList<>();
@@ -68,10 +66,6 @@ public class GameBoard extends InputAdapter {
 
     private final Array<GameTile> loseTiles = new Array<>();
     private final Array<GameTile> winTiles = new Array<>();
-
-    // TEMP -------------
-    public Pattern currentPattern = Pattern.QUEEN_ATK;
-    // TEMP -------------
 
     public GameBoard(GameScreen gameScreen, int tilesWide, int tilesHigh) {
         this.gameScreen = gameScreen;
@@ -319,8 +313,10 @@ public class GameBoard extends InputAdapter {
                 }
             }
             hoverTile = tile;
+            hoverTileOverlay = refreshHoverTileOverlay();
         } else {
             attackTileOverlays.clear();
+            hoverTileOverlay = null;
             hoverTile = null;
         }
 
@@ -328,6 +324,7 @@ public class GameBoard extends InputAdapter {
         actionQueueUI.update(dt);
         if (actionQueueUI.hoveredAction != null){
             hoverTile = actionQueueUI.hoveredAction.action.getPiece().currentTile;
+            hoverTileOverlay = refreshHoverTileOverlay();
         }
 
         for (int i = portalAnimations.size -1; i >= 0; i--) {
@@ -384,15 +381,20 @@ public class GameBoard extends InputAdapter {
             tile.render(batch);
         }
         renderGrid(batch);
-        for (Portal p : portalAnimations) {
-            p.render(batch);
-        }
 
         // draw set pieces (from StyleMgr)
         gameScreen.styleManager.render(batch);
 
         spawnGood.render(batch);
         spawnEvil.render(batch);
+
+        if (hoverTileOverlay != null) {
+            hoverTileOverlay.render(batch);
+        }
+
+        for (Portal p : portalAnimations) {
+            p.render(batch);
+        }
 
         // Ony draw when we are in planning mode
         if (gameScreen.actionManager.getCurrentPhase() == ActionManager.Phase.CollectActions) {
@@ -511,5 +513,11 @@ public class GameBoard extends InputAdapter {
                 moveTileOverlays.add(overlay);
             }
         }
+    }
+
+    private TileOverlayInfo refreshHoverTileOverlay() {
+        return new TileOverlayInfo(hoverTile, 0)
+            .addLayer("base-panel", 1.3f, Color.LIME, 0.75f, TileOverlayAssets.panelWhite, null, null)
+            .addLayer("panel2", 0.9f, Color.GOLD, 0.9f, TileOverlayAssets.panelWhite, null, null);
     }
 }
