@@ -38,7 +38,7 @@ public class GameScreen extends BaseScreen{
         ui = new GameScreenUI(this);
         settingsUI = new SettingsUI(skin, windowCamera);
         uiStage.addActor(settingsUI);
-        Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard, uiStage));
+        Gdx.input.setInputProcessor(new InputMultiplexer(uiStage, gameBoard));
         Main.game.audioManager.playMusic(AudioManager.Musics.mainMusic);
         setupStyle();
     }
