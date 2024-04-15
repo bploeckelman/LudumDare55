@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionBase;
+import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.entities.GamePiece;
 
 public class ActionItemUI {
@@ -47,21 +48,23 @@ public class ActionItemUI {
     }
 
     public void render(SpriteBatch batch) {
-        batch.setColor(Color.LIGHT_GRAY);
-        if (highlight){
-            batch.setColor(Color.YELLOW);
-        }
-        batch.draw(Main.game.assets.cardTexture, bounds.x, bounds.y, bounds.width, bounds.height);
+        if (piece == null) { return; } //??
 
-        if (piece != null) {
-            float qw = bounds.width / 16;
-            float qh = bounds.height / 16;
-            float w = bounds.width - qw * 2;
-            float h = bounds.height - qh * 2;
-            float flip = piece.owner == GamePiece.Owner.Enemy ? -1f : 1f;
-            batch.draw(portrait, bounds.x + qw, bounds.y + qh, w / 2, h / 2, w, h, flip, 1f, 0);
+        batch.setColor(piece.owner.color);
+        if (highlight){
+            batch.setColor(Color.YELLOW.r, Color.YELLOW.g, Color.YELLOW.b, 0.7f);
         }
+        TileOverlayAssets.panelGreen.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
 
         batch.setColor(Color.WHITE);
+
+        float qw = bounds.width / 16;
+        float qh = bounds.height / 16;
+        float w = bounds.width - qw * 2;
+        float h = bounds.height - qh * 2;
+        float flip = piece.owner == GamePiece.Owner.Enemy ? -1f : 1f;
+        batch.draw(portrait, bounds.x + qw, bounds.y + qh, w / 2, h / 2, w, h, flip, 1f, 0);
+
+
     }
 }

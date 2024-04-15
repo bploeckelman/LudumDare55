@@ -139,7 +139,7 @@ public class TileOverlayInfo {
         for (var layer : layers) {
             batch.setColor(layer.color);
             if (layer.patch != null) {
-                layer.patch.draw(batch, layer.bounds.x, layer.bounds.y, layer.bounds.width, layer.bounds.height);
+               layer.patch.draw(batch, layer.bounds.x, layer.bounds.y, layer.bounds.width, layer.bounds.height);
             }
             if (layer.region != null) {
                 batch.draw(layer.region, layer.bounds.x, layer.bounds.y, layer.bounds.width, layer.bounds.height);

@@ -29,7 +29,7 @@ public class ActionQueueUI {
         if (tiles > 20) rows = 2;
 //        if (tiles > 60) rows = 3;
         int itemsPerRow = (int) (Math.pow(2, rows) * 5);
-        float tileSize = (float) (65f / (Math.pow(2, rows)));
+        float tileSize = (float) (65f / (Math.pow(2, rows))) - 8;
         float margin = (float) (5f / (Math.pow(2, rows)));
         for (ActionItemUI item : turnOrderUIItems) {
             // Mark as remove, we will mark keep if we find it, and then remove others as needed
@@ -38,7 +38,7 @@ public class ActionQueueUI {
 
         Rectangle r = new Rectangle();
         for (int i = 0; i < tiles; i ++){
-            r.set(465 + (tileSize + margin) * (i % itemsPerRow), 80 - ((1+(i / itemsPerRow)) * (tileSize + margin)- margin), tileSize, tileSize);
+            r.set(465 + (tileSize + margin) * (i % itemsPerRow), 74 - ((1+(i / itemsPerRow)) * (tileSize + margin)- margin), tileSize, tileSize);
             ActionBase action = actionManager.getActionQueue().get(i);
             boolean found = false;
             // O(n^2) fuck you

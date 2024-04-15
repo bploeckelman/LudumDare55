@@ -18,7 +18,14 @@ import lando.systems.ld55.assets.Assets;
 import lando.systems.ld55.ui.HealthBar;
 
 public class GamePiece {
-    public enum Owner {Player, Enemy}
+    public enum Owner {
+        Player(Color.BLUE),
+        Enemy(Color.RED);
+        public final Color color;
+        Owner(Color color) {
+            this.color = color;
+        }
+    }
     public enum Type {
         Pawn(1, 1),
         Knight(2, 1),
