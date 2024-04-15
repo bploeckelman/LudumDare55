@@ -31,7 +31,7 @@ public class CreditScreen extends BaseScreen {
     private final Animation<TextureRegion> kittenAnimation;
     private final TextureRegion background;
 
-    private final String title = "{GRADIENT=purple;cyan}Summoning Wars (Placeholder){ENDGRADIENT}";
+    private final String title = "{GRADIENT=purple;cyan}Board to Death: Monsters and Monarchs{ENDGRADIENT}";
     private final String theme = "Made for Ludum Dare 55: Summoning";
 
     private final String thanks = "{GRADIENT=purple;cyan}Thank you for playing our game!{ENDGRADIENT}";
