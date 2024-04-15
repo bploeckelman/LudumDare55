@@ -84,7 +84,7 @@ public class GamePiece {
                 movement = 4;
                 break;
         }
-        return new GamePiece(assets, owner, animGroup.get(0), animGroup.get(1), direction, movement, maxHealth, type);
+        return new GamePiece(assets, owner, animGroup, direction, movement, maxHealth, type);
     }
 
     private final int TILE_OFFSET_Y = 10;
@@ -95,6 +95,7 @@ public class GamePiece {
     private final Assets assets;
     private final Animation<TextureRegion> idle;
     private final Animation<TextureRegion> attack;
+    public final Animation<TextureRegion> portrait;
     private boolean isAttacking = false;
     private float attackTime = 0;
     private final int directions;
@@ -127,12 +128,13 @@ public class GamePiece {
 
     public HealthBar healthBar;
 
-    public GamePiece(Assets assets, Owner owner, Animation<TextureRegion> idle, Animation<TextureRegion> attack, int directions, int maxMovement, int maxHealth, Type type) {
+    public GamePiece(Assets assets, Owner owner, Array<Animation<TextureRegion>> animGroup, int directions, int maxMovement, int maxHealth, Type type) {
         this.owner = owner;
         this.type = type;
         this.assets = assets;
-        this.idle = idle;
-        this.attack = attack;
+        this.idle = animGroup.get(0);
+        this.attack = animGroup.get(1);
+        this.portrait = animGroup.get(2);
         setCurrentAnimation(this.idle);
 
         this.directions = directions;
