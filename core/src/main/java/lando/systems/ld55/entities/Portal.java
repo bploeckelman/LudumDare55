@@ -17,10 +17,12 @@ public class Portal {
     private Color color1 = new Color();
     private float animOffset;
     private float alpha;
+    public GameTile tile;
 
-    public Portal(Rectangle bounds, Color color1) {
+    public Portal(GameTile tile, Color color1) {
+        this.tile = tile;
         this.color1.set(color1);
-        this.bounds = bounds;
+        this.bounds = tile.bounds;
         this.accum = 0;
         this.alpha = 0;
         this.animOffset = MathUtils.random(20f);
@@ -28,12 +30,9 @@ public class Portal {
     }
 
     public void update(float dt) {
-        accum += dt;
-        if (accum < 1f) {
-            alpha = accum;
-        } else if (accum > animationTime - 1f) {
-            alpha = animationTime - accum;
-        }
+        accum += dt * 2f;
+
+        alpha = MathUtils.clamp(accum, 0f, 1f);
     }
 
     public void render(SpriteBatch batch) {
@@ -53,6 +52,6 @@ public class Portal {
     }
 
     public boolean isComplete() {
-        return accum > animationTime;
+        return accum > 60f;
     }
 }

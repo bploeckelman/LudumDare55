@@ -10,6 +10,8 @@ import lando.systems.ld55.entities.Portal;
 
 public class SpawnAction extends ActionBase {
 
+    public static final float SummonTime = .5f;
+
     private GamePiece gamePiece;
     public GameTile spawnTile;
     private boolean spawned;
@@ -23,6 +25,8 @@ public class SpawnAction extends ActionBase {
         spawned = false;
         started = false;
         this.board = board;
+
+        board.portalAnimations.add(new Portal(spawnTile, gamePiece.owner == GamePiece.Owner.Player ? Color.BLUE : Color.RED));
 
         gamePiece.currentTile = tile;
     }
@@ -45,16 +49,21 @@ public class SpawnAction extends ActionBase {
             started = true;
             // TODO: Play portal sound
 
-            // TODO: do something different for player or enemy
-            board.portalAnimations.add(new Portal(spawnTile.bounds, Color.BLUE));
+
             // TODO: particles
             board.gameScreen.particles.portal(spawnTile.bounds.x + spawnTile.bounds.width / 2f, spawnTile.bounds.y + spawnTile.bounds.height / 2f, spawnTile.bounds.width / 2f);
         }
 
-        if (accum > Portal.animationTime) {
+        if (accum > SummonTime) {
             spawned = true;
             gamePiece.summoning = false;
             board.gamePieces.add(gamePiece);
+            for (int i = board.portalAnimations.size -1; i >= 0; i--) {
+                Portal p = board.portalAnimations.get(i);
+                if (p.tile == spawnTile) {
+                    board.portalAnimations.removeIndex(i);
+                }
+            }
         }
 
     }

@@ -71,12 +71,12 @@ public class ActionManager {
     public void render(SpriteBatch batch) {
         switch (phase){
             case CollectActions:
-                for (ActionBase action : actionQueue){
-                    if (action instanceof SpawnAction) {
-                        SpawnAction spawnAction = (SpawnAction) action;
-                        batch.draw(Main.game.assets.particles.ring, spawnAction.spawnTile.bounds.x, spawnAction.spawnTile.bounds.y, spawnAction.spawnTile.bounds.width, spawnAction.spawnTile.bounds.height);
-                    }
-                }
+//                for (ActionBase action : actionQueue){
+//                    if (action instanceof SpawnAction) {
+//                        SpawnAction spawnAction = (SpawnAction) action;
+//                        batch.draw(Main.game.assets.particles.ring, spawnAction.spawnTile.bounds.x, spawnAction.spawnTile.bounds.y, spawnAction.spawnTile.bounds.width, spawnAction.spawnTile.bounds.height);
+//                    }
+//                }
                 break;
             case ResolveActions:
                 if (currentAction < actionQueue.size) {
