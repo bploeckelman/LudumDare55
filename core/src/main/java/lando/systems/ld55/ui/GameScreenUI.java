@@ -17,6 +17,7 @@ import lando.systems.ld55.assets.Assets;
 import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.EnemyAI;
+import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.screens.GameScreen;
 
 public class GameScreenUI {
@@ -25,10 +26,10 @@ public class GameScreenUI {
 
     public final GameScreen screen;
     public final ImageButton endTurnButton;
-    public Rectangle settingsButtonPanelBound;
+    public final Rectangle settingsButtonPanelBound;
     public final ImageButton settingsButton;
-//    public final ImageButton summonButton;
-//    public final ImageButton moveButton;
+    public final NinePatch profilePanel;
+    public final Rectangle profilePanelBounds;
     public final NinePatch actionsPanel;
     public final Rectangle actionsPanelBounds;
     public final Array<ActionPoint> actionPoints;
@@ -71,6 +72,9 @@ public class GameScreenUI {
         settingsButton = new ImageButton(Config.Screen.window_width - 50f, Config.Screen.window_height - 50f, 50f, 50f,
             screen.assets.atlas.findRegion("icons/kenney-ui/gear"), null, null, null);
         settingsButton.onClick = () -> screen.settingsUI.showSettings();
+
+        profilePanel = TileOverlayAssets.panelWhite;
+        profilePanelBounds = new Rectangle(1205, 154, 60, 111);
 
         actionsPanel = TileOverlayAssets.panelWhite;
         actionsPanelBounds = new Rectangle(15, 154, 60, 111);
@@ -129,6 +133,32 @@ public class GameScreenUI {
         Assets.NinePatches.metal.draw(batch, settingsButtonPanelBound.x, settingsButtonPanelBound.y, settingsButtonPanelBound.width, settingsButtonPanelBound.height);
         batch.setColor(Color.WHITE);
         settingsButton.render(batch);
+
+        // draw profile panel
+        var board = screen.gameBoard;
+        if (board.hoverTile != null) {
+            var creature = board.getGamePiece(board.hoverTile);
+            if (creature != null) {
+                var panel = profilePanelBounds;
+                batch.setColor(creature.owner.color);
+                profilePanel.draw(batch, panel.x, panel.y, panel.width, panel.height);
+                batch.setColor(Color.WHITE);
+
+                var margin = 0;
+                var portrait = creature.portrait.getKeyFrame(0);
+                var size = panel.width - margin * 2;
+                var flip = creature.owner == GamePiece.Owner.Enemy ? -1f : 1f;
+                batch.draw(portrait,
+                    panel.x + margin,
+                    panel.y + (panel.height - size) / 2f,
+                    size / 2f, size / 2f,
+                    size, size,
+                    flip, 1, 0);
+
+                // TODO(brian) - draw other creature info in lower profile view panel thing
+                //   name, health, has move action queued, position in turn order, etc...
+            }
+        }
 
         var actionsAvailable = screen.actionManager.playerActionsAvailable > 0;
         batch.setColor(actionsAvailable ? Color.LIGHT_GRAY : Color.DARK_GRAY);

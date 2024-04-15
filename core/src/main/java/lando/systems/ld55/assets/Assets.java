@@ -189,6 +189,7 @@ public class Assets implements Disposable {
         public TextureRegion line;
         public Animation<TextureRegion> stars;
         public Animation<TextureRegion> twirls;
+        public Animation<TextureRegion> splats;
     }
 
     public Assets() {
@@ -358,6 +359,7 @@ public class Assets implements Disposable {
         particles.bloodSplat = atlas.findRegion("particles/blood/particle-blood-splat");
         particles.sparks  = atlas.findRegion("particles/kenney/spark");
         particles.stars   = new Animation<>(.1f, atlas.findRegions("particles/kenney/star"), Animation.PlayMode.LOOP);
+        particles.splats   = new Animation<>(.1f, atlas.findRegions("particles/splats/splat"), Animation.PlayMode.LOOP);
         particles.twirls  = new Animation<>(.1f, atlas.findRegions("particles/kenney/twirl"), Animation.PlayMode.LOOP);
         particles.line    = atlas.findRegion("particles/line");
 

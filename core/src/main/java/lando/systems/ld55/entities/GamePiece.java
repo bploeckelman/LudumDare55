@@ -18,8 +18,8 @@ import lando.systems.ld55.ui.HealthBar;
 
 public class GamePiece {
     public enum Owner {
-        Player(Color.SKY),
-        Enemy(Color.CORAL);
+        Player(Color.CYAN),       // alternatives: LIGHTBLUE, BLUE
+        Enemy(Color.SALMON);  // alternatives: FIREBRICK, CORAL, RED
         public final Color color;
         Owner(Color color) {
             this.color = color;
@@ -428,6 +428,7 @@ public class GamePiece {
         GameScreen.particles.bloodFountain(position.x, position.y + bounds.height / 2);
     }
     public void bleed() {
+        GameScreen.particles.spawnBloodPuddle(position.x, position.y);
         if (currentHealth <= 0 && MathUtils.random(100) < 25) {
             bloodDuration = 2;
         } else {
