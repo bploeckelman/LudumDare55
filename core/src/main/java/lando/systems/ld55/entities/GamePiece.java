@@ -428,7 +428,7 @@ public class GamePiece {
         GameScreen.particles.bloodFountain(position.x, position.y + bounds.height / 2);
     }
     public void bleed() {
-        if (currentHealth <= 0 && MathUtils.random(100) < 20) {
+        if (currentHealth <= 0 && MathUtils.random(100) < 25) {
             bloodDuration = 2;
         } else {
             normalBlood = true;

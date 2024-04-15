@@ -60,8 +60,10 @@ public class EnemyAI {
                 }
                 movePiece.moveTiles.clear();
                 movePiece.addMoveTiles(board);
-                GameTile moveTile = movePiece.moveTiles.random();
-                board.gameScreen.actionManager.addAction(new MoveAction(board, movePiece, moveTile));
+                if (movePiece.moveTiles.size > 0) {
+                    GameTile moveTile = movePiece.moveTiles.random();
+                    board.gameScreen.actionManager.addAction(new MoveAction(board, movePiece, moveTile));
+                }
             }
         }
 
