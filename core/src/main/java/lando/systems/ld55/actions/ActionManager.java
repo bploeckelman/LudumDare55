@@ -22,7 +22,7 @@ import java.util.List;
 public class ActionManager {
     public static final float AttackSpeed = 1f;
     public enum Phase {CollectActions, ResolveActions, Attack}
-    private final static int ActionsPerTurn = 3;
+    public final static int ActionsPerTurn = 3;
 
     int turnNumber;
     public int playerActionsAvailable;
