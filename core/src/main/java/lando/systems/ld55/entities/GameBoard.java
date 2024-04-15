@@ -186,7 +186,11 @@ public class GameBoard extends InputAdapter {
                         for (GameTile t : selectedPiece.moveTiles){
                             if (t == hoverTile){
                                 radialMenu = new RadialMenu(this, hoverTile, selectedPiece, RadialMenu.MenuType.Move);
+                                moved = true;
                             }
+                        }
+                        if (!moved) {
+                            selectedPiece.deselect(this);
                         }
 
                     }
@@ -338,6 +342,10 @@ public class GameBoard extends InputAdapter {
             attackTileOverlays.clear();
             hoverTileOverlay = null;
             hoverTile = null;
+        }
+
+        if (selectedPiece != null){
+            selectedPiece.setupPathOverlay(this, hoverTile);
         }
 
         // Check here for action hover
