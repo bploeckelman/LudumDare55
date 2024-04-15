@@ -10,11 +10,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld55.Main;
 import lando.systems.ld55.Stats;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.assets.Assets;
 import lando.systems.ld55.assets.TileOverlayAssets;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.ui.HealthBar;
 import lando.systems.ld55.ui.MovementBreadcrumb;
@@ -290,6 +292,7 @@ public class GamePiece {
         moveTile = tile;
         startPosition.set(position);
         movePosition.set(tile.bounds.x + tile.bounds.width / 2, tile.bounds.y + TILE_OFFSET_Y);
+        Main.game.audioManager.playSound(AudioManager.Sounds.hop);
         moveAnimState = 0;
 
         selected = false;
