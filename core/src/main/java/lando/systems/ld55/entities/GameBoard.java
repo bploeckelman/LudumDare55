@@ -165,7 +165,7 @@ public class GameBoard extends InputAdapter {
             if (gamePiece == null) {
                 if (selectedPiece == null && hoverTile.summonable) {
                     radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.Summon);
-                    Main.game.audioManager.playSound(AudioManager.Sounds.click, .5f);
+                    Main.game.audioManager.playSound(AudioManager.Sounds.metalTap, .5f);
                 } else {
                     // Move mode
                     if (selectedPiece != null) {

@@ -159,7 +159,7 @@ public class SettingsUI extends Group {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 audio.setSoundVolume(soundSlider.getValue());
-                audio.playSound(AudioManager.Sounds.coin);
+                audio.playSound(AudioManager.Sounds.metalTap);
             }
         });
         settingsWindow.add(soundSlider).padBottom(5f).width(settingsWindow.getWidth() - 100f);

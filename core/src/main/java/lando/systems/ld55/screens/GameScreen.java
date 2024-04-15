@@ -94,7 +94,7 @@ public class GameScreen extends BaseScreen{
         worldCamera.unproject(touchPos);
         if (Gdx.input.justTouched() && gameBoard.hoverTile == null) {
             particles.levelUpEffect(touchPos.x, touchPos.y);
-            Main.game.audioManager.playSound(AudioManager.Sounds.pew);
+//            Main.game.audioManager.playSound(AudioManager.Sounds.pew);
 //            Main.game.audioManager.playSound(AudioManager.Sounds.error_buzz);
         }
 
@@ -173,7 +173,13 @@ public class GameScreen extends BaseScreen{
             font.getData().setScale(1f);
 
             if (gameOver) {
-                layout.setText(font, win ? "YOU WIN!" : "LOSER", Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+                if(win) {
+                    layout.setText(font, "VICTORY!" , Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+                }
+                else {
+                    layout.setText(font, "YOU DIED..." , Color.RED, windowCamera.viewportWidth, Align.center, false);
+                }
+
                 font.draw(batch, layout, 0, windowCamera.viewportHeight / 2);
             }
 

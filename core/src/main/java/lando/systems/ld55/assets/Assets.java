@@ -122,6 +122,9 @@ public class Assets implements Disposable {
     public Sound coin;
     public Sound idleClick;
     public Sound click;
+    public Sound lockIn;
+    public Sound select;
+    public Sound metalTap;
     public Sound pew;
     public Sound errorThud;
     public Sound errorBuzz;
@@ -233,6 +236,9 @@ public class Assets implements Disposable {
 
             mgr.load("audio/sounds/coin.ogg", Sound.class);
             mgr.load("audio/sounds/idle-click.ogg", Sound.class);
+            mgr.load("audio/sounds/lock-in.ogg", Sound.class);
+            mgr.load("audio/sounds/select.ogg", Sound.class);
+            mgr.load("audio/sounds/metal-tap.ogg", Sound.class);
             mgr.load("audio/sounds/pew.ogg", Sound.class);
             mgr.load("audio/sounds/click1.ogg", Sound.class);
             mgr.load("audio/sounds/level-up.wav", Sound.class);
@@ -434,6 +440,9 @@ public class Assets implements Disposable {
         coin = mgr.get("audio/sounds/coin.ogg", Sound.class);
         idleClick = mgr.get("audio/sounds/idle-click.ogg", Sound.class);
         click = mgr.get("audio/sounds/click1.ogg", Sound.class);
+        lockIn = mgr.get("audio/sounds/lock-in.ogg", Sound.class);
+        select = mgr.get("audio/sounds/select.ogg", Sound.class);
+        metalTap = mgr.get("audio/sounds/metal-tap.ogg", Sound.class);
         pew = mgr.get("audio/sounds/pew.ogg", Sound.class);
         levelUp = mgr.get("audio/sounds/level-up.wav", Sound.class);
         errorThud = mgr.get("audio/sounds/error1.ogg", Sound.class);

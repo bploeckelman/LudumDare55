@@ -5,6 +5,7 @@ import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.actions.SpawnAction;
 import lando.systems.ld55.assets.TileOverlayAssets;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
@@ -28,7 +29,7 @@ public class RadialSummonButton extends RadialButton {
 //                    this.text = "Pawn\n1 Action";
                     this.text = "Summon\nPawn\n(1 move)";
                 } else {
-                    this.text = "Pawn\nNot enough\nactions";
+                    this.text = "Not\nenough\nactions";
                 }
                 break;
             case Knight:
@@ -38,7 +39,8 @@ public class RadialSummonButton extends RadialButton {
 //                    this.text = "Knight\n1 Action";
                     this.text = "Summon\nKnight\n(1 move)";
                 } else {
-                    this.text = "Knight\nNot enough\nactions";
+//                    this.text = "Knight\nNot enough\nactions";
+                    this.text = "Not\nenough\nactions";
                 }
                 break;
             case Bishop:
@@ -47,7 +49,8 @@ public class RadialSummonButton extends RadialButton {
                     enabled = true;
                     this.text = "Summon\nBishop\n(2 moves)";
                 } else {
-                    this.text = "Bishop\nNot enough\nactions";
+//                    this.text = "Bishop\nNot enough\nactions";
+                    this.text = "Not\nenough\nactions";
                 }
                 break;
             case Rook:
@@ -56,7 +59,8 @@ public class RadialSummonButton extends RadialButton {
                     enabled = true;
                     this.text = "Summon\nRook\n(2 moves)";
                 } else {
-                    this.text = "Rook\nNot enough\nactions";
+//                    this.text = "Rook\nNot enough\nactions";
+                    this.text = "Not\nenough\nactions";
                 }
                 break;
             case Queen:
@@ -65,7 +69,8 @@ public class RadialSummonButton extends RadialButton {
                     enabled = true;
                     this.text = "Summon\nQueen\n(3 moves)";
                 } else {
-                    this.text = "Queen\nNot enough\nactions";
+//                    this.text = "Queen\nNot enough\nactions";
+                    this.text = "Not\nenough\nactions";
                 }
                 break;
         }
@@ -78,6 +83,7 @@ public class RadialSummonButton extends RadialButton {
         var assets = board.gameScreen.assets;
         var owner = GamePiece.Owner.Player;
         actionManager.playerActionsAvailable -= pointsUsed;
+        Main.game.audioManager.playSound(AudioManager.Sounds.select);
         switch (pieceType) {
             case Pawn:
                 board.gameScreen.actionManager.addAction(new SpawnAction(board,

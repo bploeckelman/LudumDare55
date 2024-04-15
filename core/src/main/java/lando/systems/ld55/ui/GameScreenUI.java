@@ -11,8 +11,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Config;
+import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.assets.TileOverlayAssets;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.EnemyAI;
 import lando.systems.ld55.screens.GameScreen;
 
@@ -54,9 +56,11 @@ public class GameScreenUI {
             15, 10,
         });
         endTurnButton.onClick = () -> {
+            Main.game.audioManager.playSound(AudioManager.Sounds.lockIn);
             EnemyAI.doTurn(screen.gameBoard);
             screen.actionManager.endTurn();
             endTurnButton.pulse = false;
+
         };
         endTurnButton.imagePulse = new Animation<>(0.1f,
             screen.assets.atlas.findRegions("icons/finish-turn-btn-pulse"), Animation.PlayMode.LOOP);
@@ -98,6 +102,7 @@ public class GameScreenUI {
 
         var pressed = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
         var disabled = screen.actionManager.getCurrentPhase() != ActionManager.Phase.CollectActions;
+//        endTurnButton.update(dt, touchPos, pressed, disabled);
         endTurnButton.update(dt, touchPos, pressed, disabled);
         settingsButton.update(dt, touchPos, pressed, false);
 

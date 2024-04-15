@@ -5,6 +5,7 @@ import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.assets.TileOverlayAssets;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
@@ -36,5 +37,6 @@ public class RadialConfirmMoveButton extends RadialButton {
         ActionBase move = new MoveAction(board, piece, moveTile);
         piece.currentAction = move;
         board.gameScreen.actionManager.addAction(move);
+        Main.game.audioManager.playSound(AudioManager.Sounds.metalTap);
     }
 }

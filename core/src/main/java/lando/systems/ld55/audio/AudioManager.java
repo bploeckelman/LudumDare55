@@ -26,6 +26,9 @@ public class AudioManager implements Disposable {
         , idle_click
         , pew
         , click
+        , select
+        , lockIn
+        , metalTap
         , error_sound
         , error_buzz
         , level_up
@@ -57,6 +60,9 @@ public class AudioManager implements Disposable {
         putSound(Sounds.idle_click, assets.idleClick);
         putSound(Sounds.pew, assets.pew);
         putSound(Sounds.click, assets.click);
+        putSound(Sounds.lockIn, assets.lockIn);
+        putSound(Sounds.select, assets.select);
+        putSound(Sounds.metalTap, assets.metalTap);
         putSound(Sounds.level_up, assets.levelUp);
 //        putSound(Sounds.error, assets.errorThud);
         putSound(Sounds.error_sound, assets.errorThud);

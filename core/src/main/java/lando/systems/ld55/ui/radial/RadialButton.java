@@ -39,14 +39,20 @@ public class RadialButton {
     }
 
     public void render(SpriteBatch batch) {
-        batch.setColor(0.5f, 0.5f, 0.5f, 1f);
+        if(enabled) {
+            batch.setColor(0.35f, 0.45f, 0.45f, 1f);
+        }
+        else {
+            batch.setColor(0.7f, 0.5f, 0.5f, .8f);
+        }
+
         background.draw(batch,centerPosition.x - radius, centerPosition.y - radius, radius*2f, radius * 2f);
         batch.setColor(1, 1, 1, 1);
 
         if (enabled) {
-            batch.setColor(Color.LIME);
+            batch.setColor(.1f,.6f,.2f,1);
         } else {
-            batch.setColor(.4f, 0, 0, 1f);
+            batch.setColor(.4f, .4f, .4f, .81f);
         }
 
         var iconRadius = radius * 0.75f;
@@ -54,6 +60,7 @@ public class RadialButton {
         batch.setColor(Color.WHITE);
 
         float textWidth = radius + radius - 10;
+
 
         font.getData().setScale(radius/MAX_RADIUS);
         layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
