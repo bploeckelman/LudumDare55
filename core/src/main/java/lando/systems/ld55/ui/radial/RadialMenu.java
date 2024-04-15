@@ -40,8 +40,8 @@ public class RadialMenu {
             case Summon:
                 buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Pawn));
                 buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Knight));
-                buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Rook));
                 buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Bishop));
+                buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Rook));
                 buttons.add(new RadialSummonButton(board, tile, GamePiece.Type.Queen));
                 break;
             case CancelMove:

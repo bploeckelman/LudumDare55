@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.entities.GameBoard;
+import lando.systems.ld55.entities.GamePiece;
+import lando.systems.ld55.entities.GameTile;
 
 public class ActionQueueUI {
     public ActionManager actionManager;
@@ -57,6 +59,11 @@ public class ActionQueueUI {
         mousePos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         gameBoard.gameScreen.worldCamera.unproject(mousePos);
         hoveredAction = null;
+        GameTile hoverTile = gameBoard.hoverTile;
+        GamePiece hoverPiece = null;
+        if (hoverTile != null) {
+            hoverPiece = gameBoard.getGamePiece(hoverTile);
+        }
         for (int i = turnOrderUIItems.size -1; i >= 0; i --) {
             ActionItemUI item = turnOrderUIItems.get(i);
             item.highlight = false;
@@ -68,6 +75,8 @@ public class ActionQueueUI {
                 if (item.bounds.contains(mousePos.x, mousePos.y)){
                     item.highlight = true;
                     hoveredAction = item;
+                } else if (hoverPiece != null && hoverPiece == item.action.getPiece()){
+                    item.highlight = true;
                 }
             }
             item.update(dt);
