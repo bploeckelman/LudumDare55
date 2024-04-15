@@ -29,8 +29,9 @@ public class AfterCreditScreen extends BaseScreen {
     // Last day Magic numbers
     Rectangle skipButtonRect = new Rectangle(Config.Screen.window_width - 300, 620, 150, 40);
 
-    String text = "Goomba Simulator 2\n\n" +
+    String text =
         "Game Jam: The Game\n\n" +
+        "Goomba Simulator 2\n\n" +
         "Deja vu like game - sum mo(r)Ning\n\n" +
         "A next next generation AI requires blood sacrifice.. what will you do to help humanity?\n\n" +
         "Bible hero: Pray in time with the beat of that sweet gospel music. Can I get an amen?!! Al-leh-luh-ahhh\n\n" +

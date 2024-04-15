@@ -21,17 +21,17 @@ public class IntroScreen extends BaseScreen {
     Particles particles;
     String page1 =
         "{COLOR=black}" +
-            "\nMany consider a{GRADIENT=black;gray} King{ENDGRADIENT} the embodiment of{GRADIENT=black;gold} power{ENDGRADIENT}.\n\n" +
+            "Many consider a{GRADIENT=black;gray} King{ENDGRADIENT} the embodiment of{GRADIENT=black;gold} power{ENDGRADIENT}.\n\n" +
         "But in truth, each monarch is a captive. " +
             "Their every need relies on the{GRADIENT=navy;purple} fealty {ENDGRADIENT}of those they purport to rule.\n\n " +
             "And in times of peril, the King is only as safe as the court they are {GRADIENT=yellow;black}summoning{ENDGRADIENT} to their defense...";
     String page2 =
-        "\n{COLOR=black}When a mystical{GRADIENT=red;black} wizard{ENDGRADIENT} unleashes his army of {GRADIENT=red;brown}monsters {ENDGRADIENT}on the castle, " +
+        "{COLOR=black}When a mystical{GRADIENT=red;black} wizard{ENDGRADIENT} unleashes his army of {GRADIENT=red;brown}monsters {ENDGRADIENT}on the castle, " +
             "the King's warriors must confront the menace before they reach the kingdom.\n\n" +
             "(Real dick move by the wizard, by the way. Not what you do if you want to make friends)";
     String page3 =
-            "\n{COLOR=black}For whatever reason, the King's guards prefer a strategy of{GRADIENT=brown;red} turn-based combat {ENDGRADIENT}" +
-                "vaguely reminiscent of {GRADIENT=green;black}chess {ENDGRADIENT}(although the similarities are pretty superficial, truth be told)." +
+            "{COLOR=black}For whatever reason, the King's guards prefer a strategy of{GRADIENT=brown;red} turn-based combat {ENDGRADIENT}" +
+                "that is vaguely reminiscent of {GRADIENT=green;black}chess{ENDGRADIENT}, although the similarities are admittedly pretty superficial." +
                 "\n\nIf our warriors reach the wizard's stronghold, it means victory for the kingdom. Otherwise our king will be {GRADIENT=red;brown}Board To Death! {ENDGRADIENT} " ;
 //    String page4 =
 //        "{COLOR=black}This is no mere chessboard, but a tapestry of fate woven by your strategic brilliance.\n" +
