@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
+import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
@@ -15,7 +16,7 @@ public class RadialConfirmMoveButton extends RadialButton {
     GamePiece piece;
 
     public RadialConfirmMoveButton(GameBoard board, GamePiece piece, GameTile tile) {
-        super(Main.game.assets.pixelRegion, "Confirm", true);
+        super(TileOverlayAssets.panelGreen, TileOverlayAssets.pawnRight, "Confirm", true);
         this.board = board;
         this.moveTile = tile;
         this.piece = piece;

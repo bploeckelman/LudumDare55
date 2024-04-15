@@ -27,10 +27,12 @@ public class TileOverlayAssets {
     public static TextureRegion checkmark;
     public static TextureRegion exclamation;
     public static TextureRegion question;
+    public static TextureRegion dollar;
     public static TextureRegion pawn;
     public static TextureRegion pawns;
     public static TextureRegion pawnUp;
     public static TextureRegion pawnDown;
+    public static TextureRegion pawnRight;
     public static TextureRegion pawnPlus;
     public static TextureRegion tokenAdd;
     public static TextureRegion dot;
@@ -38,6 +40,7 @@ public class TileOverlayAssets {
     public static TextureRegion sword;
     public static TextureRegion crown;
     public static TextureRegion laurel;
+    public static TextureRegion cardX;
 
     public static Array<TextureRegion> tags;
 
@@ -65,10 +68,12 @@ public class TileOverlayAssets {
         checkmark   = atlas.findRegion("icons/kenney-ui/checkmark");
         exclamation = atlas.findRegion("icons/kenney-ui/exclamation");
         question    = atlas.findRegion("icons/kenney-board-game/dice_question");
+        dollar      = atlas.findRegion("icons/kenney-board-game/dollar");
         pawn        = atlas.findRegion("icons/kenney-board-game/pawn");
         pawns       = atlas.findRegion("icons/kenney-board-game/pawns");
         pawnUp      = atlas.findRegion("icons/kenney-board-game/pawn_up");
         pawnDown    = atlas.findRegion("icons/kenney-board-game/pawn_down");
+        pawnRight   = atlas.findRegion("icons/kenney-board-game/pawn_right");
         pawnPlus    = atlas.findRegion("icons/kenney-board-game/pawn_plus");
         tokenAdd    = atlas.findRegion("icons/kenney-board-game/token_add");
         dot         = atlas.findRegion("icons/kenney-board-game/tag_empty");
@@ -76,6 +81,7 @@ public class TileOverlayAssets {
         sword       = atlas.findRegion("icons/kenney-board-game/sword");
         crown       = atlas.findRegion("icons/kenney-board-game/crown_b");
         laurel      = atlas.findRegion("icons/kenney-board-game/award");
+        cardX       = atlas.findRegion("icons/kenney-board-game/card_outline_remove");
 
         tags = new Array<>();
         for (int i = 0; i <= 10; i++) {

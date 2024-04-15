@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.actions.SpawnAction;
+import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
@@ -14,7 +15,7 @@ public class RadialSummonButton extends RadialButton {
     GameTile summonTile;
 
     public RadialSummonButton(GameBoard board, GameTile tile, GamePiece.Type type) {
-        super(Main.game.assets.pixelRegion, "DEBUG", false);
+        super(TileOverlayAssets.panelBlue, TileOverlayAssets.pawnPlus, "DEBUG", false);
         this.summonTile = tile;
         this.board = board;
         this.pieceType = type;
