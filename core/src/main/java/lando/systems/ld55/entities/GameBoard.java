@@ -368,7 +368,7 @@ public class GameBoard extends InputAdapter {
         for (int i = gamePieces.size -1; i >= 0; i--) {
             GamePiece gp = gamePieces.get(i);
             gp.update(dt);
-            if (gp.isDead()) {
+            if (gp.canRemove()) {
                 gamePieces.removeIndex(i);
             }
 

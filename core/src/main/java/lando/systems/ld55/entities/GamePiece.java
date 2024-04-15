@@ -1,5 +1,6 @@
 package lando.systems.ld55.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -186,6 +187,10 @@ public class GamePiece {
         return currentHealth <= 0;
     }
 
+    public boolean canRemove() {
+        return isDead() && bloodDuration <= 0;
+    }
+
     public void takeDamage(int amount, GameBoard board) {
         currentHealth -= amount;
         // TODO: make something cool happen here, health bar floats away as a particle maybe?
@@ -290,14 +295,14 @@ public class GamePiece {
             updateMovement(dt);
         }
 
+        updateBlood(dt);
+
         if (currentAction != null && currentAction.isCompleted()){
             currentAction = null;
         }
 
         adjustFocus(dt);
         healthBar.updateCurrentHealth(currentHealth);
-
-        updateBlood(dt);
     }
 
     private void updateMovement(float dt) {
@@ -323,7 +328,9 @@ public class GamePiece {
             currentAction.render(batch);
         }
 
-        healthBar.render(batch, healthAlpha);
+        if (!isDead()) {
+            healthBar.render(batch, healthAlpha);
+        }
         //TEST
 //        if (isAttacking){
 //            batch.setColor(Color.RED);
@@ -444,13 +451,14 @@ public class GamePiece {
 
         bloodDuration -= dt;
         if (bloodDuration < 0) return;
+        Gdx.app.log("test", ""+bloodDuration);
 
         GameScreen.particles.bloodFountain(position.x, position.y + bounds.height / 2);
     }
     public void bleed() {
         GameScreen.particles.spawnBloodPuddle(position.x, position.y);
-        if (currentHealth <= 0 && MathUtils.random(100) < 50) {
-            bloodDuration = 2;
+        if (currentHealth <= 0) {
+            bloodDuration = 2.5f;
         } else {
             normalBlood = true;
         }
