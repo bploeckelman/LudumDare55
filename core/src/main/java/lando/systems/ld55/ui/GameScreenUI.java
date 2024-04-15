@@ -26,12 +26,13 @@ public class GameScreenUI {
     public final Array<ActionPoint> actionPoints;
 
     public static class ActionPoint {
+        public enum State {Empty, Temp, Full}
         public Rectangle bounds;
-        public boolean active;
+        public State state;
 
         public ActionPoint(Rectangle bounds, boolean active) {
             this.bounds = bounds;
-            this.active = active;
+            this.state = State.Full;
         }
     }
 
@@ -96,9 +97,16 @@ public class GameScreenUI {
 //        moveButton.update(dt, touchPos, pressed, false);
 
         var actionsAvailable = screen.actionManager.playerActionsAvailable;
+        var tempActions = screen.actionManager.tempActionPoints;
         for (int i = 0; i < actionPoints.size; i++) {
             var point = actionPoints.get(i);
-            point.active = i < actionsAvailable;
+            point.state = ActionPoint.State.Empty;
+            if (i < actionsAvailable) {
+                point.state = ActionPoint.State.Temp;
+            }
+            if (i < tempActions) {
+                point.state = ActionPoint.State.Full;
+            }
         }
         endTurnButton.pulse = actionsAvailable == 0;
     }
@@ -114,7 +122,17 @@ public class GameScreenUI {
 
         for (var point : actionPoints) {
             // TODO(brian) - would be nice to change color through blue -> green -> yellow -> red as actions are used
-            var color = point.active ? Color.LIME : Color.GRAY;
+            var color = Color.GRAY;
+            switch (point.state){
+                case Empty:
+                    break;
+                case Temp:
+                    color = Color.YELLOW;
+                    break;
+                case Full:
+                    color = Color.LIME;
+                    break;
+            }
             if (!actionsAvailable) color = Color.DARK_GRAY;
 
             batch.setColor(color);

@@ -17,6 +17,7 @@ public class RadialCancelMoveButton extends RadialButton {
 
     public RadialCancelMoveButton(GameBoard board, GamePiece piece, GameTile tile) {
         super(TileOverlayAssets.panelRed, TileOverlayAssets.cross, "Confirm", true);
+        pointsUsed = 1;
         this.board = board;
         this.moveTile = tile;
         this.piece = piece;

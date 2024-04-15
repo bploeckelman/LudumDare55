@@ -17,6 +17,7 @@ public class RadialConfirmMoveButton extends RadialButton {
 
     public RadialConfirmMoveButton(GameBoard board, GamePiece piece, GameTile tile) {
         super(TileOverlayAssets.panelGreen, TileOverlayAssets.pawnRight, "Confirm", true);
+        this.pointsUsed = 1;
         this.board = board;
         this.moveTile = tile;
         this.piece = piece;

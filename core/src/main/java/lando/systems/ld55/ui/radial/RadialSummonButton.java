@@ -23,6 +23,7 @@ public class RadialSummonButton extends RadialButton {
         switch (type) {
             case Pawn:
                 if (actionsAvailable >= 1) {
+                    pointsUsed = 1;
                     enabled = true;
                     this.text = "Pawn\n1 Action";
                 } else {
@@ -31,6 +32,7 @@ public class RadialSummonButton extends RadialButton {
                 break;
             case Knight:
                 if (actionsAvailable >= 1) {
+                    pointsUsed = 1;
                     enabled = true;
                     this.text = "Knight\n1 Action";
                 } else {
@@ -39,6 +41,7 @@ public class RadialSummonButton extends RadialButton {
                 break;
             case Bishop:
                 if (actionsAvailable >= 2) {
+                    pointsUsed = 2;
                     enabled = true;
                     this.text = "Bishop\n2 Actions";
                 } else {
@@ -47,6 +50,7 @@ public class RadialSummonButton extends RadialButton {
                 break;
             case Rook:
                 if (actionsAvailable >= 2) {
+                    pointsUsed = 2;
                     enabled = true;
                     this.text = "Rook\n2 Actions";
                 } else {
@@ -55,6 +59,7 @@ public class RadialSummonButton extends RadialButton {
                 break;
             case Queen:
                 if (actionsAvailable >= 3) {
+                    pointsUsed = 3;
                     enabled = true;
                     this.text = "Queen\n3 Actions";
                 } else {
@@ -70,29 +75,25 @@ public class RadialSummonButton extends RadialButton {
         ActionManager actionManager = board.gameScreen.actionManager;
         var assets = board.gameScreen.assets;
         var owner = GamePiece.Owner.Player;
+        actionManager.playerActionsAvailable -= pointsUsed;
         switch (pieceType) {
             case Pawn:
-                actionManager.playerActionsAvailable -= 1;
                 board.gameScreen.actionManager.addAction(new SpawnAction(board,
                     GamePiece.getGamePiece(assets, GamePiece.Type.Pawn, owner), summonTile));
                 break;
             case Knight:
-                actionManager.playerActionsAvailable -= 1;
                 board.gameScreen.actionManager.addAction(new SpawnAction(board,
                     GamePiece.getGamePiece(assets, GamePiece.Type.Knight, owner), summonTile));
                 break;
             case Bishop:
-                actionManager.playerActionsAvailable -= 2;
                 board.gameScreen.actionManager.addAction(new SpawnAction(board,
                     GamePiece.getGamePiece(assets, GamePiece.Type.Bishop, owner), summonTile));
                 break;
             case Rook:
-                actionManager.playerActionsAvailable -= 2;
                 board.gameScreen.actionManager.addAction(new SpawnAction(board,
                     GamePiece.getGamePiece(assets, GamePiece.Type.Rook, owner), summonTile));
                 break;
             case Queen:
-                actionManager.playerActionsAvailable -= 3;
                 board.gameScreen.actionManager.addAction(new SpawnAction(board,
                     GamePiece.getGamePiece(assets, GamePiece.Type.Queen, owner), summonTile));
                 break;

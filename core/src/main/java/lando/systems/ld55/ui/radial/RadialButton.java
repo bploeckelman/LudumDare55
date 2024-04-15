@@ -19,6 +19,7 @@ public class RadialButton {
     private BitmapFont font;
     private GlyphLayout layout;
     public boolean enabled;
+    public int pointsUsed = 0;
 
 
     public RadialButton(NinePatch background, TextureRegion icon, String text, boolean enabled) {
