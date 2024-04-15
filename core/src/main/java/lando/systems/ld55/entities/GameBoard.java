@@ -54,6 +54,7 @@ public class GameBoard extends InputAdapter {
     public final List<TileOverlayInfo> spawnTileOverlays = new ArrayList<>();
     public final List<TileOverlayInfo> moveTileOverlays = new ArrayList<>();
     public final List<TileOverlayInfo> attackTileOverlays = new ArrayList<>();
+    public final List<TileOverlayInfo> goalTileOverlays = new ArrayList<>();
 
     public FrameBuffer gridFB;
     public Texture gridTexture;
@@ -102,6 +103,15 @@ public class GameBoard extends InputAdapter {
                     }
                 }
             }
+        }
+
+        // setup goal tile overlays
+        for (var tile : winTiles) {
+            goalTileOverlays.add(new TileOverlayInfo(tile, 0)
+                .addLayer("base-panel", 1f, 1, 1, 1, 0.3f, TileOverlayAssets.panelWhite, null, null)
+                .addLayer("icon-laurel", 0.9f, Color.GOLD, 1f, null, TileOverlayAssets.laurel, null)
+                .addLayer("icon-crown", 0.6f, Color.WHITE, 1f, null, TileOverlayAssets.crown, null)
+            );
         }
 
         gridFB = new FrameBuffer(Pixmap.Format.RGBA8888, Config.Screen.window_width, Config.Screen.window_height, true);
@@ -269,31 +279,13 @@ public class GameBoard extends InputAdapter {
 
     public void update(float dt) {
         if (gameScreen.gameOver) { return; }
+
         // TEST ---------------
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            var nextPattern = currentPattern.next__TEST();
-            if (nextPattern != currentPattern) {
-                currentPattern = nextPattern;
-                if (hoverTile != null) {
-                    tileOverlays = getTileOverlaysForPattern(hoverTile, currentPattern);
-                } else {
-                    tileOverlays.clear();
-                }
-            }
-        }
         if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             spawnGood.activate();
             spawnEvil.activate();
         }
-
-        if (hoverTile != null && Gdx.input.isKeyJustPressed(Input.Keys.L)){
-            radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.CancelMove);
-        }
-        if (hoverTile != null && Gdx.input.isKeyJustPressed(Input.Keys.S)){
-            radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.Summon);
-        }
         // TEST ---------------
-
 
         refreshSummonableTiles();
         refreshMovementTiles();
@@ -373,18 +365,10 @@ public class GameBoard extends InputAdapter {
             }
 
             // draw tile overlays
-//            for (var overlay : tileOverlays) {
-//                overlay.render(batch);
-//            }
-            for (var overlay : spawnTileOverlays) {
-                overlay.render(batch);
-            }
-            for (var overlay : moveTileOverlays) {
-                overlay.render(batch);
-            }
-            for (var overlay : attackTileOverlays) {
-                overlay.render(batch);
-            }
+            spawnTileOverlays.forEach(overlay -> overlay.render(batch));
+            goalTileOverlays.forEach(overlay -> overlay.render(batch));
+            moveTileOverlays.forEach(overlay -> overlay.render(batch));
+            attackTileOverlays.forEach(overlay -> overlay.render(batch));
         }
 
         batch.setColor(Color.WHITE);
@@ -475,12 +459,13 @@ public class GameBoard extends InputAdapter {
         var activeMoveLists = gameScreen.actionManager.getActiveMoveLists();
         for (var moveList : activeMoveLists) {
             for (var breadcrumb : moveList) {
+                var color = breadcrumb.piece.owner == GamePiece.Owner.Player ? Color.SKY : Color.SALMON;
                 var icon = TileOverlayAssets.getArrowForDir(breadcrumb.direction);
                 var overlay = new TileOverlayInfo(breadcrumb.tile, 0)
                     // NOTE(brian) - panel is too much since all movement paths will be drawn each frame
                     //.addLayer("base-panel", 1f, 1, 1, 1, 0.25f, TileOverlayAssets.panelYellow, null, null)
                     .addLayer("direction-icon-shadow", 1, 0, 0, 0, 1, null, icon, null)
-                    .addLayer("direction-icon", 0.8f, 1, 0.6f, 0, 1, null, icon, null)
+                    .addLayer("direction-icon", 0.8f, color.r, color.g, color.b, 1, null, icon, null)
                     ;
                 moveTileOverlays.add(overlay);
             }

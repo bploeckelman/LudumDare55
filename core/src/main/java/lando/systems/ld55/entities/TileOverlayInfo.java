@@ -18,13 +18,11 @@ public class TileOverlayInfo {
         public Rectangle bounds;
 
         // NOTE - only *one* of these should be included per layer
+        // NOTE - use 'icons/kenney-board-game/tag_#' for numbers
         public NinePatch patch;
         public TextureRegion region;
         public Animation<TextureRegion> anim;
         public float stateTime;
-
-        // TODO - text option? would need font, string, maybe bounds? possibly a bunch of other settings too
-        // NOTE - no text, better to use 'icons/kenney-board-game/tag_#' for numers
 
         public Layer(String name, Color color, Rectangle bounds, NinePatch patch, TextureRegion region, Animation<TextureRegion> anim) {
             this.name = name;
@@ -110,6 +108,10 @@ public class TileOverlayInfo {
 
     public TileOverlayInfo addLayer(String name, float fillPercent, Color color, NinePatch patch, TextureRegion region, Animation<TextureRegion> anim) {
         return addLayer(name, fillPercent, color.r, color.g, color.b, color.a, patch, region, anim);
+    }
+
+    public TileOverlayInfo addLayer(String name, float fillPercent, Color color, float alpha, NinePatch patch, TextureRegion region, Animation<TextureRegion> anim) {
+        return addLayer(name, fillPercent, color.r, color.g, color.b, alpha, patch, region, anim);
     }
 
     public TileOverlayInfo addLayer(String name, float fillPercent, float r, float g, float b, float a, NinePatch patch, TextureRegion region, Animation<TextureRegion> anim) {
