@@ -6,11 +6,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.assets.Assets;
 import lando.systems.ld55.audio.AudioManager;
+import lando.systems.ld55.ui.Button;
 import lando.systems.ld55.utils.typinglabel.TypingLabel;
 
 public class CreditScreen extends BaseScreen {
@@ -40,6 +44,8 @@ public class CreditScreen extends BaseScreen {
 
     private float accum = 0f;
     private boolean showPets = false;
+
+    private Button afterCreditsButton;
 
     public CreditScreen() {
         super();
@@ -77,6 +83,7 @@ public class CreditScreen extends BaseScreen {
         catAnimation = assets.cherry;
         dogAnimation = assets.asuka;
         kittenAnimation = assets.osha;
+        afterCreditsButton = new Button(new Rectangle(worldCamera.viewportWidth - 300f, 0f, 300, 50), "Scraped Ideas", Assets.NinePatches.glass_yellow, Assets.NinePatches.glass, assets.fontZektonSmall);
 
         Main.game.audioManager.playMusic(AudioManager.Musics.introMusic);
     }
@@ -89,7 +96,14 @@ public class CreditScreen extends BaseScreen {
     @Override
     public void update(float dt) {
         if (exitingScreen) { return; }
+        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        windowCamera.unproject(mousePos);
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) || Gdx.input.isTouched()) {
+            if (afterCreditsButton.getBounds().contains(mousePos.x, mousePos.y)) {
+                game.setScreen(new AfterCreditScreen());
+                exitingScreen = true;
+                return;
+            }
             var allDone = titleLabel.hasEnded() && themeLabel.hasEnded() && leftCreditLabel.hasEnded() && rightCreditLabel.hasEnded() && thanksLabel.hasEnded() && disclaimerLabel.hasEnded();
             Gdx.app.log("CreditScreen", "allDone: " + allDone);
             if (allDone) {
@@ -114,6 +128,7 @@ public class CreditScreen extends BaseScreen {
         rightCreditLabel.update(dt);
         thanksLabel.update(dt);
         disclaimerLabel.update(dt);
+        afterCreditsButton.update(mousePos.x, mousePos.y);
     }
 
     @Override
@@ -157,6 +172,7 @@ public class CreditScreen extends BaseScreen {
                 batch.draw(yodaTexture, 525f, 125f);
             }
             batch.setColor(Color.WHITE);
+            afterCreditsButton.draw(batch);
         }
         batch.end();
     }
