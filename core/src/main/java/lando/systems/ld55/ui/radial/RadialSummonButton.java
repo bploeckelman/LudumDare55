@@ -15,7 +15,7 @@ public class RadialSummonButton extends RadialButton {
     GameTile summonTile;
 
     public RadialSummonButton(GameBoard board, GameTile tile, GamePiece.Type type) {
-        super(TileOverlayAssets.panelBlue, TileOverlayAssets.pawnPlus, "DEBUG", false);
+        super(TileOverlayAssets.panelWhite, TileOverlayAssets.pawnPlus, "DEBUG", false);
         this.summonTile = tile;
         this.board = board;
         this.pieceType = type;

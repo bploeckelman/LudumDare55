@@ -38,7 +38,9 @@ public class RadialButton {
     }
 
     public void render(SpriteBatch batch) {
+        batch.setColor(0.5f, 0.5f, 0.5f, 1f);
         background.draw(batch,centerPosition.x - radius, centerPosition.y - radius, radius*2f, radius * 2f);
+        batch.setColor(1, 1, 1, 1);
 
         if (enabled) {
             batch.setColor(Color.LIME);
@@ -46,7 +48,8 @@ public class RadialButton {
             batch.setColor(.4f, 0, 0, 1f);
         }
 
-        batch.draw(icon, centerPosition.x - radius, centerPosition.y - radius, radius*2f, radius * 2f);
+        var iconRadius = radius * 0.75f;
+        batch.draw(icon, centerPosition.x - iconRadius, centerPosition.y - iconRadius, iconRadius*2f, iconRadius * 2f);
         batch.setColor(Color.WHITE);
 
         float textWidth = radius + radius - 10;
