@@ -48,6 +48,7 @@ public class Portal {
         batch.draw(Main.game.assets.noiseTexture, bounds.x, bounds.y, bounds.width, bounds.height);
         batch.end();
         batch.setShader(null);
+        batch.setColor(Color.WHITE);
         if (isAlreadyDrawing) batch.begin();
     }
 

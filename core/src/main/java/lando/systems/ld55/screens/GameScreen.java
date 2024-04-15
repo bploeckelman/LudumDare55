@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.Stats;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
@@ -33,6 +34,7 @@ public class GameScreen extends BaseScreen{
 
 
     public GameScreen() {
+        Stats.reset();
         actionManager = new ActionManager(this);
         gameBoard = new GameBoard(this, 22, 10);
         particles = new Particles(assets);

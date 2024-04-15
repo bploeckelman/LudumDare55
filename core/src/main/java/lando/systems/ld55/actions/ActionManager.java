@@ -6,8 +6,10 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.Stats;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.TileOverlayInfo;
@@ -22,7 +24,10 @@ import java.util.List;
 public class ActionManager {
     public static final float AttackSpeed = 1f;
     public enum Phase {CollectActions, ResolveActions, Attack}
-    public final static int ActionsPerTurn = 3;
+    public static final int MIN_ACTION_POINTS = 2;
+    public static final int MAX_ACTION_POINTS = 10;
+    public static int ActionsPerTurn = MIN_ACTION_POINTS;
+
 
     int turnNumber;
     public int playerActionsAvailable;
@@ -46,6 +51,8 @@ public class ActionManager {
     }
 
     public void update(float dt) {
+        ActionsPerTurn = MIN_ACTION_POINTS + (Stats.enemyUnitsKilled - Stats.playerUnitsKilled);
+        ActionsPerTurn = MathUtils.clamp(ActionsPerTurn, MIN_ACTION_POINTS, MAX_ACTION_POINTS);
         switch (phase){
             case CollectActions:
                 // Idle
@@ -143,6 +150,8 @@ public class ActionManager {
         if (currentAttackerPiece >= attackingUnits.size) {
             // TODO: Sound when the player can act again
             phase = Phase.CollectActions;
+            playerActionsAvailable = ActionsPerTurn;
+            tempActionPoints = playerActionsAvailable;
             return;
         }
 
@@ -215,7 +224,6 @@ public class ActionManager {
         turnNumber++;
         // TODO: Sound when it moves to Attack phase
         phase = Phase.Attack;
-        playerActionsAvailable = ActionsPerTurn;
         for (int i = actionQueue.size-1; i >= 0; i--){
             ActionBase action = actionQueue.get(i);
             action.reset();

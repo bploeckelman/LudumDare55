@@ -22,7 +22,7 @@ public class MovementBreadcrumb {
         if (dX == 0 && dY == -1) direction = Direction.Down;
         if (dX == -1 && dY == -1) direction = Direction.DownLeft;
         if (dX == -1 && dY == 0) direction = Direction.Left;
-        if (dX == -1 && dY == 0) direction = Direction.UpLeft;
+        if (dX == -1 && dY == 1) direction = Direction.UpLeft;
     }
 
 }

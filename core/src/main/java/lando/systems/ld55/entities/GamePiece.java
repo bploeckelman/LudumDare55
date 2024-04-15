@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.Stats;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.assets.Assets;
@@ -173,9 +174,17 @@ public class GamePiece {
         currentHealth -= amount;
         // TODO: make something cool happen here, health bar floats away as a particle maybe?
         healthBar.updateCurrentHealth(currentHealth);
+        if (currentHealth <= 0){
+            if (owner == Owner.Player){
+                Stats.playerUnitsKilled++;
+            } else {
+                Stats.enemyUnitsKilled++;
+            }
+        }
         if (currentHealth <= 0 && currentAction != null){
             board.gameScreen.actionManager.removeAction(currentAction);
             currentAction = null;
+
         }
     }
 

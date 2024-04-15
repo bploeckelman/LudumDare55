@@ -83,6 +83,7 @@ public class GameScreenUI {
     }
 
     public void update(float dt) {
+        refreshActionPoints();
         touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         screen.worldCamera.unproject(touchPos);
 
