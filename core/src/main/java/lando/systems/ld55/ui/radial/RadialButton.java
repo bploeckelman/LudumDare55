@@ -11,6 +11,9 @@ public class RadialButton {
 
     public static float MAX_RADIUS = 35f;
 
+    public Color iconEnabledColor = new Color(.1f,.6f,.2f,1);
+    public Color iconDisabledColor = new Color(.4f, .4f, .4f, .81f);
+
     public String text;
     public TextureRegion icon;
     public NinePatch background;
@@ -45,9 +48,9 @@ public class RadialButton {
         batch.setColor(1, 1, 1, 1);
 
         if (enabled) {
-            batch.setColor(.1f,.6f,.2f,1);
+            batch.setColor(iconEnabledColor);
         } else {
-            batch.setColor(.4f, .4f, .4f, .81f);
+            batch.setColor(iconDisabledColor);
         }
 
         var iconRadius = radius * 0.75f;

@@ -1,5 +1,7 @@
 package lando.systems.ld55.ui.radial;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionManager;
@@ -16,65 +18,19 @@ public class RadialSummonButton extends RadialButton {
     GameTile summonTile;
 
     public RadialSummonButton(GameBoard board, GameTile tile, GamePiece.Type type) {
-        super(TileOverlayAssets.panelWhite, TileOverlayAssets.pawnPlus, "DEBUG", false);
+        super(TileOverlayAssets.panelWhite, TileOverlayAssets.pawnPlus, "", false);
         this.summonTile = tile;
         this.board = board;
         this.pieceType = type;
         int actionsAvailable = board.gameScreen.actionManager.playerActionsAvailable;
-        switch (type) {
-            case Pawn:
-                if (actionsAvailable >= type.actionsToSpawn) {
-                    pointsUsed = type.actionsToSpawn;
-                    enabled = true;
-//                    this.text = "Pawn\n1 Action";
-                    this.text = "Summon\nPawn\n(1 move)";
-                } else {
-                    this.text = "Not\nenough\nactions";
-                }
-                break;
-            case Knight:
-                if (actionsAvailable >= type.actionsToSpawn) {
-                    pointsUsed = type.actionsToSpawn;
-                    enabled = true;
-//                    this.text = "Knight\n1 Action";
-                    this.text = "Summon\nKnight\n(1 move)";
-                } else {
-//                    this.text = "Knight\nNot enough\nactions";
-                    this.text = "Not\nenough\nactions";
-                }
-                break;
-            case Bishop:
-                if (actionsAvailable >= type.actionsToSpawn) {
-                    pointsUsed = type.actionsToSpawn;
-                    enabled = true;
-                    this.text = "Summon\nBishop\n(2 moves)";
-                } else {
-//                    this.text = "Bishop\nNot enough\nactions";
-                    this.text = "Not\nenough\nactions";
-                }
-                break;
-            case Rook:
-                if (actionsAvailable >= type.actionsToSpawn) {
-                    pointsUsed = type.actionsToSpawn;
-                    enabled = true;
-                    this.text = "Summon\nRook\n(2 moves)";
-                } else {
-//                    this.text = "Rook\nNot enough\nactions";
-                    this.text = "Not\nenough\nactions";
-                }
-                break;
-            case Queen:
-                if (actionsAvailable >= type.actionsToSpawn) {
-                    pointsUsed = type.actionsToSpawn;
-                    enabled = true;
-                    this.text = "Summon\nQueen\n(3 moves)";
-                } else {
-//                    this.text = "Queen\nNot enough\nactions";
-                    this.text = "Not\nenough\nactions";
-                }
-                break;
+        if (actionsAvailable >= type.actionsToSpawn) {
+            pointsUsed = type.actionsToSpawn;
+            enabled = true;
         }
-
+        Animation<TextureRegion> portrait = board.gameScreen.assets.getPortrait(type, GamePiece.Owner.Player);
+        this.icon = portrait.getKeyFrame(0);
+        iconEnabledColor.set(Color.WHITE);
+        iconDisabledColor.set(.8f, .8f, .8f, 1f);
     }
 
     @Override

@@ -175,6 +175,7 @@ public class Assets implements Disposable {
         public static NinePatch metal_yellow;
         public static NinePatch shear;
         public static NinePatch outline;
+        public static NinePatch debug;
     }
 
     public static class Particles {
@@ -436,6 +437,7 @@ public class Assets implements Disposable {
         NinePatches.metal_yellow                    = new NinePatch(atlas.findRegion("ninepatch/metal-yellow"),            12, 12, 12, 12);
         NinePatches.shear                           = new NinePatch(atlas.findRegion("ninepatch/shear"),                   75, 75, 12, 12);
         NinePatches.outline                         = new NinePatch(atlas.findRegion("ninepatch/outline"),                 3,   3,  3,  3);
+        NinePatches.debug                         = new NinePatch(atlas.findRegion("ninepatch/debug"),                 3,   3,  3,  3);
 
         TileOverlayAssets.populate(atlas);
 
@@ -538,6 +540,23 @@ public class Assets implements Disposable {
                 return rook.get(alignment).get(0);
             case Queen:
                 return queen.get(alignment).get(0);
+        }
+        return null;
+    }
+
+    public Animation<TextureRegion> getPortrait(GamePiece.Type type, GamePiece.Owner owner) {
+        var alignment = owner == GamePiece.Owner.Player ? 0 : 1;
+        switch (type) {
+            case Pawn:
+                return pawn.get(alignment).get(2);
+            case Knight:
+                return knight.get(alignment).get(2);
+            case Bishop:
+                return bishop.get(alignment).get(2);
+            case Rook:
+                return rook.get(alignment).get(2);
+            case Queen:
+                return queen.get(alignment).get(2);
         }
         return null;
     }
