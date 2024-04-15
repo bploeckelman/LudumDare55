@@ -405,6 +405,6 @@ public class GamePiece {
         }
 
         float alpha = healthAlpha + dt;
-        healthAlpha = MathUtils.clamp(alpha, 0f, 1f);
+        healthAlpha = MathUtils.clamp(alpha, 0.6f, 1f);
     }
 }
