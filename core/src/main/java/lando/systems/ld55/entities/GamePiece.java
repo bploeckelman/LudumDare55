@@ -13,7 +13,7 @@ import lando.systems.ld55.Stats;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.assets.Assets;
-import lando.systems.ld55.particles.Particles;
+import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.ui.HealthBar;
 
@@ -221,6 +221,7 @@ public class GamePiece {
         selected = true;
         selectedAnimState = 0;
         addMoveTiles(gameBoard);
+        setupMoveOverlay(gameBoard);
         return this;
     }
 
@@ -391,6 +392,15 @@ public class GamePiece {
                 addMoveTile(gameBoard,-i - 1, i + 1);
             }
         }
+    }
+
+    private void setupMoveOverlay(GameBoard gameBoard) {
+        gameBoard.playerMoveOverlay.clear();
+
+        for (GameTile tile : moveTiles)
+            gameBoard.playerMoveOverlay.add(new TileOverlayInfo(tile, 0)
+            .addLayer("base-panel", 1f, 1, 1, 1, 0.4f, TileOverlayAssets.panelWhite, null, null));
+
     }
 
     private void addMoveTile(GameBoard gameBoard, int x, int y) {

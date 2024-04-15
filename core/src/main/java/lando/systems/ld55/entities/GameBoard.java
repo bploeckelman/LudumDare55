@@ -52,6 +52,7 @@ public class GameBoard extends InputAdapter {
     public final List<TileOverlayInfo> moveTileOverlays = new ArrayList<>();
     public final List<TileOverlayInfo> attackTileOverlays = new ArrayList<>();
     public final List<TileOverlayInfo> goalTileOverlays = new ArrayList<>();
+    public final List<TileOverlayInfo> playerMoveOverlay = new ArrayList<>();
 
     public FrameBuffer gridFB;
     public Texture gridTexture;
@@ -396,7 +397,7 @@ public class GameBoard extends InputAdapter {
             tile.render(batch);
         }
         renderGrid(batch);
-        gameScreen.particles.draw(batch, lando.systems.ld55.particles.Particles.Layer.BACKGROUND);
+        GameScreen.particles.draw(batch, lando.systems.ld55.particles.Particles.Layer.BACKGROUND);
         // draw set pieces (from StyleMgr)
         gameScreen.styleManager.render(batch);
 
@@ -418,6 +419,7 @@ public class GameBoard extends InputAdapter {
             spawnTileOverlays.forEach(overlay -> overlay.render(batch));
             goalTileOverlays.forEach(overlay -> overlay.render(batch));
             moveTileOverlays.forEach(overlay -> overlay.render(batch));
+            playerMoveOverlay.forEach(overlay -> overlay.render(batch));
             attackTileOverlays.forEach(overlay -> overlay.render(batch));
         }
 
@@ -429,10 +431,10 @@ public class GameBoard extends InputAdapter {
             gp.render(batch);
         }
 
-        // NOTE - this is showing where a possible move can go to
-        if (selectedPiece != null && selectedPiece.currentAction == null ) {
-            selectedPiece.renderMovement(batch);
-        }
+//        // NOTE - this is showing where a possible move can go to
+//        if (selectedPiece != null && selectedPiece.currentAction == null ) {
+//            selectedPiece.renderMovement(batch);
+//        }
 
         // NOTE - radial menu is drawn in game screen so it can be on top of everything
 
