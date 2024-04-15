@@ -48,29 +48,8 @@ public class SpawnAction extends ActionBase {
     public void update(float dt) {
         accum += dt;
         if (!started) {
-            gamePiece.setTile(spawnTile);
             started = true;
-//            Gdx.app.log("cucaracha counter", String.valueOf(board.cucarachaCounter));
-            if(board.cucarachaCounter >= 20) {
-               Main.game.audioManager.playSound(AudioManager.Sounds.cucaracha_fanfare);
-               board.cucarachaCounter = 0;
-            }
-            else {
-                if(gamePiece.owner == GamePiece.Owner.Player) {
-                    Main.game.audioManager.playSound(AudioManager.Sounds.horn_fanfare);
-                }
-
-                else {
-                    Main.game.audioManager.playSound(AudioManager.Sounds.enemy_spawn);
-                }
-                board.cucarachaCounter++;
-            }
-
-
-
-
-            // TODO: particles
-            board.gameScreen.particles.portal(spawnTile.bounds.x + spawnTile.bounds.width / 2f, spawnTile.bounds.y + spawnTile.bounds.height / 2f, spawnTile.bounds.width / 2f);
+            startSpawn();
         }
 
         if (accum > SummonTime) {
@@ -90,9 +69,23 @@ public class SpawnAction extends ActionBase {
                 gamePiece.summoning = false;
                 board.gamePieces.add(gamePiece);
             }
-
         }
+    }
 
+    private void startSpawn() {
+
+        float x, y;
+        if (gamePiece.owner == GamePiece.Owner.Enemy) {
+            var bounds = board.spawnEvil.bounds;
+            x = bounds.x + bounds.width / 2;
+            gamePiece.startSpawn(x, 560, board.spawnEvil.anim.getAnimationDuration() + 0.5f);
+            board.spawnEvil.activate();
+            Main.game.audioManager.playSound(AudioManager.Sounds.spawn_evil_start);
+        } else {
+            gamePiece.startSpawn(44, 470, board.spawnGood.anim.getAnimationDuration() + 0.5f);
+            board.spawnGood.activate();
+            Main.game.audioManager.playSound(AudioManager.Sounds.spawn_good_start);
+        }
     }
 
     @Override

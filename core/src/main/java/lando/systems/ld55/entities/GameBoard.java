@@ -308,13 +308,6 @@ public class GameBoard extends InputAdapter {
         turnTime += dt;
         if (gameScreen.gameOver) { return; }
 
-        // TEST ---------------
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            spawnGood.activate();
-            spawnEvil.activate();
-        }
-        // TEST ---------------
-
         refreshSummonableTiles();
         refreshMovementTiles();
 

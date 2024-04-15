@@ -37,6 +37,13 @@ public class AudioManager implements Disposable {
         , enemy_spawn
         , round_ring
         , combat_hit
+        , spawn_evil_start // tentacles appear
+        , spawn_evil_end // game piece completely rendered
+        , spawn_evil_move_start // movement sound from spawn location
+        , spawn_good_start // fanfare trumpets
+        , spawn_good_end
+        , spawn_good_move_start
+
     }
 
     public enum Musics {

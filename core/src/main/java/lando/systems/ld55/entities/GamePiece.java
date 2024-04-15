@@ -297,7 +297,9 @@ public class GamePiece {
     }
 
     public void update(float dt) {
+        updateSpawn(dt);
         animState += dt;
+
         keyframe = currentAnimation.getKeyFrame(animState);
         if (selected) {
             selectedAnimState += dt;
@@ -337,8 +339,12 @@ public class GamePiece {
     public void render(SpriteBatch batch) {
         if (currentTile == null) return;
 
-        float flip = owner == Owner.Enemy ? -1 : 1;
+        if (isSpawning) {
+            renderSpawn(batch);
+            return;
+        }
 
+        float flip = owner == Owner.Enemy ? -1 : 1;
         float yOffset = getYOffset();
         batch.draw(keyframe, bounds.x, bounds.y + yOffset, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, flip, 1, 0);
 
@@ -504,6 +510,7 @@ public class GamePiece {
 
         GameScreen.particles.bloodFountain(position.x, position.y + bounds.height / 2);
     }
+
     public void bleed() {
         GameScreen.particles.spawnBloodPuddle(position.x, position.y);
         if (currentHealth <= 0) {
@@ -511,5 +518,35 @@ public class GamePiece {
         } else {
             normalBlood = true;
         }
+    }
+
+    private final Vector2 spawnPosition = new Vector2();
+    private boolean isSpawning = false;
+    private float spawnTime = 0;
+    private float maxSpawn;
+
+    public void startSpawn(float x, float y, float spawnTime) {
+        this.spawnTime = this.maxSpawn = spawnTime;
+        this.isSpawning = true;
+        spawnPosition.set(x, y);
+    }
+
+    private void updateSpawn(float dt) {
+        if (!isSpawning) return;
+
+        spawnTime -= dt;
+        if (spawnTime < 0) {
+            spawnTime = 0;
+            isSpawning = false;
+            position.set(spawnPosition.x, spawnPosition.y);
+            moveToTile(currentTile);
+        }
+    }
+
+    private void renderSpawn(SpriteBatch batch) {
+        float flip = owner == Owner.Enemy ? -1 : 1;
+        batch.setColor(1, 1, 1, 1 - spawnTime / maxSpawn);
+        batch.draw(keyframe, spawnPosition.x - keyframe.getRegionWidth() / 2f, spawnPosition.y, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, flip, 1, 0);
+        batch.setColor(Color.WHITE);
     }
 }
