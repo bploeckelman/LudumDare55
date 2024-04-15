@@ -31,12 +31,11 @@ import java.util.List;
 
 public class GameBoard extends InputAdapter {
 
-    public static float marginLeft = 112;
-    public static float marginRight = 112;
-    public static float marginTop = 120;
-    public static float marginBottom = 120;
-
     public static final Color gridColor = new Color(.7f, .7f, .9f, 1f);
+    public static final float marginLeft   = 112f;
+    public static final float marginRight  = 112f;
+    public static final float marginTop    = 120f;
+    public static final float marginBottom = 120f;
 
     public GameTile hoverTile;
     public Rectangle boardRegion;
@@ -73,11 +72,14 @@ public class GameBoard extends InputAdapter {
         this.tilesWide = tilesWide;
         this.tilesHigh = tilesHigh;
 
-        var cornerDepth = 3; // 'cutout' 3 tiles deep in each corner on both axes
-        var boardWidth = gameScreen.worldCamera.viewportWidth - (marginLeft + marginRight);
-        var boardHeight = gameScreen.worldCamera.viewportHeight - (marginTop + marginBottom);
-        var tileSize = boardWidth / tilesWide; // should be same as (boardHeight / tilesHigh)
-        var boardStartPoint = new Vector2(marginLeft, marginBottom);
+        var stageWidth = gameScreen.worldCamera.viewportWidth;
+        var stageHeight = gameScreen.worldCamera.viewportHeight;
+
+        var boardHeight = stageHeight - (marginTop + marginBottom);
+        var tileSize = boardHeight / tilesHigh;
+        var boardWidth = tileSize * tilesWide;
+        var left = (stageWidth - boardWidth) / 2f;
+        var boardStartPoint = new Vector2(left, marginBottom);
         boardRegion = new Rectangle(boardStartPoint.x, boardStartPoint.y, boardWidth, boardHeight);
 
         for (int y = 0; y < tilesHigh; y++) {
@@ -87,7 +89,10 @@ public class GameBoard extends InputAdapter {
                     boardStartPoint.y + (y * tileSize),
                     tileSize, tileSize);
                 var tile = new GameTile(x, y, rect);
-                tile.valid = !isCornerTile(x, y, cornerDepth);
+                // NOTE(brian) - no longer doing cutouts
+//                var cornerDepth = 3; // 'cutout' 3 tiles deep in each corner on both axes
+//                tile.valid = !isCornerTile(x, y, cornerDepth);
+                tile.valid = true;
                 tiles.add(tile);
 
                 if (tile.valid) {

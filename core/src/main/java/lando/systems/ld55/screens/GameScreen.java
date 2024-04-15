@@ -4,14 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
@@ -20,15 +16,16 @@ import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.StyleManager;
-import lando.systems.ld55.entities.StylePiece;
 import lando.systems.ld55.particles.Particles;
 import lando.systems.ld55.ui.GameScreenUI;
+import lando.systems.ld55.ui.SettingsUI;
 
 public class GameScreen extends BaseScreen{
     public GameBoard gameBoard;
     public Particles particles;
     public ActionManager actionManager;
     public GameScreenUI ui;
+    public SettingsUI settingsUI;
     public final StyleManager styleManager = new StyleManager();
     private float gameOverTime = 5;
 
@@ -36,10 +33,12 @@ public class GameScreen extends BaseScreen{
     public GameScreen() {
         Stats.reset();
         actionManager = new ActionManager(this);
-        gameBoard = new GameBoard(this, 22, 10);
+        gameBoard = new GameBoard(this, 16, 10);
         particles = new Particles(assets);
         ui = new GameScreenUI(this);
-        Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
+        settingsUI = new SettingsUI(skin, windowCamera);
+        uiStage.addActor(settingsUI);
+        Gdx.input.setInputProcessor(new InputMultiplexer(uiStage, gameBoard));
         Main.game.audioManager.playMusic(AudioManager.Musics.mainMusic);
         setupStyle();
     }
@@ -68,6 +67,11 @@ public class GameScreen extends BaseScreen{
     }
 
     public void update(float dt) {
+        if (settingsUI.isSettingShown) {
+            uiStage.act(dt);
+            return;
+        }
+
         if (gameOver) {
             gameOverTime -= dt;
             if (gameOverTime < 0) {
@@ -89,7 +93,7 @@ public class GameScreen extends BaseScreen{
         var touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         worldCamera.unproject(touchPos);
         if (Gdx.input.justTouched() && gameBoard.hoverTile == null) {
-            particles.portal(touchPos.x, touchPos.y, 20f);
+            particles.levelUpEffect(touchPos.x, touchPos.y);
             Main.game.audioManager.playSound(AudioManager.Sounds.pew);
 //            Main.game.audioManager.playSound(AudioManager.Sounds.error_buzz);
         }
@@ -176,6 +180,10 @@ public class GameScreen extends BaseScreen{
             particles.draw(batch, Particles.Layer.FOREGROUND);
         }
         batch.end();
+
+        if (settingsUI.isSettingShown) {
+            uiStage.draw();
+        }
     }
 
     public boolean gameOver = false;

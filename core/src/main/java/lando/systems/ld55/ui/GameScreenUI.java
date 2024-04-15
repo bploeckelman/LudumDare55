@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld55.Config;
 import lando.systems.ld55.actions.ActionManager;
 import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.entities.EnemyAI;
@@ -19,6 +20,7 @@ public class GameScreenUI {
 
     public final GameScreen screen;
     public final ImageButton endTurnButton;
+    public final ImageButton settingsButton;
 //    public final ImageButton summonButton;
 //    public final ImageButton moveButton;
     public final NinePatch actionsPanel;
@@ -48,6 +50,13 @@ public class GameScreenUI {
             screen.actionManager.endTurn();
             endTurnButton.pulse = false;
         };
+
+        settingsButton = new ImageButton(Config.Screen.window_width - 50f, Config.Screen.window_height - 50f, 50f, 50f,
+            screen.assets.atlas.findRegion("icons/kenney-ui/gear"),
+            null,
+            null,
+            null);
+        settingsButton.onClick = () -> screen.settingsUI.showSettings();
 
         actionsPanel = TileOverlayAssets.panelWhite;
         actionsPanelBounds = new Rectangle(15, 154, 60, 111);
@@ -90,6 +99,7 @@ public class GameScreenUI {
         var pressed = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
         var disabled = screen.actionManager.getCurrentPhase() != ActionManager.Phase.CollectActions;
         endTurnButton.update(dt, touchPos, pressed, disabled);
+        settingsButton.update(dt, touchPos, pressed, false);
 
 //        summonButton.active = screen.currentGameMode == GameScreen.GameMode.Summon;
 //        moveButton.active = screen.currentGameMode == GameScreen.GameMode.Move;
@@ -114,6 +124,7 @@ public class GameScreenUI {
 
     public void render(SpriteBatch batch) {
         endTurnButton.render(batch);
+        settingsButton.render(batch);
 //        summonButton.render(batch);
 //        moveButton.render(batch);
 
