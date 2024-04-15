@@ -19,6 +19,7 @@ public class ImageButton {
     public Animation<TextureRegion> imageHovered;
     public Animation<TextureRegion> imagePressed;
     public Animation<TextureRegion> imageDisabled;
+    public Animation<TextureRegion> imagePulse;
     public TextureRegion keyframe;
     public Rectangle bounds;
     public Circle boundsCircle;
@@ -85,7 +86,7 @@ public class ImageButton {
         }
 
         if (pulse) {
-            var speed = 5f;
+            var speed = 8f;
             pulseAccum += dt * speed;
         } else {
             pulseAccum = 0f;
@@ -111,7 +112,11 @@ public class ImageButton {
             bounds.height - 2 * margin);
 
         if (pulse) {
-            var pulseKeyframe = imageDisabled.getKeyFrame(stateTime);
+            // not everything will have a pulsing image, so default to disabled so the behavior still typically works
+            if (imagePulse == null) {
+                imagePulse = imageDisabled;
+            }
+            var pulseKeyframe = imagePulse.getKeyFrame(stateTime);
             var alpha = (float) ((Math.sin(pulseAccum) + 1f) / 2f);
             batch.setColor(1, 1, 1, alpha);
             batch.draw(pulseKeyframe,

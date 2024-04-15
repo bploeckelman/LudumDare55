@@ -3,6 +3,7 @@ package lando.systems.ld55.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Polygon;
@@ -57,6 +58,8 @@ public class GameScreenUI {
             screen.actionManager.endTurn();
             endTurnButton.pulse = false;
         };
+        endTurnButton.imagePulse = new Animation<>(0.1f,
+            screen.assets.atlas.findRegions("icons/finish-turn-btn-pulse"), Animation.PlayMode.LOOP);
 
         settingsButton = new ImageButton(Config.Screen.window_width - 50f, Config.Screen.window_height - 50f, 50f, 50f,
             screen.assets.atlas.findRegion("icons/kenney-ui/gear"),
@@ -69,16 +72,6 @@ public class GameScreenUI {
         actionsPanelBounds = new Rectangle(15, 154, 60, 111);
         actionPoints = new Array<>();
         refreshActionPoints();
-
-//        var summonIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/pawns");
-//        summonButton = new ImageButton(20, 280 - 70, 50, 50, summonIcon, null, null, null);
-//        summonButton.backgroundDefault = Assets.Patch.glass_dim.ninePatch;
-//        summonButton.onClick = () -> screen.currentGameMode = GameScreen.GameMode.Summon;
-//
-//        var moveIcon = screen.assets.atlas.findRegion("icons/kenney-board-game/arrow_diagonal_cross");
-//        moveButton = new ImageButton(20, 280 - 130, 50, 50, moveIcon, null, null, null);
-//        moveButton.backgroundDefault = Assets.Patch.glass_dim.ninePatch;
-//        moveButton.onClick = () -> screen.currentGameMode = GameScreen.GameMode.Move;
     }
 
     private void refreshActionPoints() {
@@ -108,12 +101,6 @@ public class GameScreenUI {
         endTurnButton.update(dt, touchPos, pressed, disabled);
         settingsButton.update(dt, touchPos, pressed, false);
 
-//        summonButton.active = screen.currentGameMode == GameScreen.GameMode.Summon;
-//        moveButton.active = screen.currentGameMode == GameScreen.GameMode.Move;
-
-//        summonButton.update(dt, touchPos, pressed, false);
-//        moveButton.update(dt, touchPos, pressed, false);
-
         var actionsAvailable = screen.actionManager.playerActionsAvailable;
         var tempActions = screen.actionManager.tempActionPoints;
         for (int i = 0; i < actionPoints.size; i++) {
@@ -126,14 +113,14 @@ public class GameScreenUI {
                 point.state = ActionPoint.State.Full;
             }
         }
-        endTurnButton.pulse = actionsAvailable == 0;
+        var outOfActions = actionsAvailable == 0;
+        var inCollectActionPhase = screen.actionManager.getCurrentPhase() == ActionManager.Phase.CollectActions;
+        endTurnButton.pulse = outOfActions && inCollectActionPhase;
     }
 
     public void render(SpriteBatch batch) {
         endTurnButton.render(batch);
         settingsButton.render(batch);
-//        summonButton.render(batch);
-//        moveButton.render(batch);
 
         var actionsAvailable = screen.actionManager.playerActionsAvailable > 0;
         batch.setColor(actionsAvailable ? Color.LIGHT_GRAY : Color.DARK_GRAY);
@@ -143,14 +130,9 @@ public class GameScreenUI {
             // TODO(brian) - would be nice to change color through blue -> green -> yellow -> red as actions are used
             var color = Color.GRAY;
             switch (point.state){
-                case Empty:
-                    break;
-                case Temp:
-                    color = Color.YELLOW;
-                    break;
-                case Full:
-                    color = Color.LIME;
-                    break;
+                case Empty: break;
+                case Temp: color = Color.YELLOW; break;
+                case Full: color = Color.LIME; break;
             }
             if (!actionsAvailable) color = Color.DARK_GRAY;
 
