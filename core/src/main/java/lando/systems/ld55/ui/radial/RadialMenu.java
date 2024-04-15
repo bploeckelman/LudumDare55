@@ -88,6 +88,7 @@ public class RadialMenu {
         }
 
         centerVec2 = tile.bounds.getCenter(centerVec2);
+        float gottaGoFast = 4f;
         float dTheta = 360f / buttons.size;
         for (int i = 0; i < buttons.size; i++) {
             RadialButton b = buttons.get(i);
@@ -95,7 +96,7 @@ public class RadialMenu {
             tempVec2.scl(interpolation.apply(currentProgress) * MENU_RADIUS);
             tempVec2.rotateDeg((-90*interpolation.apply(currentProgress)) + (i*dTheta));
             tempVec2.add(centerVec2);
-            b.update(tempVec2, currentProgress, dt);
+            b.update(tempVec2, currentProgress, gottaGoFast * dt);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             exitMenu();
