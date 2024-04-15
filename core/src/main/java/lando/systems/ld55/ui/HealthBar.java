@@ -72,7 +72,7 @@ public class HealthBar {
         batch.draw(boxBorder, x, y, boxWidth, boxHeight);
 
         if (filled) {
-            if (currentHealth <= maxHealth / 3f || currentHealth <= 1) {
+            if (currentHealth <= maxHealth / 3f || (currentHealth <= 1 && maxHealth > 1)) {
                 batch.setColor(0.8f, 0.1f, 0.1f, 1f);  // Red color
             } else if (currentHealth < maxHealth * 2f / 3f) {
                 batch.setColor(0.8f, 0.8f, 0.1f, 1f);  // Yellow color
