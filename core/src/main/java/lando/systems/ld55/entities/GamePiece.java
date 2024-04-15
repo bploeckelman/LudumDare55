@@ -84,7 +84,7 @@ public class GamePiece {
     }
 
     private final int TILE_OFFSET_Y = 10;
-    public final static float moveSeconds = 0.6f; // seconds
+    public final static float moveSeconds = 0.4f; // seconds
 
     public Owner owner;
 
@@ -140,13 +140,13 @@ public class GamePiece {
                 pattern = Pattern.PAWN_ATK;
                 break;
             case Knight:
-                pattern = Pattern.ARCHER_ATK;
+                pattern = Pattern.KNIGHT_ATK;
                 break;
             case Bishop:
                 pattern = Pattern.BISHOP_ATK;
                 break;
             case Rook:
-                pattern = Pattern.BISHOP_ATK;
+                pattern = Pattern.ROOK_ATK;
                 break;
             case Queen:
                 pattern = Pattern.QUEEN_ATK;

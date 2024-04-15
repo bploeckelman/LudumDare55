@@ -9,7 +9,7 @@ import lando.systems.ld55.Main;
 
 public class Portal {
 
-    public static float animationTime = 1f;
+    public static float animationTime = .5f;
 
     public Rectangle bounds;
     public float accum;
