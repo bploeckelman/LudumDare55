@@ -64,7 +64,6 @@ public class SpawnAction extends ActionBase {
             GamePiece tilePiece = board.getGamePiece(spawnTile);
             if (tilePiece != gamePiece) {
                 // Spawn failed because something moved into it
-                // TODO: Play sound
             } else {
                 gamePiece.summoning = false;
                 board.gamePieces.add(gamePiece);
