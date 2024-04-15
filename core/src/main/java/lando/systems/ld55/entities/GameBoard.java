@@ -133,7 +133,7 @@ public class GameBoard extends InputAdapter {
         spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 80, 580);
         spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1150, 600);
 
-        removeThis();
+//        removeThis();
     }
 
     private void removeThis() {
