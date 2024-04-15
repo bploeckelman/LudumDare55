@@ -182,6 +182,7 @@ public class GamePiece {
         // TODO: do types attack particles and sounds
         setCurrentAnimation(attack);
         attackTime = attack.getAnimationDuration();
+        isAttacking = true;
     }
 
     public GamePiece select(GameBoard gameBoard) {
@@ -283,11 +284,11 @@ public class GamePiece {
         }
         healthBar.render(batch);
         //TEST
-        if (isAttacking){
-            batch.setColor(Color.RED);
-            batch.draw(Main.game.assets.pixelRegion, bounds.x, bounds.y, bounds.width, bounds.height);
-            batch.setColor(Color.WHITE);
-        }
+//        if (isAttacking){
+//            batch.setColor(Color.RED);
+//            batch.draw(Main.game.assets.pixelRegion, bounds.x, bounds.y, bounds.width, bounds.height);
+//            batch.setColor(Color.WHITE);
+//        }
         //TEST
     }
 
