@@ -282,11 +282,11 @@ public class Particles implements Disposable {
                 .endRotation(MathUtils.random(720, 1440))
                 .acceleration(100f,100f)
                 .accelerationDamping(0.95f)
-                .timeToLive(.5f)
+                .timeToLive(.4f)
                 .init()
             );
-            Time.do_after_delay(0.5f, param -> smoke(targetX, targetY));
         }
+        Time.do_after_delay(0.5f, param -> smoke(targetX, targetY));
     }
 
     public void spawnArrow(float x, float y, float targetX, float targetY) {
@@ -318,7 +318,7 @@ public class Particles implements Disposable {
     }
 
     public void fanfareConfetti(float x, float y) {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 70; i++) {
             activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
                 .keyframe(assets.particles.stars.getKeyFrame(MathUtils.random(0f, 1f)))
                 .startPos(x, y)

@@ -27,6 +27,7 @@ public class TitleScreen extends BaseScreen {
     Events.EventListener transitionToCreditsScreen = (type, data) -> transitionToCreditsScreen();
     Events.EventListener meaninglessClickEffect = (type, data) -> meaninglessClickEffect((float)data[0], (float)data[1]);
     Events.EventListener showSettings = (type, data) -> showSettings();
+    boolean firedParticle = false;
 
     public TitleScreen() {
         Gdx.input.setInputProcessor(uiStage);
@@ -65,16 +66,20 @@ public class TitleScreen extends BaseScreen {
         settingsUI.act(dt);
         particles.update(dt);
 
-        if (fanfareTimer < .05f) {
+        if (fanfareTimer < .05f && !firedParticle) {
             particles.fanfareConfetti(70f, 470f);
             particles.fanfareConfetti(100f, 500f);
             particles.fanfareConfetti(130f, 530f);
             particles.bloodFountain(960f, 520f);
             particles.bloodFountain(1100f, 470f);
             particles.bloodFountain(1050f, 400f);
-
+            particles.spawnArrow(450f, 285f, 890f, 280f);
+            particles.spawnFireball(580f, 235f, 720f, 350f);
+            particles.spawnMagic(920f, 280f, 540f, 320f);
+            firedParticle = true;
         } else if (fanfareTimer > 2.3f) {
             fanfareTimer = 0f;
+            firedParticle = false;
         }
     }
 
