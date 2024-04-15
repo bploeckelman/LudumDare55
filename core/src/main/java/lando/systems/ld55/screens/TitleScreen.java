@@ -22,15 +22,16 @@ public class TitleScreen extends BaseScreen {
     boolean drawUI = true;
     TitleScreenUI titleScreenUI;
     Particles particles;
+    Events.EventListener transitionToGameScreen = (type, data) -> transitionToGameScreen();
+    Events.EventListener transitionToCreditsScreen = (type, data) -> transitionToCreditsScreen();
+    Events.EventListener meaninglessClickEffect = (type, data) -> meaninglessClickEffect((float)data[0], (float)data[1]);
 
     public TitleScreen() {
         Gdx.input.setInputProcessor(uiStage);
         Main.game.audioManager.playMusic(AudioManager.Musics.introMusic);
         particles = new Particles(assets);
         titleScreenUI = new TitleScreenUI(worldCamera.viewportWidth - 500f, 200, 300f, 75f, assets.fontAbandoned, TitleScreenUI.ButtonOrientation.VERTICAL);
-        Events.get().subscribe(EventType.TRANSITION_TO_GAME, (type, data) -> transitionToGameScreen());
-        Events.get().subscribe(EventType.TRANSITION_TO_CREDITS, (type, data) -> transitionToCreditsScreen());
-        Events.get().subscribe(EventType.MEANINGLESS_CLICK, (type, data) -> meaninglessClickEffect((float)data[0], (float)data[1]));
+        subscribeEvents();
     }
 
     @Override
@@ -84,31 +85,44 @@ public class TitleScreen extends BaseScreen {
             }
         }
         batch.end();
-
-
     }
 
     private void transitionToGameScreen() {
-        if (Gdx.input.justTouched() && !exitingScreen ) {
+        if (!exitingScreen ) {
             exitingScreen = true;
             var nextScreen = Config.Debug.show_intro_screen
                 ? new IntroScreen()
                 : new GameScreen();
             game.setScreen(nextScreen);
             Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
+            unsubscribeEvents();
         }
     }
 
     private void transitionToCreditsScreen() {
-        Main.game.audioManager.playSound(AudioManager.Sounds.level_up);
-//        if (Gdx.input.justTouched() && !exitingScreen ) {
-//            exitingScreen = true;
-//            game.setScreen(new GameScreen());
-//        }
+        Gdx.app.log("TitleScreen", "transitionToCreditsScreen");
+        if (!exitingScreen ) {
+            Main.game.audioManager.playSound(AudioManager.Sounds.level_up);
+            exitingScreen = true;
+            game.setScreen(new CreditScreen());
+            unsubscribeEvents();
+        }
     }
 
     private void meaninglessClickEffect(float x, float y) {
         particles.tinySmoke(x, y);
         Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
+    }
+
+    private void subscribeEvents() {
+        Events.get().subscribe(EventType.TRANSITION_TO_GAME, transitionToGameScreen);
+        Events.get().subscribe(EventType.TRANSITION_TO_CREDITS, transitionToCreditsScreen);
+        Events.get().subscribe(EventType.MEANINGLESS_CLICK, meaninglessClickEffect);
+    }
+
+    private void unsubscribeEvents() {
+        Events.get().unsubscribe(EventType.TRANSITION_TO_GAME, transitionToGameScreen);
+        Events.get().unsubscribe(EventType.TRANSITION_TO_CREDITS, transitionToCreditsScreen);
+        Events.get().unsubscribe(EventType.MEANINGLESS_CLICK, meaninglessClickEffect);
     }
 }

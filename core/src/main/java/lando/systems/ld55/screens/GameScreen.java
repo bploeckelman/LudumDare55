@@ -32,9 +32,9 @@ public class GameScreen extends BaseScreen{
 
 
     public GameScreen() {
+        actionManager = new ActionManager(this);
         gameBoard = new GameBoard(this, 22, 10);
         particles = new Particles(assets);
-        actionManager = new ActionManager(this);
         ui = new GameScreenUI(this);
         Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
         Main.game.audioManager.playMusic(AudioManager.Musics.mainMusic);
@@ -126,8 +126,8 @@ public class GameScreen extends BaseScreen{
 
             var font = assets.fontAbandonedMed;
             var layout = assets.layout;
-            layout.setText(font, "--- [Turn Order] ---", Color.WHITE, windowCamera.viewportWidth, Align.center, false);
-            font.draw(batch, layout, 0, 50);
+//            layout.setText(font, "--- [Turn Order] ---", Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+//            font.draw(batch, layout, 0, 50);
 
             font = assets.font;
             var phase = actionManager.getCurrentPhase();
