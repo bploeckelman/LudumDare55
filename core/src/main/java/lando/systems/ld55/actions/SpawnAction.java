@@ -55,15 +55,23 @@ public class SpawnAction extends ActionBase {
         }
 
         if (accum > SummonTime) {
-            spawned = true;
-            gamePiece.summoning = false;
-            board.gamePieces.add(gamePiece);
             for (int i = board.portalAnimations.size -1; i >= 0; i--) {
                 Portal p = board.portalAnimations.get(i);
                 if (p.tile == spawnTile) {
                     board.portalAnimations.removeIndex(i);
                 }
             }
+            spawned = true;
+
+            GamePiece tilePiece = board.getGamePiece(spawnTile);
+            if (tilePiece != gamePiece) {
+                // Spawn failed because something moved into it
+                // TODO: Play sound
+            } else {
+                gamePiece.summoning = false;
+                board.gamePieces.add(gamePiece);
+            }
+
         }
 
     }

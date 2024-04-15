@@ -140,9 +140,9 @@ public class GameBoard extends InputAdapter {
             gamePieces.add(gp);
         }
         // LET'S GO BANANA
-        var gp = GamePiece.getGamePiece(gameScreen.assets, GamePiece.Type.Pawn, GamePiece.Owner.Player);
-        gp.setTile(getTileAt(20, 5));
-        gamePieces.add(gp);
+//        var gp = GamePiece.getGamePiece(gameScreen.assets, GamePiece.Type.Pawn, GamePiece.Owner.Player);
+//        gp.setTile(getTileAt(20, 5));
+//        gamePieces.add(gp);
     }
 
     private boolean isCornerTile(int x, int y, int cornerDepth) {
@@ -163,7 +163,7 @@ public class GameBoard extends InputAdapter {
             if (gamePiece != null && gamePiece.summoning) gamePiece = null;
             if (gamePiece != null && gamePiece.owner != GamePiece.Owner.Player) gamePiece = null;
             if (gamePiece == null) {
-                if (hoverTile.summonable) {
+                if (selectedPiece == null && hoverTile.summonable) {
                     radialMenu = new RadialMenu(this, hoverTile, null, RadialMenu.MenuType.Summon);
                 } else {
                     // Move mode
