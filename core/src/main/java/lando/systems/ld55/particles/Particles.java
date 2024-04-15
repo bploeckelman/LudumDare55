@@ -288,4 +288,32 @@ public class Particles implements Disposable {
         }
     }
 
+    public void spawnArrow(float x, float y, float targetX, float targetY) {
+        float angle = MathUtils.atan2(targetY - y, targetX - x);
+        activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+            .keyframe(assets.particles.traces.getKeyFrame(MathUtils.random(0f, 1f)))
+            .startPos(x, y)
+            .targetPos(targetX, targetY)
+            .startRotation(angle * MathUtils.radiansToDegrees + 90)
+            .startColor(1f, 1f, 1f, 1f)
+            .startSize(50f)
+            .timeToLive(0.5f)
+            .init()
+        );
+    }
+
+    public void spawnSwordSlash(float x, float y, float targetX, float targetY) {
+        activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+            .keyframe(assets.particles.twirls.getKeyFrame(MathUtils.random(0f, 1f)))
+            .startPos(x, y)
+            .targetPos(targetX, targetY)
+            .startColor(0.8f, 0.8f, 1f, 1f)
+            .endColor(0.8f, 0.8f, 1f, 0f)
+            .startSize(30f)
+            .endSize(50f)
+            .timeToLive(0.4f)
+            .init()
+        );
+    }
+
 }
