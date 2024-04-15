@@ -83,7 +83,7 @@ public class CreditScreen extends BaseScreen {
         catAnimation = assets.cherry;
         dogAnimation = assets.asuka;
         kittenAnimation = assets.osha;
-        afterCreditsButton = new Button(new Rectangle(worldCamera.viewportWidth - 300f, 0f, 300, 50), "Scraped Ideas", Assets.NinePatches.glass_yellow, Assets.NinePatches.glass, assets.fontZektonSmall);
+        afterCreditsButton = new Button(new Rectangle(worldCamera.viewportWidth - 300f, 0f, 300, 50), "Scrapped Ideas", Assets.NinePatches.glass_yellow, Assets.NinePatches.glass, assets.fontZektonSmall);
 
         Main.game.audioManager.playMusic(AudioManager.Musics.introMusic);
     }
