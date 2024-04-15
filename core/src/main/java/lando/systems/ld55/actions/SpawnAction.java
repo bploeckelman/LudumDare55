@@ -1,5 +1,6 @@
 package lando.systems.ld55.actions;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -49,7 +50,23 @@ public class SpawnAction extends ActionBase {
         if (!started) {
             gamePiece.setTile(spawnTile);
             started = true;
-            Main.game.audioManager.playSound(AudioManager.Sounds.horn_fanfare);
+//            Gdx.app.log("cucaracha counter", String.valueOf(board.cucarachaCounter));
+            if(board.cucarachaCounter >= 20) {
+               Main.game.audioManager.playSound(AudioManager.Sounds.cucaracha_fanfare);
+               board.cucarachaCounter = 0;
+            }
+            else {
+                if(gamePiece.owner == GamePiece.Owner.Player) {
+                    Main.game.audioManager.playSound(AudioManager.Sounds.horn_fanfare);
+                }
+
+                else {
+                    Main.game.audioManager.playSound(AudioManager.Sounds.enemy_spawn);
+                }
+                board.cucarachaCounter++;
+            }
+
+
 
 
             // TODO: particles

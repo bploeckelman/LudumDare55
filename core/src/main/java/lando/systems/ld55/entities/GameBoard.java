@@ -46,6 +46,7 @@ public class GameBoard extends InputAdapter {
     public Spawn spawnGood;
     public Spawn spawnEvil;
     public GamePiece selectedPiece;
+    public int cucarachaCounter;
 
     // track overlays for different things separately
     public TileOverlayInfo hoverTileOverlay = null;
@@ -133,6 +134,7 @@ public class GameBoard extends InputAdapter {
         actionQueueUI = new ActionQueueUI(gameScreen.actionManager, this);
         spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 80, 580);
         spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1150, 600);
+        this.cucarachaCounter = 0;
 
 //        removeThis();
     }

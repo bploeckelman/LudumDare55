@@ -31,7 +31,7 @@ public class IntroScreen extends BaseScreen {
             "(Real dick move by the wizard, by the way. Not what you do if you want to make friends)";
     String page3 =
             "\n{COLOR=black}For whatever reason, the King's guards prefer a strategy of{GRADIENT=brown;red} turn-based combat {ENDGRADIENT}" +
-                "vaguely reminiscent of {GRADIENT=green;black}chess {ENDGRADIENT}(although truth be told, the similarities are pretty superficial)." +
+                "vaguely reminiscent of {GRADIENT=green;black}chess {ENDGRADIENT}(although the similarities are pretty superficial, truth be told)." +
                 "\n\nIf our warriors reach the wizard's stronghold, it means victory for the kingdom. Otherwise our king will be {GRADIENT=red;brown}Board To Death! {ENDGRADIENT} " ;
 //    String page4 =
 //        "{COLOR=black}This is no mere chessboard, but a tapestry of fate woven by your strategic brilliance.\n" +

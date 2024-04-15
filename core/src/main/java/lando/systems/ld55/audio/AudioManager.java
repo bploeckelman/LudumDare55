@@ -33,6 +33,8 @@ public class AudioManager implements Disposable {
         , error_buzz
         , level_up
         , horn_fanfare
+        , cucaracha_fanfare
+        , enemy_spawn
         , round_ring
         , combat_hit
     }
@@ -70,6 +72,8 @@ public class AudioManager implements Disposable {
         putSound(Sounds.error_sound, assets.errorThud);
         putSound(Sounds.error_buzz, assets.errorBuzz);
         putSound(Sounds.horn_fanfare, assets.hornFanfare);
+        putSound(Sounds.cucaracha_fanfare, assets.cucarachaFanfare);
+        putSound(Sounds.enemy_spawn, assets.enemySpawn);
         putSound(Sounds.round_ring, assets.roundRing);
         putSound(Sounds.combat_hit, assets.hit1);
         putSound(Sounds.combat_hit, assets.hit2);
