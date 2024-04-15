@@ -35,7 +35,7 @@ public class GamePiece {
             Direction.Top | Direction.TopLeft | Direction.Left | Direction.BottomLeft | Direction.Bottom),
         Bishop(3, 2,
             Direction.TopRight | Direction.BottomRight,
-            Direction.TopRight | Direction.BottomRight),
+            Direction.TopLeft | Direction.BottomLeft),
         Rook(4, 3,
             Direction.Top | Direction.Right | Direction.Bottom | Direction.Left,
             Direction.Top | Direction.Right | Direction.Bottom | Direction.Left),
@@ -99,7 +99,7 @@ public class GamePiece {
         return new GamePiece(assets, owner, animGroup, direction, movement, maxHealth, type);
     }
 
-    private final int TILE_OFFSET_Y = 10;
+    public final int TILE_OFFSET_Y = 10;
     public final static float moveSeconds = 0.4f; // seconds
 
     public Owner owner;

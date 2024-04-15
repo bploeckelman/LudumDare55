@@ -70,7 +70,7 @@ public class MoveAction extends ActionBase {
                 piece.position.set(targetMove);
                 piece.position.interpolate(startMovePos, (blockAccum-halfWayTime) / halfWayTime, Interpolation.linear);
             }
-            piece.setPosition(piece.position.x, piece.position.y);
+            piece.setPosition(piece.position.x, piece.position.y - piece.TILE_OFFSET_Y);
             if (blockAccum - dt < halfWayTime && blockAccum > halfWayTime){
                 if (blockingPiece.owner != piece.owner){
                     // Attack

@@ -13,6 +13,9 @@ public class EnemyAI {
     public static Array<GamePiece> enemyPieces = new Array<>();
     public static void doTurn(GameBoard board) {
         int actions = 3;
+        if (MathUtils.randomBoolean(.1f)) {
+            actions = 5;
+        }
         // Make game decisions and add to the action queue
 
         // This is dumb rally dumb
