@@ -84,7 +84,7 @@ public class GamePiece {
     }
 
     private final int TILE_OFFSET_Y = 10;
-    public final static float moveSeconds = 1; // seconds
+    public final static float moveSeconds = 0.6f; // seconds
 
     public Owner owner;
 

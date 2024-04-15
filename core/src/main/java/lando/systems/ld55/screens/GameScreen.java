@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -41,22 +42,16 @@ public class GameScreen extends BaseScreen{
     }
 
     private void setupStyle() {
-        float width = 400;
-        float x = Config.Screen.window_width / 2f - width;
-        float div = width / 5;
         float y = 75;
-        styleManager.add(assets.candle, x += div, y, 0);
-        styleManager.add(assets.candle, x += div, y, 0);
-        styleManager.add(assets.candle, x += div, y, 0);
-        styleManager.add(assets.candle, x += div, y, 0);
-        styleManager.add(assets.candleEvil, x += div * 2, y, 0);
-        styleManager.add(assets.candleEvil, x += div, y, 0);
-        styleManager.add(assets.candleEvil, x += div, y, 0);
-        styleManager.add(assets.candleEvil, x += div, y, 0);
+        styleManager.add(assets.candle, 28, 542, 0);
+        styleManager.add(assets.candle, 58, 572, 0);
+        styleManager.add(assets.candle, 88, 602, 0);
+        styleManager.add(assets.candleEvil, 904, y, 0);
+        styleManager.add(assets.candleEvil, 972, y, 0);
+        styleManager.add(assets.candleEvil, 1040, y, 0);
 
-        styleManager.add(assets.babe1, 233, Config.Screen.window_height - 689);
-        styleManager.add(assets.organGrinder, 206, Config.Screen.window_height - 157);
-        styleManager.add(assets.babe2, 115, Config.Screen.window_height - 151);
+        var asset = MathUtils.random(100) < 20 ? assets.babe2 : assets.organGrinder;
+        styleManager.add(asset, 73, Config.Screen.window_height - 130);
     }
 
     @Override
