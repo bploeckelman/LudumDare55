@@ -296,6 +296,7 @@ public class GameBoard extends InputAdapter {
 
 
         refreshSummonableTiles();
+        refreshMovementTiles();
 
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         var tile = getTileAtScreenPos(screenPosition);
@@ -369,14 +370,19 @@ public class GameBoard extends InputAdapter {
                     batch.setColor(color.r, color.g, color.b, alpha);
                     batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
                 }
-
             }
 
             // draw tile overlays
-            for (var overlay : tileOverlays) {
+//            for (var overlay : tileOverlays) {
+//                overlay.render(batch);
+//            }
+            for (var overlay : spawnTileOverlays) {
                 overlay.render(batch);
             }
-            for (var overlay : spawnTileOverlays) {
+            for (var overlay : moveTileOverlays) {
+                overlay.render(batch);
+            }
+            for (var overlay : attackTileOverlays) {
                 overlay.render(batch);
             }
         }
@@ -387,6 +393,7 @@ public class GameBoard extends InputAdapter {
             gp.render(batch);
         }
 
+        // NOTE - this is showing where a possible move can go to
         if (selectedPiece != null && selectedPiece.currentAction == null ) {
             selectedPiece.renderMovement(batch);
         }
@@ -459,6 +466,23 @@ public class GameBoard extends InputAdapter {
 
                 // reset flag for next tile
                 summonable = false;
+            }
+        }
+    }
+
+    private void refreshMovementTiles() {
+        moveTileOverlays.clear();
+        var activeMoveLists = gameScreen.actionManager.getActiveMoveLists();
+        for (var moveList : activeMoveLists) {
+            for (var breadcrumb : moveList) {
+                var icon = TileOverlayAssets.getArrowForDir(breadcrumb.direction);
+                var overlay = new TileOverlayInfo(breadcrumb.tile, 0)
+                    // NOTE(brian) - panel is too much since all movement paths will be drawn each frame
+                    //.addLayer("base-panel", 1f, 1, 1, 1, 0.25f, TileOverlayAssets.panelYellow, null, null)
+                    .addLayer("direction-icon-shadow", 1, 0, 0, 0, 1, null, icon, null)
+                    .addLayer("direction-icon", 0.8f, 1, 0.6f, 0, 1, null, icon, null)
+                    ;
+                moveTileOverlays.add(overlay);
             }
         }
     }

@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import lando.systems.ld55.actions.MoveAction;
+import lando.systems.ld55.entities.Direction;
+import lando.systems.ld55.ui.MovementBreadcrumb;
 
 import java.util.List;
 
@@ -23,10 +26,12 @@ public class TileOverlayAssets {
     public static TextureRegion cross;
     public static TextureRegion checkmark;
     public static TextureRegion exclamation;
+    public static TextureRegion question;
     public static TextureRegion pawns;
     public static TextureRegion pawnUp;
     public static TextureRegion pawnDown;
     public static TextureRegion tokenAdd;
+    public static TextureRegion dot;
 
     public static Array<TextureRegion> tags;
 
@@ -51,10 +56,12 @@ public class TileOverlayAssets {
         cross       = atlas.findRegion("icons/kenney-ui/cross");
         checkmark   = atlas.findRegion("icons/kenney-ui/checkmark");
         exclamation = atlas.findRegion("icons/kenney-ui/exclamation");
+        question    = atlas.findRegion("icons/kenney-board-game/dice_question");
         pawns       = atlas.findRegion("icons/kenney-board-game/pawns");
         pawnUp      = atlas.findRegion("icons/kenney-board-game/pawn_up");
         pawnDown    = atlas.findRegion("icons/kenney-board-game/pawn_down");
         tokenAdd    = atlas.findRegion("icons/kenney-board-game/token_add");
+        dot         = atlas.findRegion("icons/kenney-board-game/tag_empty");
 
         tags = new Array<>();
         for (int i = 1; i <= 10; i++) {
@@ -67,6 +74,21 @@ public class TileOverlayAssets {
         panelGreen  = new NinePatch(atlas.findRegion("icons/kenney-ui/green_panel"), margin, margin, margin, margin);
         panelBlue   = new NinePatch(atlas.findRegion("icons/kenney-ui/blue_panel"), margin, margin, margin, margin);
         panelYellow = new NinePatch(atlas.findRegion("icons/kenney-ui/yellow_panel"), margin, margin, margin, margin);
+    }
+
+    public static TextureRegion getArrowForDir(MovementBreadcrumb.Direction dir) {
+        switch (dir) {
+            case Up: return arrowUp;
+            case Down: return arrowDown;
+            case Left: return arrowLeft;
+            case Right: return arrowRight;
+            case UpLeft: return arrowUpLeft;
+            case UpRight: return arrowUpRight;
+            case DownLeft: return arrowDownLeft;
+            case DownRight: return arrowDownRight;
+            case End: return dot;
+            default: return question;
+        }
     }
 
     // testing... -----------------------------------------

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.audio.AudioManager;
-import lando.systems.ld55.entities.EnemyAI;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.TileOverlayInfo;
 import lando.systems.ld55.screens.GameScreen;
@@ -189,12 +188,14 @@ public class ActionManager {
 
     }
 
-    Array<Array<MovementBreadcrumb>> breadcrumbLists;
+    Array<Array<MovementBreadcrumb>> breadcrumbLists = new Array<>();
     public Array<Array<MovementBreadcrumb>> getActiveMoveLists() {
         breadcrumbLists.clear();
         for (ActionBase action : actionQueue) {
             if (action instanceof MoveAction){
-                breadcrumbLists.add(((MoveAction)action).breadcrumbArray);
+                var moveAction = (MoveAction) action;
+                moveAction.walkBreadCrumbChain();
+                breadcrumbLists.add(moveAction.breadcrumbArray);
             }
         }
         return breadcrumbLists;

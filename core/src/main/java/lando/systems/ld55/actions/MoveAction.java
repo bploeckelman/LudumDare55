@@ -1,12 +1,10 @@
 package lando.systems.ld55.actions;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import lando.systems.ld55.Main;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
@@ -123,7 +121,7 @@ public class MoveAction extends ActionBase {
     }
 
 
-    private void walkBreadCrumbChain() {
+    public void walkBreadCrumbChain() {
         breadcrumbArray.clear();
         int dX = (int)Math.signum(targetTile.x - piece.currentTile.x);
         int dY = (int)Math.signum(targetTile.y - piece.currentTile.y);
@@ -146,17 +144,18 @@ public class MoveAction extends ActionBase {
     Vector2 delta = new Vector2();
     @Override
     public void render(SpriteBatch batch) {
-        startPos.set(piece.currentTile.bounds.getCenter(startPos));
-        if (targetTile != null) {
-            endPos.set(targetTile.bounds.getCenter(endPos));
-        } else {
-            endPos.set(startPos);
-        }
-        delta.set(endPos).sub(startPos);
-
-        float width = 1f;
-        batch.setColor(Color.YELLOW);
-        batch.draw(Main.game.assets.pixelRegion, startPos.x, startPos.y - width/2f, 0, width/2f, delta.len(), width, 1, 1, delta.angle());
+        // draw a line towards movement target, not needed b/c GameBoard::render will draw the breadcrumbs
+//        startPos.set(piece.currentTile.bounds.getCenter(startPos));
+//        if (targetTile != null) {
+//            endPos.set(targetTile.bounds.getCenter(endPos));
+//        } else {
+//            endPos.set(startPos);
+//        }
+//        delta.set(endPos).sub(startPos);
+//
+//        float width = 1f;
+//        batch.setColor(Color.YELLOW);
+//        batch.draw(Main.game.assets.pixelRegion, startPos.x, startPos.y - width/2f, 0, width/2f, delta.len(), width, 1, 1, delta.angle());
     }
 
 
