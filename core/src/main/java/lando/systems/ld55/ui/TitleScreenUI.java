@@ -50,9 +50,7 @@ public class TitleScreenUI {
         creditButton = new Button(creditBound, "Credits", Assets.NinePatches.glass_red, TileOverlayAssets.panelGreen, font);
 
         startGameButton.setOnClickAction(() -> Events.get().dispatch(EventType.TRANSITION_TO_GAME));
-        settingsButton.setOnClickAction(() -> {
-            Gdx.app.log("TitleScreenUI", "Settings Button Clicked");
-        });
+        settingsButton.setOnClickAction(() -> Events.get().dispatch(EventType.SHOW_SETTINGS));
         creditButton.setOnClickAction(() -> Events.get().dispatch(EventType.TRANSITION_TO_CREDITS));
     }
 

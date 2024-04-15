@@ -8,6 +8,7 @@ import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.particles.Particles;
+import lando.systems.ld55.ui.SettingsUI;
 import lando.systems.ld55.ui.TitleScreenUI;
 import lando.systems.ld55.utils.events.EventType;
 import lando.systems.ld55.utils.events.Events;
@@ -17,10 +18,12 @@ public class TitleScreen extends BaseScreen {
     float accum = 0;
     boolean drawUI = true;
     TitleScreenUI titleScreenUI;
+    SettingsUI settingsUI;
     Particles particles;
     Events.EventListener transitionToGameScreen = (type, data) -> transitionToGameScreen();
     Events.EventListener transitionToCreditsScreen = (type, data) -> transitionToCreditsScreen();
     Events.EventListener meaninglessClickEffect = (type, data) -> meaninglessClickEffect((float)data[0], (float)data[1]);
+    Events.EventListener showSettings = (type, data) -> showSettings();
 
     public TitleScreen() {
         Gdx.input.setInputProcessor(uiStage);
@@ -31,6 +34,8 @@ public class TitleScreen extends BaseScreen {
         titleScreenUI = new TitleScreenUI(
             (worldCamera.viewportWidth - (3 * buttonWidth)) / 2f, 20,
             buttonWidth, buttonHeight, assets.font, TitleScreenUI.ButtonOrientation.HORIZONTAL);
+        settingsUI = new SettingsUI(skin, worldCamera);
+        uiStage.addActor(settingsUI);
         subscribeEvents();
     }
 
@@ -53,6 +58,7 @@ public class TitleScreen extends BaseScreen {
         Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         worldCamera.unproject(touchPos);
         titleScreenUI.update(touchPos.x, touchPos.y);
+        settingsUI.act(dt);
         particles.update(dt);
     }
 
@@ -85,6 +91,11 @@ public class TitleScreen extends BaseScreen {
             }
         }
         batch.end();
+
+        if (drawUI) {
+            uiStage.act();
+            uiStage.draw();
+        }
     }
 
     private void transitionToGameScreen() {
@@ -109,6 +120,10 @@ public class TitleScreen extends BaseScreen {
         }
     }
 
+    private void showSettings() {
+        settingsUI.showSettings();
+    }
+
     private void meaninglessClickEffect(float x, float y) {
         particles.tinySmoke(x, y);
         Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
@@ -118,11 +133,13 @@ public class TitleScreen extends BaseScreen {
         Events.get().subscribe(EventType.TRANSITION_TO_GAME, transitionToGameScreen);
         Events.get().subscribe(EventType.TRANSITION_TO_CREDITS, transitionToCreditsScreen);
         Events.get().subscribe(EventType.MEANINGLESS_CLICK, meaninglessClickEffect);
+        Events.get().subscribe(EventType.SHOW_SETTINGS, showSettings);
     }
 
     private void unsubscribeEvents() {
         Events.get().unsubscribe(EventType.TRANSITION_TO_GAME, transitionToGameScreen);
         Events.get().unsubscribe(EventType.TRANSITION_TO_CREDITS, transitionToCreditsScreen);
         Events.get().unsubscribe(EventType.MEANINGLESS_CLICK, meaninglessClickEffect);
+        Events.get().unsubscribe(EventType.SHOW_SETTINGS, showSettings);
     }
 }
