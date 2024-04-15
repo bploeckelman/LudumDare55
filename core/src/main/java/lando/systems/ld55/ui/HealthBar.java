@@ -54,6 +54,7 @@ public class HealthBar {
         float borderY = barBounds.y;
         float borderWidth = barBounds.width;
         float borderHeight = barBounds.height;
+        batch.setColor(Color.WHITE);
         batch.draw(boxBorder, borderX, borderY, borderWidth, borderHeight);
 
         // Draw health boxes
@@ -71,7 +72,13 @@ public class HealthBar {
         batch.draw(boxBorder, x, y, boxWidth, boxHeight);
 
         if (filled) {
-            batch.setColor(0.1f, 0.8f, 0.1f, 1f);  // Green color
+            if (currentHealth <= maxHealth / 3f || currentHealth <= 1) {
+                batch.setColor(0.8f, 0.1f, 0.1f, 1f);  // Red color
+            } else if (currentHealth < maxHealth * 2f / 3f) {
+                batch.setColor(0.8f, 0.8f, 0.1f, 1f);  // Yellow color
+            } else {
+                batch.setColor(0.1f, 0.8f, 0.1f, 1f);  // Green color
+            }
             batch.draw(boxFill, x + BOX_BORDER_SIZE, y + BOX_BORDER_SIZE, boxWidth - 2 * BOX_BORDER_SIZE, boxHeight - 2 * BOX_BORDER_SIZE);
             batch.setColor(1f, 1f, 1f, 1f);
         }
