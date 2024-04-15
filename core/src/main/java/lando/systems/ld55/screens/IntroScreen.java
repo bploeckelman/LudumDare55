@@ -21,18 +21,18 @@ public class IntroScreen extends BaseScreen {
     Particles particles;
     String page1 =
         "{COLOR=black}" +
-            "\nA{GRADIENT=black;gray} King{ENDGRADIENT} is the embodiment of{GRADIENT=black;gold} power{ENDGRADIENT}.\n\n" +
-        "But every monarch knows they are a captive,\n" +
-            "with their every need relying on the {GRADIENT=navy;purple} fealty {ENDGRADIENT}of those who serve them.\n\n ";
+            "\nMany consider a{GRADIENT=black;gray} King{ENDGRADIENT} the embodiment of{GRADIENT=black;gold} power{ENDGRADIENT}.\n\n" +
+        "But in truth, each monarch is a captive. " +
+            "Their every need relies on the{GRADIENT=navy;purple} fealty {ENDGRADIENT}of those they purport to rule.\n\n " +
+            "And in times of peril, the King is only as safe as the court they are {GRADIENT=yellow;black}summoning{ENDGRADIENT} to their defense...";
     String page2 =
-        "{COLOR=black}An {GRADIENT=red;black}evil wizard{ENDGRADIENT} has unleashed an army of {GRADIENT=red;brown}monsters {ENDGRADIENT}on the castle.\n\n" +
-            "The warriors of the King's " +
-            "court must now advance and conquer their menace in a {GRADIENT=brown;red}rousing, turn-based combat simulator{ENDGRADIENT} " +
-            "vaguely similar to{GRADIENT=green;black} chess{ENDGRADIENT}.\n\n" +
-            "(The similarities turned out to be pretty superficial in the end, but that's where the idea started)";
+        "\n{COLOR=black}When a mystical{GRADIENT=red;black} wizard{ENDGRADIENT} unleashes his army of {GRADIENT=red;brown}monsters {ENDGRADIENT}on the castle, " +
+            "the King's warriors must advance and confront the menace.\n\n" +
+            "(Real dick move by the wizard, by the way. Not what you do if you want to make friends)";
     String page3 =
-            "\n{COLOR=black}In times of peril, the King is only as safe as the court of their {GRADIENT=yellow;black}summoning{ENDGRADIENT}..." +
-                "\n\nGuide your warriors to victory or end up \n {GRADIENT=red;brown}Board To Death! {ENDGRADIENT} " ;
+            "\n{COLOR=black}For whatever reason, the King's guards prefer a strategy of{GRADIENT=brown;red} turn-based combat {ENDGRADIENT}" +
+                "vaguely reminiscent of {GRADIENT=green;black}chess {ENDGRADIENT}(although truth be told, the similarities are pretty superficial)" +
+                "\n\nHelp the warriors onward to victory or end up \n {GRADIENT=red;brown}Board To Death! {ENDGRADIENT} " ;
 //    String page4 =
 //        "{COLOR=black}This is no mere chessboard, but a tapestry of fate woven by your strategic brilliance.\n" +
 //        "So, grand observer, will your reign usher in an era of prosperity...\n" +

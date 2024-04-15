@@ -9,6 +9,7 @@ import lando.systems.ld55.Config;
 import lando.systems.ld55.assets.Assets;
 import lando.systems.ld55.utils.Callback;
 import lando.systems.ld55.utils.Time;
+import lando.systems.ld55.utils.Utils;
 
 public class Particles implements Disposable {
 
@@ -185,7 +186,7 @@ public class Particles implements Disposable {
             float size = MathUtils.random(60f, 120f);
             float color = MathUtils.random(.3f, 1f);
             activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
-                .animation(win ? assets.yoda : assets.cherry)
+                .animation(win ? assets.particles.twirls : assets.particles.blood)
                 .startPos(x, y)
                 .velocity(MathUtils.cosDeg(angle) * speed, MathUtils.sinDeg(angle) * speed)
                 .startColor(color, color, color, 1f)
@@ -316,4 +317,22 @@ public class Particles implements Disposable {
         );
     }
 
+    public void fanfareConfetti(float x, float y) {
+        for (int i = 0; i < 20; i++) {
+            activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+                .keyframe(assets.particles.stars.getKeyFrame(MathUtils.random(0f, 1f)))
+                .startPos(x, y)
+                .velocityDirection(MathUtils.random(90, 270), MathUtils.random(200))
+                .acceleration(50f, -1000f)
+                .accelerationDamping(.95f)
+                .startRotation(MathUtils.random(360f))
+                .endRotation(360f * 1000)
+                .startColor(Utils.randomColor()) // Get a random color
+                .startSize(MathUtils.random(10f, 30f))
+                .endSize(MathUtils.random(35f, 60f))
+                .timeToLive(10f)
+                .init()
+            );
+        }
+    }
 }

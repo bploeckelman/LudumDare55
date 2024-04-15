@@ -13,7 +13,11 @@ public class MovementBreadcrumb {
     public MovementBreadcrumb(GamePiece piece, GameTile tile, int dX, int dY) {
         this.piece = piece;
         this.tile = tile;
-        direction = Direction.End;
+        direction = getDirectionFrom(dX, dY);
+    }
+
+    public static Direction getDirectionFrom(int dX, int dY) {
+        Direction direction = Direction.End;
         if (dX == 0 && dY == 0) direction = Direction.End;
         if (dX == 0 && dY == 1) direction = Direction.Up;
         if (dX == 1 && dY == 1) direction = Direction.UpRight;
@@ -23,6 +27,7 @@ public class MovementBreadcrumb {
         if (dX == -1 && dY == -1) direction = Direction.DownLeft;
         if (dX == -1 && dY == 0) direction = Direction.Left;
         if (dX == -1 && dY == 1) direction = Direction.UpLeft;
+        return direction;
     }
 
 }

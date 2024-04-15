@@ -17,6 +17,7 @@ import lando.systems.ld55.assets.Assets;
 import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.ui.HealthBar;
+import lando.systems.ld55.ui.MovementBreadcrumb;
 
 public class GamePiece {
     public enum Owner {
@@ -254,6 +255,7 @@ public class GamePiece {
         moveTiles.clear();
         gameBoard.playerMoveOverlay.clear();
         gameBoard.selectedPiece = null;
+        gameBoard.playerMoveOverlay.clear();
         return this;
     }
 
@@ -427,6 +429,38 @@ public class GamePiece {
             gameBoard.playerMoveOverlay.add(new TileOverlayInfo(tile, 0)
             .addLayer("base-panel", 1f, 1, 1, 1, 0.4f, TileOverlayAssets.panelWhite, null, null));
 
+    }
+
+    public void setupPathOverlay(GameBoard gameBoard, GameTile targetTile) {
+        for (TileOverlayInfo info : gameBoard.playerMoveOverlay) {
+            info.removeLayer("path");
+        }
+        if (targetTile == null){
+            return;
+        }
+        if (moveTiles.contains(targetTile, true)){
+            // On available Move path
+            int dX = (int)Math.signum(targetTile.x - currentTile.x);
+            int dY = (int)Math.signum(targetTile.y - currentTile.y);
+            int nextX = dX + currentTile.x;
+            int nextY = dY + currentTile.y;
+
+            while (dX != 0 || dY != 0) {
+                GameTile t = gameBoard.getTileAt(nextX, nextY);
+                dX = (int) Math.signum(targetTile.x - nextX);
+                dY = (int) Math.signum(targetTile.y - nextY);
+                nextX = dX + nextX;
+                nextY = dY + nextY;
+
+                for (TileOverlayInfo info : gameBoard.playerMoveOverlay){
+                    if (info.tile == t){
+                        info.addLayer("path", 1f, 1, 1, 0, 1f, null, TileOverlayAssets.getArrowForDir(MovementBreadcrumb.getDirectionFrom(dX, dY)), null);
+                    }
+                }
+            }
+
+
+        }
     }
 
     private void addMoveTile(GameBoard gameBoard, int x, int y) {

@@ -134,7 +134,7 @@ public class GameBoard extends InputAdapter {
         spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 80, 580);
         spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1150, 600);
 
-        removeThis();
+//        removeThis();
     }
 
     private void removeThis() {
@@ -187,7 +187,11 @@ public class GameBoard extends InputAdapter {
                         for (GameTile t : selectedPiece.moveTiles){
                             if (t == hoverTile){
                                 radialMenu = new RadialMenu(this, hoverTile, selectedPiece, RadialMenu.MenuType.Move);
+                                moved = true;
                             }
+                        }
+                        if (!moved) {
+                            selectedPiece.deselect(this);
                         }
 
                     }
@@ -339,6 +343,10 @@ public class GameBoard extends InputAdapter {
             attackTileOverlays.clear();
             hoverTileOverlay = null;
             hoverTile = null;
+        }
+
+        if (selectedPiece != null){
+            selectedPiece.setupPathOverlay(this, hoverTile);
         }
 
         // Check here for action hover

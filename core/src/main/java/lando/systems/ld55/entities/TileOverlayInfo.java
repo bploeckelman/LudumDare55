@@ -128,6 +128,13 @@ public class TileOverlayInfo {
         return this;
     }
 
+    public void removeLayer(String name) {
+        int index = findLayerIndex(name);
+        if (index >= 0){
+            layers.remove(index);
+        }
+    }
+
     public void update(float dt) {
         for (var layer : layers) {
             layer.stateTime += dt;
