@@ -1,5 +1,6 @@
 package lando.systems.ld55.ui;
 
+import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
 
 public class MovementBreadcrumb {
@@ -7,8 +8,10 @@ public class MovementBreadcrumb {
 
     public GameTile tile;
     public Direction direction;
+    public GamePiece piece;
 
-    public MovementBreadcrumb(GameTile tile, int dX, int dY) {
+    public MovementBreadcrumb(GamePiece piece, GameTile tile, int dX, int dY) {
+        this.piece = piece;
         this.tile = tile;
         if (dX == 0 && dY == 0) direction = Direction.End;
         if (dX == 0 && dY == 1) direction = Direction.Up;
