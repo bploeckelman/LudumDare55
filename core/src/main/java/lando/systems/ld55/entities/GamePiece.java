@@ -428,6 +428,7 @@ public class GamePiece {
         GameScreen.particles.bloodFountain(position.x, position.y + bounds.height / 2);
     }
     public void bleed() {
+        GameScreen.particles.spawnBloodPuddle(position.x, position.y);
         if (currentHealth <= 0 && MathUtils.random(100) < 20) {
             bloodDuration = 2;
         } else {

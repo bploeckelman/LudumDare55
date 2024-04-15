@@ -396,7 +396,7 @@ public class GameBoard extends InputAdapter {
             tile.render(batch);
         }
         renderGrid(batch);
-
+        gameScreen.particles.draw(batch, lando.systems.ld55.particles.Particles.Layer.BACKGROUND);
         // draw set pieces (from StyleMgr)
         gameScreen.styleManager.render(batch);
 

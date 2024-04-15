@@ -238,4 +238,17 @@ public class Particles implements Disposable {
             );
         }
     }
+
+    public void spawnBloodPuddle(float x, float y) {
+        activeParticles.get(Layer.BACKGROUND).add(Particle.initializer(particlePool.obtain())
+            .keyframe(assets.particles.splats.getKeyFrame(MathUtils.random(0f, 1f)))
+            .startPos(x, y)
+            .startColor(0.6f, 0.1f, 0.1f, 1f)
+            .endColor(0.6f, 0.1f, 0.1f, 0f)
+            .startSize(MathUtils.random(20f, 30f))
+            .endSize(MathUtils.random(60f, 80f))
+            .timeToLive(20f)
+            .init()
+        );
+    }
 }
