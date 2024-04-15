@@ -28,7 +28,7 @@ public class ActionManager {
     public int playerActionsAvailable;
 
     Array<ActionBase> actionQueue = new Array<>();
-    int currentAction;
+    public int currentAction;
     private Phase phase = Phase.CollectActions;
     private GameScreen gameScreen;
     private float attackAccum;

@@ -23,6 +23,7 @@ import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.actions.SpawnAction;
 import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.screens.GameScreen;
+import lando.systems.ld55.ui.ActionQueueUI;
 import lando.systems.ld55.ui.radial.RadialMenu;
 import lando.systems.ld55.utils.Utils;
 
@@ -65,6 +66,7 @@ public class GameBoard extends InputAdapter {
     public final Vector3 screenPosition = new Vector3();
 
     private RadialMenu radialMenu;
+    public ActionQueueUI actionQueueUI;
 
     private final Array<GameTile> loseTiles = new Array<>();
     private final Array<GameTile> winTiles = new Array<>();
@@ -117,7 +119,7 @@ public class GameBoard extends InputAdapter {
         gridFB = new FrameBuffer(Pixmap.Format.RGBA8888, Config.Screen.window_width, Config.Screen.window_height, true);
         gridTexture = gridFB.getColorBufferTexture();
         gridTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-
+        actionQueueUI = new ActionQueueUI(gameScreen.actionManager, this);
         spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 180, 655);
         spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1115, 195);
 
@@ -301,7 +303,12 @@ public class GameBoard extends InputAdapter {
             hoverTile = null;
             tileOverlays.clear();
         }
-        // TODO: Check here for action hover
+
+        // Check here for action hover
+        actionQueueUI.update(dt);
+        if (actionQueueUI.hoveredAction != null){
+            hoverTile = actionQueueUI.hoveredAction.action.getPiece().currentTile;
+        }
 
         for (int i = portalAnimations.size -1; i >= 0; i--) {
             Portal p = portalAnimations.get(i);
@@ -385,6 +392,8 @@ public class GameBoard extends InputAdapter {
         if (radialMenu != null) {
             radialMenu.render(batch);
         }
+
+        actionQueueUI.render(batch);
     }
 
     public void renderFrameBuffers(SpriteBatch batch) {

@@ -59,6 +59,7 @@ public class Assets implements Disposable {
 
     public TextureRegion pixelRegion;
     public TextureRegion closeButton;
+    public TextureRegion cardTexture;
 
     public Animation<TextureRegion> cherry;
     public Animation<TextureRegion> yoda;
@@ -271,6 +272,7 @@ public class Assets implements Disposable {
 
         // TextureRegions
         closeButton = atlas.findRegion("pixel");
+        cardTexture = atlas.findRegion("icons/kenney-board-game/dice_empty");
 
         // String replacement
         strings = mgr.get("i18n/strings", I18NBundle.class);
