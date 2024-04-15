@@ -45,6 +45,7 @@ public class GameScreenUI {
         endTurnButton.onClick = () -> {
             EnemyAI.doTurn(screen.gameBoard);
             screen.actionManager.endTurn();
+            endTurnButton.pulse = false;
         };
 
         actionsPanel = TileOverlayAssets.panelWhite;
@@ -99,6 +100,7 @@ public class GameScreenUI {
             var point = actionPoints.get(i);
             point.active = i < actionsAvailable;
         }
+        endTurnButton.pulse = actionsAvailable == 0;
     }
 
     public void render(SpriteBatch batch) {

@@ -25,11 +25,13 @@ public class ImageButton {
 
     public Runnable onClick = null;
     public float stateTime = 0f;
+    public float pulseAccum = 0f;
     public boolean hovered = false;
     public boolean pressed = false;
     public boolean disabled = false;
     public boolean wasPressed = false;
     public boolean active = false; // for 'checkbox' style
+    public boolean pulse = false;
 
     public ImageButton(float x, float y, TextureRegion image, TextureRegion imageHovered, TextureRegion imagePressed, TextureRegion imageDisabled) {
         this(x, y, image.getRegionWidth(), image.getRegionHeight(), image, imageHovered, imagePressed, imageDisabled);
@@ -77,6 +79,13 @@ public class ImageButton {
             wasPressed = pressed;
         }
 
+        if (pulse) {
+            var speed = 5f;
+            pulseAccum += dt * speed;
+        } else {
+            pulseAccum = 0f;
+        }
+
         stateTime += dt;
         updateKeyFrame();
     }
@@ -95,6 +104,18 @@ public class ImageButton {
             bounds.y + margin,
             bounds.width - 2f * margin,
             bounds.height - 2 * margin);
+
+        if (pulse) {
+            var pulseKeyframe = imageDisabled.getKeyFrame(stateTime);
+            var alpha = (float) ((Math.sin(pulseAccum) + 1f) / 2f);
+            batch.setColor(1, 1, 1, alpha);
+            batch.draw(pulseKeyframe,
+                bounds.x + margin,
+                bounds.y + margin,
+                bounds.width - 2 * margin,
+                bounds.height - 2 * margin);
+        }
+
         batch.setColor(1, 1, 1, 1);
     }
 
