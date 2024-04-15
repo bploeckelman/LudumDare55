@@ -22,8 +22,8 @@ public class RadialSummonButton extends RadialButton {
         int actionsAvailable = board.gameScreen.actionManager.playerActionsAvailable;
         switch (type) {
             case Pawn:
-                if (actionsAvailable >= 1) {
-                    pointsUsed = 1;
+                if (actionsAvailable >= type.actionsToSpawn) {
+                    pointsUsed = type.actionsToSpawn;
                     enabled = true;
                     this.text = "Pawn\n1 Action";
                 } else {
@@ -31,8 +31,8 @@ public class RadialSummonButton extends RadialButton {
                 }
                 break;
             case Knight:
-                if (actionsAvailable >= 1) {
-                    pointsUsed = 1;
+                if (actionsAvailable >= type.actionsToSpawn) {
+                    pointsUsed = type.actionsToSpawn;
                     enabled = true;
                     this.text = "Knight\n1 Action";
                 } else {
@@ -40,8 +40,8 @@ public class RadialSummonButton extends RadialButton {
                 }
                 break;
             case Bishop:
-                if (actionsAvailable >= 2) {
-                    pointsUsed = 2;
+                if (actionsAvailable >= type.actionsToSpawn) {
+                    pointsUsed = type.actionsToSpawn;
                     enabled = true;
                     this.text = "Bishop\n2 Actions";
                 } else {
@@ -49,8 +49,8 @@ public class RadialSummonButton extends RadialButton {
                 }
                 break;
             case Rook:
-                if (actionsAvailable >= 2) {
-                    pointsUsed = 2;
+                if (actionsAvailable >= type.actionsToSpawn) {
+                    pointsUsed = type.actionsToSpawn;
                     enabled = true;
                     this.text = "Rook\n2 Actions";
                 } else {
@@ -58,8 +58,8 @@ public class RadialSummonButton extends RadialButton {
                 }
                 break;
             case Queen:
-                if (actionsAvailable >= 3) {
-                    pointsUsed = 3;
+                if (actionsAvailable >= type.actionsToSpawn) {
+                    pointsUsed = type.actionsToSpawn;
                     enabled = true;
                     this.text = "Queen\n3 Actions";
                 } else {
