@@ -54,6 +54,7 @@ public class GameBoard extends InputAdapter {
     public final List<TileOverlayInfo> attackTileOverlays = new ArrayList<>();
     public final List<TileOverlayInfo> goalTileOverlays = new ArrayList<>();
     public final List<TileOverlayInfo> playerMoveOverlay = new ArrayList<>();
+    public final List<TileOverlayInfo> attackActionOverlay = new ArrayList<>();
 
     public FrameBuffer gridFB;
     public Texture gridTexture;
@@ -424,17 +425,22 @@ public class GameBoard extends InputAdapter {
             p.render(batch);
         }
 
-        // Ony draw when we are in planning mode
-        if (gameScreen.actionManager.getCurrentPhase() == ActionManager.Phase.CollectActions) {
-            // draw tile overlays
-            batch.setColor(1, 1, 1, 1);
-            spawnTileOverlays.forEach(overlay -> overlay.render(batch));
-            goalTileOverlays.forEach(overlay -> overlay.render(batch));
-            moveTileOverlays.forEach(overlay -> overlay.render(batch));
-            playerMoveOverlay.forEach(overlay -> overlay.render(batch));
-            attackTileOverlays.forEach(overlay -> overlay.render(batch));
-        }
 
+        switch (gameScreen.actionManager.getCurrentPhase()) {
+            case CollectActions:
+                // draw tile overlays
+                batch.setColor(1, 1, 1, 1);
+                spawnTileOverlays.forEach(overlay -> overlay.render(batch));
+                goalTileOverlays.forEach(overlay -> overlay.render(batch));
+                moveTileOverlays.forEach(overlay -> overlay.render(batch));
+                playerMoveOverlay.forEach(overlay -> overlay.render(batch));
+                attackTileOverlays.forEach(overlay -> overlay.render(batch));
+                break;
+            case Attack:
+                // attacker/defender
+                attackActionOverlay.forEach(overlay -> overlay.render(batch));
+                break;
+        }
         batch.setColor(Color.WHITE);
 
         // sort by y position, top down
