@@ -74,8 +74,11 @@ public class TitleScreen extends BaseScreen {
             particles.bloodFountain(1100f, 470f);
             particles.bloodFountain(1050f, 400f);
             particles.spawnArrow(450f, 285f, 890f, 280f);
+            Time.do_after_delay(0.5f, (param) -> particles.bloodBurst(890f, 280f));
             particles.spawnFireball(580f, 235f, 720f, 350f);
-            particles.spawnMagic(920f, 280f, 540f, 320f);
+            Time.do_after_delay(0.6f, (param) -> particles.bloodBurst(720f, 350f));
+            particles.spawnMagic(920f, 350f, 540f, 320f);
+            Time.do_after_delay(0.4f, (param) -> particles.bloodBurst(540f, 320f));
             firedParticle = true;
         } else if (fanfareTimer > 2.3f) {
             fanfareTimer = 0f;
@@ -148,8 +151,7 @@ public class TitleScreen extends BaseScreen {
 
     private void meaninglessClickEffect(float x, float y) {
         if (settingsUI.isSettingShown) { return; }
-        particles.tinySmoke(x, y);
-        particles.fanfareConfetti(x, y);
+        particles.levelUpEffect(x, y);
         Main.game.audioManager.playSound(AudioManager.Sounds.click);
     }
 

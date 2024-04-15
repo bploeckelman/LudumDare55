@@ -264,10 +264,10 @@ public class Particles implements Disposable {
             .endRotation(MathUtils.random(720, 1440))
             .acceleration(100f,100f)
             .accelerationDamping(0.95f)
-            .timeToLive(.5f)
+            .timeToLive(.6f)
             .init()
         );
-        Time.do_after_delay(0.5f, param -> smoke(targetX, targetY));
+        Time.do_after_delay(0.6f, param -> smoke(targetX, targetY));
     }
 
     public void spawnMagic(float x, float y, float targetX, float targetY) {
@@ -286,7 +286,7 @@ public class Particles implements Disposable {
                 .init()
             );
         }
-        Time.do_after_delay(0.5f, param -> smoke(targetX, targetY));
+        Time.do_after_delay(0.4f, param -> smoke(targetX, targetY));
     }
 
     public void spawnArrow(float x, float y, float targetX, float targetY) {
