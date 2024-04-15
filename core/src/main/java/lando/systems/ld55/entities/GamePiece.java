@@ -1,6 +1,5 @@
 package lando.systems.ld55.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import lando.systems.ld55.Main;
 import lando.systems.ld55.Stats;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
@@ -19,8 +17,8 @@ import lando.systems.ld55.ui.HealthBar;
 
 public class GamePiece {
     public enum Owner {
-        Player(Color.BLUE),
-        Enemy(Color.RED);
+        Player(Color.SKY),
+        Enemy(Color.CORAL);
         public final Color color;
         Owner(Color color) {
             this.color = color;

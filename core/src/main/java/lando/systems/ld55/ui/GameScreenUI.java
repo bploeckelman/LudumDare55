@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionManager;
+import lando.systems.ld55.assets.Assets;
 import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.EnemyAI;
@@ -24,6 +25,7 @@ public class GameScreenUI {
 
     public final GameScreen screen;
     public final ImageButton endTurnButton;
+    public Rectangle settingsButtonPanelBound;
     public final ImageButton settingsButton;
 //    public final ImageButton summonButton;
 //    public final ImageButton moveButton;
@@ -65,11 +67,9 @@ public class GameScreenUI {
         endTurnButton.imagePulse = new Animation<>(0.1f,
             screen.assets.atlas.findRegions("icons/finish-turn-btn-pulse"), Animation.PlayMode.LOOP);
 
+        settingsButtonPanelBound = new Rectangle(Config.Screen.window_width - 50f, Config.Screen.window_height - 50f, 50f, 50f);
         settingsButton = new ImageButton(Config.Screen.window_width - 50f, Config.Screen.window_height - 50f, 50f, 50f,
-            screen.assets.atlas.findRegion("icons/kenney-ui/gear"),
-            null,
-            null,
-            null);
+            screen.assets.atlas.findRegion("icons/kenney-ui/gear"), null, null, null);
         settingsButton.onClick = () -> screen.settingsUI.showSettings();
 
         actionsPanel = TileOverlayAssets.panelWhite;
@@ -125,6 +125,9 @@ public class GameScreenUI {
 
     public void render(SpriteBatch batch) {
         endTurnButton.render(batch);
+        batch.setColor(Color.DARK_GRAY);
+        Assets.NinePatches.metal.draw(batch, settingsButtonPanelBound.x, settingsButtonPanelBound.y, settingsButtonPanelBound.width, settingsButtonPanelBound.height);
+        batch.setColor(Color.WHITE);
         settingsButton.render(batch);
 
         var actionsAvailable = screen.actionManager.playerActionsAvailable > 0;
