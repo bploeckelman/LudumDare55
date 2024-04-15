@@ -73,6 +73,24 @@ public class SpawnAction extends ActionBase {
     }
 
     private void startSpawn() {
+// moving here for now
+//        Gdx.app.log("cucaracha counter", String.valueOf(board.cucarachaCounter));
+//        if(board.cucarachaCounter >= 20) {
+//            Main.game.audioManager.playSound(AudioManager.Sounds.cucaracha_fanfare);
+//            board.cucarachaCounter = 0;
+//        }
+//        else {
+//            if(gamePiece.owner == GamePiece.Owner.Player) {
+//                Main.game.audioManager.playSound(AudioManager.Sounds.horn_fanfare);
+//            }
+//
+//            else {
+//                Main.game.audioManager.playSound(AudioManager.Sounds.enemy_spawn);
+//            }
+//            board.cucarachaCounter++;
+//        }
+
+
 
         float x, y;
         if (gamePiece.owner == GamePiece.Owner.Enemy) {
