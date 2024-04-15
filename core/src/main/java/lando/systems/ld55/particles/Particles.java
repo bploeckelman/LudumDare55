@@ -216,4 +216,26 @@ public class Particles implements Disposable {
             );
         }
     }
+
+    public void bloodFountain(float x, float y) {
+        for (int i = 0; i < 10; i++) {
+            float angle = MathUtils.random(0f, 60f) + 60;
+            float speed = MathUtils.random(10f, 100f) + 200;
+            float size = MathUtils.random(10f, 20f);
+            float color = MathUtils.random(.3f, 1f);
+            activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
+                .keyframe(assets.particles.blood.getKeyFrame(MathUtils.random(0f, 1f)))
+                .startPos(x, y)
+                .velocityDirection(angle, speed)
+                .acceleration(0, -700)
+                .accelerationDamping(0.95f)
+                .startColor(color, 0, 0, 1f)
+                .endColor(0, 0, 0, 0)
+                .startSize(size)
+                .endSize(0f)
+                .timeToLive(MathUtils.random(1f, 2f))
+                .init()
+            );
+        }
+    }
 }

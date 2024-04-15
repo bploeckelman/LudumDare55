@@ -22,7 +22,7 @@ import lando.systems.ld55.ui.SettingsUI;
 
 public class GameScreen extends BaseScreen{
     public GameBoard gameBoard;
-    public Particles particles;
+    public static Particles particles;
     public ActionManager actionManager;
     public GameScreenUI ui;
     public SettingsUI settingsUI;

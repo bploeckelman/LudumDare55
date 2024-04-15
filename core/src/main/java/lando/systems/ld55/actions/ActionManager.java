@@ -191,7 +191,7 @@ public class ActionManager {
                         @Override
                         public void onEvent(int type, BaseTween<?> source) {
                             damagedPiece.takeDamage(finalMaxDamage, gameScreen.gameBoard);
-                            gameScreen.particles.bloodBurst(damagedPiece.position.x, damagedPiece.position.y);
+                            damagedPiece.bleed();
                             Main.game.audioManager.playSound(AudioManager.Sounds.combat_hit, .7f); //placeholder sound
                         }
                     }))

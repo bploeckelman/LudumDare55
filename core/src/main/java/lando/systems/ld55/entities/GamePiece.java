@@ -13,6 +13,7 @@ import lando.systems.ld55.Stats;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
 import lando.systems.ld55.assets.Assets;
+import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.ui.HealthBar;
 
 public class GamePiece {
@@ -284,6 +285,8 @@ public class GamePiece {
 
         adjustFocus(dt);
         healthBar.updateCurrentHealth(currentHealth);
+
+        updateBlood(dt);
     }
 
     private void updateMovement(float dt) {
@@ -409,5 +412,26 @@ public class GamePiece {
 
         float alpha = healthAlpha + dt;
         healthAlpha = MathUtils.clamp(alpha, 0.6f, 1f);
+    }
+
+    private boolean normalBlood = false;
+    private float bloodDuration = 0;
+    private void updateBlood(float dt) {
+        if (normalBlood) {
+            GameScreen.particles.bloodBurst(position.x, position.y + bounds.height / 2);
+            normalBlood = false;
+        }
+
+        bloodDuration -= dt;
+        if (bloodDuration < 0) return;
+
+        GameScreen.particles.bloodFountain(position.x, position.y + bounds.height / 2);
+    }
+    public void bleed() {
+        if (currentHealth <= 0 && MathUtils.random(100) < 20) {
+            bloodDuration = 2;
+        } else {
+            normalBlood = true;
+        }
     }
 }
