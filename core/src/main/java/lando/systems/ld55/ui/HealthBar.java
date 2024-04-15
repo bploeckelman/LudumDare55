@@ -7,10 +7,10 @@ import com.badlogic.gdx.math.Rectangle;
 import lando.systems.ld55.assets.Assets;
 
 public class HealthBar {
-    private final static float BASE_BOX_WIDTH = 30;
-    private final static float BASE_BOX_HEIGHT = 10;
-    private final static float BAR_BORDER_SIZE = 2;
-    private final static float BOX_BORDER_SIZE = 2;
+    private final static float BASE_BOX_WIDTH = 20;
+    private final static float BASE_BOX_HEIGHT = 6;
+    private final static float BAR_BORDER_SIZE = 1;
+    private final static float BOX_BORDER_SIZE = 1;
 
     private float boxWidth = BASE_BOX_WIDTH;
     private float boxHeight = BASE_BOX_HEIGHT;

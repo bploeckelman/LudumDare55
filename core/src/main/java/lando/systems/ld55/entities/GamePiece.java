@@ -221,7 +221,7 @@ public class GamePiece {
     public void setPosition(float x, float y) {
         position.set(x, y);
         bounds.setPosition(x - bounds.width / 2, y);
-        healthBar.updatePosition(position.x, position.y + 60f);
+        healthBar.updatePosition(position.x, position.y - healthBar.barBounds.height);
     }
 
     public void moveToTile(GameTile tile) {
