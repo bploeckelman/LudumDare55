@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import lando.systems.ld55.actions.MoveAction;
-import lando.systems.ld55.entities.Direction;
 import lando.systems.ld55.ui.MovementBreadcrumb;
 
 import java.util.List;
@@ -32,6 +30,10 @@ public class TileOverlayAssets {
     public static TextureRegion pawnDown;
     public static TextureRegion tokenAdd;
     public static TextureRegion dot;
+    public static TextureRegion skull;
+    public static TextureRegion sword;
+    public static TextureRegion crown;
+    public static TextureRegion laurel;
 
     public static Array<TextureRegion> tags;
 
@@ -62,6 +64,10 @@ public class TileOverlayAssets {
         pawnDown    = atlas.findRegion("icons/kenney-board-game/pawn_down");
         tokenAdd    = atlas.findRegion("icons/kenney-board-game/token_add");
         dot         = atlas.findRegion("icons/kenney-board-game/tag_empty");
+        skull       = atlas.findRegion("icons/kenney-board-game/skull");
+        sword       = atlas.findRegion("icons/kenney-board-game/sword");
+        crown       = atlas.findRegion("icons/kenney-board-game/crown_b");
+        laurel      = atlas.findRegion("icons/kenney-board-game/award");
 
         tags = new Array<>();
         for (int i = 1; i <= 10; i++) {
