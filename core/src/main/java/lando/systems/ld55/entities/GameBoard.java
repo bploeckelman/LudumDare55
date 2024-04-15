@@ -125,7 +125,7 @@ public class GameBoard extends InputAdapter {
     }
 
     private void removeThis() {
-//        var types = new GamePiece.Type[] { GamePiece.Type.Pawn, GamePiece.Type.Bishop, GamePiece.Type.Queen, GamePiece.Type.Knight, GamePiece.Type.Rook };
+        var types = new GamePiece.Type[] { GamePiece.Type.Pawn, GamePiece.Type.Bishop, GamePiece.Type.Queen, GamePiece.Type.Knight, GamePiece.Type.Rook };
 //        int y = 2;
 //        for (var type : types) {
 //            var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Enemy);
@@ -133,12 +133,12 @@ public class GameBoard extends InputAdapter {
 //            gamePieces.add(gp);
 //        }
 //
-//        y = 2;
-//        for (var type : types) {
-//            var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Player);
-//            gp.setTile(getTileAt(18, y++));
-//            gamePieces.add(gp);
-//        }
+        var y = 2;
+        for (var type : types) {
+            var gp = GamePiece.getGamePiece(gameScreen.assets, type, GamePiece.Owner.Enemy);
+            gp.setTile(getTileAt(4, y++));
+            gamePieces.add(gp);
+        }
         // LET'S GO BANANA
         var gp = GamePiece.getGamePiece(gameScreen.assets, GamePiece.Type.Pawn, GamePiece.Owner.Player);
         gp.setTile(getTileAt(20, 5));
