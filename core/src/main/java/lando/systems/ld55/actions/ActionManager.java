@@ -192,7 +192,7 @@ public class ActionManager {
                         public void onEvent(int type, BaseTween<?> source) {
                             damagedPiece.takeDamage(finalMaxDamage, gameScreen.gameBoard);
                             gameScreen.particles.bloodBurst(damagedPiece.position.x, damagedPiece.position.y);
-                            Main.game.audioManager.playSound(AudioManager.Sounds.coin); //placeholder sound
+                            Main.game.audioManager.playSound(AudioManager.Sounds.combat_hit, .7f); //placeholder sound
                         }
                     }))
                     .start(Main.game.tween);

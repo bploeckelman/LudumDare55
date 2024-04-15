@@ -24,8 +24,13 @@ public class AudioManager implements Disposable {
         none
         , coin
         , idle_click
+        , pew
+        , click
         , error_sound
+        , error_buzz
         , level_up
+        , horn_fanfare
+        , combat_hit
     }
 
     public enum Musics {
@@ -50,9 +55,19 @@ public class AudioManager implements Disposable {
 
         putSound(Sounds.coin, assets.coin);
         putSound(Sounds.idle_click, assets.idleClick);
+        putSound(Sounds.pew, assets.pew);
+        putSound(Sounds.click, assets.click);
         putSound(Sounds.level_up, assets.levelUp);
 //        putSound(Sounds.error, assets.errorThud);
         putSound(Sounds.error_sound, assets.errorThud);
+        putSound(Sounds.error_buzz, assets.errorBuzz);
+        putSound(Sounds.horn_fanfare, assets.hornFanfare);
+        putSound(Sounds.combat_hit, assets.hit1);
+        putSound(Sounds.combat_hit, assets.hit2);
+        putSound(Sounds.combat_hit, assets.hit3);
+        putSound(Sounds.combat_hit, assets.hit4);
+        putSound(Sounds.combat_hit, assets.hit5);
+        putSound(Sounds.combat_hit, assets.hit6);
 
         musics.put(Musics.introMusic, assets.introMusic);
         musics.put(Musics.mainMusic, assets.mainMusic);

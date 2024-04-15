@@ -90,13 +90,19 @@ public class GameScreen extends BaseScreen{
         worldCamera.unproject(touchPos);
         if (Gdx.input.justTouched() && gameBoard.hoverTile == null) {
             particles.portal(touchPos.x, touchPos.y, 20f);
-            Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
-//            Main.game.audioManager.playSound(AudioManager.Sounds.error_sound);
+            Main.game.audioManager.playSound(AudioManager.Sounds.pew);
+//            Main.game.audioManager.playSound(AudioManager.Sounds.error_buzz);
         }
 
-        if(Gdx.input.justTouched() && gameBoard.hoverTile != null) {
-            Main.game.audioManager.playSound(AudioManager.Sounds.error_sound, .3f);
-        }
+//        if(Gdx.input.justTouched() && gameBoard.hoverTile != null) {
+//            if(gameBoard.hoverTile.summonable) {
+//                Main.game.audioManager.playSound(AudioManager.Sounds.click, .3f);
+//            }
+//            else {
+//                Main.game.audioManager.playSound(AudioManager.Sounds.error_buzz, .3f);
+//            }
+//
+//        }
 
         styleManager.update(dt);
     }

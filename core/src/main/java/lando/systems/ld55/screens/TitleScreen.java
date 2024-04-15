@@ -107,7 +107,7 @@ public class TitleScreen extends BaseScreen {
                 ? new IntroScreen()
                 : new GameScreen();
             game.setScreen(nextScreen);
-            Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
+            Main.game.audioManager.playSound(AudioManager.Sounds.click);
             unsubscribeEvents();
         }
     }
@@ -129,7 +129,7 @@ public class TitleScreen extends BaseScreen {
     private void meaninglessClickEffect(float x, float y) {
         if (settingsUI.isSettingShown) { return; }
         particles.tinySmoke(x, y);
-        Main.game.audioManager.playSound(AudioManager.Sounds.idle_click);
+        Main.game.audioManager.playSound(AudioManager.Sounds.click);
     }
 
     private void subscribeEvents() {
