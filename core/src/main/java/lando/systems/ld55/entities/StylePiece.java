@@ -11,8 +11,9 @@ public class StylePiece {
     private final Animation<TextureRegion> animation;
     private final Vector2 position = new Vector2();
     private float animState = 0;
+    private boolean flipped;
 
-    public StylePiece(Animation<TextureRegion> animation, float x, float y, float animState) {
+    public StylePiece(Animation<TextureRegion> animation, float x, float y, float animState, boolean flipped) {
         this.animation = animation;
         this.position.set(x, y);
 
@@ -20,6 +21,7 @@ public class StylePiece {
             animState = MathUtils.random(1f);
         }
         this.animState = animState;
+        this.flipped = flipped;
     }
 
     public void update(float dt) {
@@ -28,6 +30,9 @@ public class StylePiece {
 
     public void render(SpriteBatch batch) {
         var frame = animation.getKeyFrame(animState);
-        batch.draw(frame, position.x - frame.getRegionWidth() / 2f, position.y);
+        float scaleX = flipped ? 1f : -1f;
+        float width = frame.getRegionWidth();
+        float height = frame.getRegionHeight();
+        batch.draw(frame, position.x - width / 2f, position.y, width / 2f, height / 2f, width, height, scaleX, 1f, 0);
     }
 }

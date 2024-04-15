@@ -11,11 +11,15 @@ public class StyleManager {
     private final Array<StylePiece> stylePieces = new Array<>();
 
     public void add(Animation<TextureRegion> animation, float x, float y) {
-        add(animation, x, y, -1);
+        add(animation, x, y, false);
     }
 
     public void add(Animation<TextureRegion> animation, float x, float y, float animState) {
-        stylePieces.add(new StylePiece(animation, x, y, animState));
+        stylePieces.add(new StylePiece(animation, x, y, animState, false));
+    }
+
+    public void add(Animation<TextureRegion> animation, float x, float y, boolean flipped) {
+        stylePieces.add(new StylePiece(animation, x, y, 0, flipped));
     }
 
     public void update(float dt) {

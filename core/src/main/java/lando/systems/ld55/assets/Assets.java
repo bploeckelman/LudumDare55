@@ -82,6 +82,8 @@ public class Assets implements Disposable {
     public Array<Array<Animation<TextureRegion>>> rook = new Array<>();
     public Array<Array<Animation<TextureRegion>>> queen = new Array<>();
 
+    public Array<Animation<TextureRegion>> thrones = new Array<>();
+
     public ShaderProgram portalShader;
 
     public Array<ShaderProgram> randomTransitions;
@@ -260,6 +262,9 @@ public class Assets implements Disposable {
         addCharacterImages(bishop, "wizard");
         addCharacterImages(rook, "archer");
         addCharacterImages(queen, "queen");
+
+        thrones.add(new Animation<>(0.1f, atlas.findRegions("stage/throne-idle"), Animation.PlayMode.LOOP));
+        thrones.add(new Animation<>(0.1f, atlas.findRegions("stage/throne-evil-idle"), Animation.PlayMode.LOOP));
 
         // Initialize asset helpers
 

@@ -51,7 +51,12 @@ public class GameScreen extends BaseScreen{
         styleManager.add(assets.candleEvil, 1040, y, 0);
 
         var asset = MathUtils.random(100) < 20 ? assets.babe2 : assets.organGrinder;
-        styleManager.add(asset, 73, Config.Screen.window_height - 130);
+        styleManager.add(asset, 73, Config.Screen.window_height - 130, true);
+
+        styleManager.add(assets.thrones.get(0), 50, 350, true);
+        styleManager.add(assets.king.get(0).get(0), 80, 450, true);
+        styleManager.add(assets.thrones.get(1), 1230, 350, false);
+        styleManager.add(assets.king.get(1).get(0), 1230, 320);
     }
 
     @Override
