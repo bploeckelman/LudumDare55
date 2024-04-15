@@ -177,7 +177,7 @@ public class GameScreen extends BaseScreen{
                     layout.setText(font, "VICTORY!" , Color.WHITE, windowCamera.viewportWidth, Align.center, false);
                 }
                 else {
-                    layout.setText(font, "YOU DIED..." , Color.RED, windowCamera.viewportWidth, Align.center, false);
+                    layout.setText(font, "The King Died..." , Color.RED, windowCamera.viewportWidth, Align.center, false);
                 }
 
                 font.draw(batch, layout, 0, windowCamera.viewportHeight / 2);

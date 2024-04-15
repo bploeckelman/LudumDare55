@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.particles.Particles;
 import lando.systems.ld55.utils.typinglabel.TypingLabel;
 
@@ -19,25 +20,24 @@ public class IntroScreen extends BaseScreen {
     BitmapFont font;
     Particles particles;
     String page1 =
-        "{COLOR=black}The old king has fallen, his crown a relic of an era.\n" +
-        "The board lies silent, a battlefield turned desolate.\n" +
-        "{GRADIENT=gray;black}{JUMP}Pawns{ENDJUMP}{ENDGRADIENT} stand frozen, {GRADIENT=yellow;black}knights{ENDGRADIENT} remain unmounted, their destinies uncertain in this hushed kingdom.\n" +
-        "{SICK}Yet, a new power stirs. Not a warrior to claim the throne, but a strategist, a seer...{ENDSICK}\n";
+        "{COLOR=black}" +
+            "\nA{GRADIENT=black;gray} King{ENDGRADIENT} is the embodiment of{GRADIENT=black;gold} power{ENDGRADIENT}.\n\n" +
+        "But every monarch knows they are a captive,\n" +
+            "with their every need relying on the {GRADIENT=navy;purple} fealty {ENDGRADIENT}of those who serve them.\n\n ";
     String page2 =
-        "{COLOR=black}Your eyes behold this forgotten realm.  Your touch awakens its slumbering pieces.\n" +
-        "Though your hand wields no sword, your mind commands armies unseen.\n" +
-        "Each move you orchestrate ripples across this checkered landscape, shaping history.\n" +
-        "{GRADIENT=white;black}Bishops{ENDGRADIENT} whisper prayers, their paths influenced by your subtle guidance.\n";
+        "{COLOR=black}An {GRADIENT=red;black}evil wizard{ENDGRADIENT} has unleashed an army of {GRADIENT=red;brown}monsters {ENDGRADIENT}on the castle.\n\n" +
+            "The warriors of the King's " +
+            "court must now advance and conquer their menace in a {GRADIENT=brown;red}rousing, turn-based combat simulator{ENDGRADIENT} " +
+            "vaguely similar to{GRADIENT=green;black} chess{ENDGRADIENT}.\n\n" +
+            "(The similarities turned out to be pretty superficial in the end, but that's where the idea started)";
     String page3 =
-        "{COLOR=black}Knights charge with renewed purpose, their hooves a thunderclap directed by your will.\n" +
-        "The pawns, once overlooked, become the linchpin of your grand design.\n" +
-        "But beware, strategist, for every calculated move, an equal counterstroke awaits.\n" +
-        "Victory and defeat hang in delicate balance, the echoes of your choices ringing through time.\n";
-    String page4 =
-        "{COLOR=black}This is no mere chessboard, but a tapestry of fate woven by your strategic brilliance.\n" +
-        "So, grand observer, will your reign usher in an era of prosperity...\n" +
-        "...or will the kingdom crumble beneath the weight of your decisions?\n" +
-        "{RAINBOW}The time has come. The pieces await your command...{ENDRAINBOW}\n";
+            "\n{COLOR=black}In times of peril, the King is only as safe as the court of their {GRADIENT=yellow;black}summoning{ENDGRADIENT}..." +
+                "\n\nGuide your warriors to victory or end up \n {GRADIENT=red;brown}Board To Death! {ENDGRADIENT} " ;
+//    String page4 =
+//        "{COLOR=black}This is no mere chessboard, but a tapestry of fate woven by your strategic brilliance.\n" +
+//        "So, grand observer, will your reign usher in an era of prosperity...\n" +
+//        "...or will the kingdom crumble beneath the weight of your decisions?\n" +
+//        "{RAINBOW}The time has come. The pieces await your command...{ENDRAINBOW}\n";
     int currentPage = 0;
     float elapsedTime = 0f;
     TypingLabel typingLabel;
@@ -48,6 +48,7 @@ public class IntroScreen extends BaseScreen {
         parchmentTexture = assets.parchment;
         font = Main.game.assets.fontTreasureMap;
 
+        Main.game.audioManager.playMusic(AudioManager.Musics.introMusic);
 
         particles = new Particles(Main.game.assets);
 
@@ -68,6 +69,7 @@ public class IntroScreen extends BaseScreen {
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             worldCamera.unproject(touchPos);
             particles.levelUpEffect(touchPos.x, touchPos.y);
+
             if (transitionAlpha < 1f) {
                 transitionAlpha = 1f;
             } else if (!typingLabel.hasEnded()) {
@@ -78,9 +80,11 @@ public class IntroScreen extends BaseScreen {
                     typingLabel.restart(page2);
                 } else if (currentPage == 2) {
                     typingLabel.restart(page3);
-                } else if (currentPage == 3) {
-                    typingLabel.restart(page4);
-                } else {
+                }
+//                else if (currentPage == 3) {
+//                    typingLabel.restart(page4);
+//                }
+                else {
                     launchGame();
                 }
             }

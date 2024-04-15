@@ -40,6 +40,7 @@ public class AudioManager implements Disposable {
         none
         , introMusic
         , mainMusic
+        , outroMusic
     }
 
     public ObjectMap<Sounds, SoundContainer> sounds = new ObjectMap<>();
@@ -77,6 +78,7 @@ public class AudioManager implements Disposable {
 
         musics.put(Musics.introMusic, assets.introMusic);
         musics.put(Musics.mainMusic, assets.mainMusic);
+        musics.put(Musics.outroMusic, assets.outroMusic);
 
         musicVolume = new MutableFloat(0.65f);
         soundVolume = new MutableFloat(0.85f);

@@ -38,6 +38,7 @@ public class TitleScreen extends BaseScreen {
         settingsUI = new SettingsUI(skin, worldCamera);
         uiStage.addActor(settingsUI);
         subscribeEvents();
+
     }
 
     @Override
@@ -107,6 +108,7 @@ public class TitleScreen extends BaseScreen {
                 ? new IntroScreen()
                 : new GameScreen();
             game.setScreen(nextScreen);
+//            game.setScreen(new IntroScreen());
             Main.game.audioManager.playSound(AudioManager.Sounds.click);
             unsubscribeEvents();
         }
@@ -115,7 +117,7 @@ public class TitleScreen extends BaseScreen {
     private void transitionToCreditsScreen() {
         if (settingsUI.isSettingShown) { return; }
         if (!exitingScreen ) {
-            Main.game.audioManager.playSound(AudioManager.Sounds.level_up);
+            Main.game.audioManager.playSound(AudioManager.Sounds.click);
             exitingScreen = true;
             game.setScreen(new CreditScreen());
             unsubscribeEvents();
