@@ -36,6 +36,7 @@ public class AudioManager implements Disposable {
         , cucaracha_fanfare
         , enemy_spawn
         , round_ring
+        , hop
         , combat_hit
         , spawn_evil_start // tentacles appear
         , spawn_evil_end // game piece completely rendered
@@ -82,6 +83,7 @@ public class AudioManager implements Disposable {
         putSound(Sounds.cucaracha_fanfare, assets.cucarachaFanfare);
         putSound(Sounds.enemy_spawn, assets.enemySpawn);
         putSound(Sounds.round_ring, assets.roundRing);
+        putSound(Sounds.hop, assets.hop);
         putSound(Sounds.combat_hit, assets.hit1);
         putSound(Sounds.combat_hit, assets.hit2);
         putSound(Sounds.combat_hit, assets.hit3);

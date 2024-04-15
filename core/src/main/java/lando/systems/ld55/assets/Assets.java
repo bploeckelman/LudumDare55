@@ -135,6 +135,7 @@ public class Assets implements Disposable {
     public Sound cucarachaFanfare;
     public Sound enemySpawn;
     public Sound roundRing;
+    public Sound hop;
     public Sound hit1;
     public Sound hit2;
     public Sound hit3;
@@ -261,6 +262,7 @@ public class Assets implements Disposable {
             mgr.load("audio/sounds/enemy-spawn.ogg", Sound.class);
             mgr.load("audio/sounds/round-ring.ogg", Sound.class);
             mgr.load("audio/sounds/hit1.ogg", Sound.class);
+            mgr.load("audio/sounds/hop.ogg", Sound.class);
             mgr.load("audio/sounds/hit2.ogg", Sound.class);
             mgr.load("audio/sounds/hit3.ogg", Sound.class);
             mgr.load("audio/sounds/hit4.ogg", Sound.class);
@@ -473,6 +475,7 @@ public class Assets implements Disposable {
         hornFanfare = mgr.get("audio/sounds/horn-fanfare.ogg", Sound.class);
         cucarachaFanfare = mgr.get("audio/sounds/cucaracha-fanfare.ogg", Sound.class);
         enemySpawn = mgr.get("audio/sounds/enemy-spawn.ogg", Sound.class);
+        hop = mgr.get("audio/sounds/hop.ogg", Sound.class);
         hit1 = mgr.get("audio/sounds/hit1.ogg", Sound.class);
         hit2 = mgr.get("audio/sounds/hit2.ogg", Sound.class);
         hit3 = mgr.get("audio/sounds/hit3.ogg", Sound.class);
