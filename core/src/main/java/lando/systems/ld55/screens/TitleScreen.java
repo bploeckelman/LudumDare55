@@ -46,7 +46,6 @@ public class TitleScreen extends BaseScreen {
     @Override
     public void initializeUI() {
         super.initializeUI();
-        //TitleScreenUI titleScreenUI = new TitleScreenUI(this);
         //uiStage.addActor(titleScreenUI);
     }
 
@@ -123,7 +122,6 @@ public class TitleScreen extends BaseScreen {
                 ? new IntroScreen()
                 : new GameScreen();
             game.setScreen(nextScreen);
-//            game.setScreen(new IntroScreen());
             Main.game.audioManager.playSound(AudioManager.Sounds.click);
             unsubscribeEvents();
         }

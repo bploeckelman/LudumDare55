@@ -49,7 +49,6 @@ public class SpawnAction extends ActionBase {
         if (!started) {
             gamePiece.setTile(spawnTile);
             started = true;
-            // TODO: Play portal sound
             Main.game.audioManager.playSound(AudioManager.Sounds.horn_fanfare);
 
 

@@ -186,7 +186,7 @@ public class Particles implements Disposable {
             float size = MathUtils.random(60f, 120f);
             float color = MathUtils.random(.3f, 1f);
             activeParticles.get(Layer.FOREGROUND).add(Particle.initializer(particlePool.obtain())
-                .animation(win ? assets.yoda : assets.cherry)
+                .animation(win ? assets.particles.twirls : assets.particles.blood)
                 .startPos(x, y)
                 .velocity(MathUtils.cosDeg(angle) * speed, MathUtils.sinDeg(angle) * speed)
                 .startColor(color, color, color, 1f)

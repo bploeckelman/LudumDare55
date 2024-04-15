@@ -122,7 +122,6 @@ public class ActionManager {
         }
 
         Gdx.app.log("ActionManager", "Moving to Action Resolution Phase");
-        // TODO: Sound for end turn and action resolution starts
         phase = Phase.ResolveActions;
         currentAction = 0;
         currentAttackerPiece = 0;
@@ -148,7 +147,7 @@ public class ActionManager {
     Array<GamePiece> attackablePieces = new Array<>();
     private void handleAttacks(float dt) {
         if (currentAttackerPiece >= attackingUnits.size) {
-            // TODO: Sound when the player can act again
+            Main.game.audioManager.playSound(AudioManager.Sounds.round_ring, .3f);
             phase = Phase.CollectActions;
             playerActionsAvailable = ActionsPerTurn;
             tempActionPoints = playerActionsAvailable;

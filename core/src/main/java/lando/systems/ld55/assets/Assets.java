@@ -132,6 +132,7 @@ public class Assets implements Disposable {
     public Sound errorBuzz;
     public Sound levelUp;
     public Sound hornFanfare;
+    public Sound roundRing;
     public Sound hit1;
     public Sound hit2;
     public Sound hit3;
@@ -254,6 +255,7 @@ public class Assets implements Disposable {
             mgr.load("audio/sounds/error1.ogg", Sound.class);
             mgr.load("audio/sounds/error-buzz.ogg", Sound.class);
             mgr.load("audio/sounds/horn-fanfare.ogg", Sound.class);
+            mgr.load("audio/sounds/round-ring.ogg", Sound.class);
             mgr.load("audio/sounds/hit1.ogg", Sound.class);
             mgr.load("audio/sounds/hit2.ogg", Sound.class);
             mgr.load("audio/sounds/hit3.ogg", Sound.class);
@@ -461,6 +463,7 @@ public class Assets implements Disposable {
         metalTap = mgr.get("audio/sounds/metal-tap.ogg", Sound.class);
         pew = mgr.get("audio/sounds/pew.ogg", Sound.class);
         levelUp = mgr.get("audio/sounds/level-up.wav", Sound.class);
+        roundRing = mgr.get("audio/sounds/round-ring.ogg", Sound.class);
         errorThud = mgr.get("audio/sounds/error1.ogg", Sound.class);
         errorBuzz = mgr.get("audio/sounds/error-buzz.ogg", Sound.class);
         hornFanfare = mgr.get("audio/sounds/horn-fanfare.ogg", Sound.class);

@@ -174,10 +174,10 @@ public class GameScreen extends BaseScreen{
 
             if (gameOver) {
                 if(win) {
-                    layout.setText(font, "VICTORY!" , Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+                    layout.setText(font, "You win!" , Color.WHITE, windowCamera.viewportWidth, Align.center, false);
                 }
                 else {
-                    layout.setText(font, "The King Died..." , Color.RED, windowCamera.viewportWidth, Align.center, false);
+                    layout.setText(font, "You Died..." , Color.RED, windowCamera.viewportWidth, Align.center, false);
                 }
 
                 font.draw(batch, layout, 0, windowCamera.viewportHeight / 2);

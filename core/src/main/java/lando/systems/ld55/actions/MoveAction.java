@@ -74,11 +74,9 @@ public class MoveAction extends ActionBase {
             if (blockAccum - dt < halfWayTime && blockAccum > halfWayTime){
                 if (blockingPiece.owner != piece.owner){
                     // Attack
-                    // TODO: Melee attack sound
                     // TODO: Do we do damage to both sides?
                     blockingPiece.takeDamage(1, board);
                 } else {
-                    // friendly,  TODO: bounce sound
                     Main.game.audioManager.playSound(AudioManager.Sounds.error_sound);
                 }
             }
