@@ -80,8 +80,14 @@ public class AudioManager implements Disposable {
         putSound(Sounds.error_sound, assets.errorThud);
         putSound(Sounds.error_buzz, assets.errorBuzz);
         putSound(Sounds.horn_fanfare, assets.hornFanfare);
+        putSound(Sounds.spawn_good_start, assets.hornFanfare);
+        putSound(Sounds.spawn_evil_start, assets.squelch1);
+        putSound(Sounds.spawn_evil_start, assets.squelch2);
+        putSound(Sounds.spawn_evil_start, assets.squelch3);
+        putSound(Sounds.spawn_evil_start, assets.squelch4);
         putSound(Sounds.cucaracha_fanfare, assets.cucarachaFanfare);
         putSound(Sounds.enemy_spawn, assets.enemySpawn);
+        putSound(Sounds.spawn_evil_start, assets.enemySpawn);
         putSound(Sounds.round_ring, assets.roundRing);
         putSound(Sounds.hop, assets.hop);
         putSound(Sounds.combat_hit, assets.hit1);
