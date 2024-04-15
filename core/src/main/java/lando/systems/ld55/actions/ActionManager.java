@@ -126,7 +126,6 @@ public class ActionManager {
         phase = Phase.ResolveActions;
         currentAction = 0;
         currentAttackerPiece = 0;
-        gameScreen.gameBoard.turnTime = 0;
     }
 
     public int actionsRemaining() {
@@ -153,6 +152,7 @@ public class ActionManager {
             phase = Phase.CollectActions;
             playerActionsAvailable = ActionsPerTurn;
             tempActionPoints = playerActionsAvailable;
+            gameScreen.gameBoard.turnTime = 0;
             return;
         }
 
