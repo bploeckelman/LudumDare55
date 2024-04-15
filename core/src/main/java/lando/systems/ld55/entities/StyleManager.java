@@ -26,10 +26,6 @@ public class StyleManager {
         for (var piece : stylePieces) {
             piece.update(dt);
         }
-
-        if (Gdx.input.justTouched()) {
-            Gdx.app.log("pos", "(" + Gdx.input.getX() + ", " + Gdx.input.getY() + ")");
-        }
     }
 
     public void render(SpriteBatch batch) {

@@ -160,7 +160,6 @@ public class ActionManager {
 
         // TODO: do the actual attacks of people
         if (attackAccum >= AttackSpeed){
-            Gdx.app.log("ActionManager", "Making an attack for index: " + currentAttackerPiece);
             GamePiece attackPiece = attackingUnits.get(currentAttackerPiece);
             if (attackPiece.isDead()) {
                 currentAttackerPiece++;
@@ -222,7 +221,6 @@ public class ActionManager {
      * Resets the action queue after all actions have been resolved
      */
     private void resetActionQueue() {
-        Gdx.app.log("ActionManager", "Finished with Resolving actions, moving to Attack Phase");
         turnNumber++;
         // TODO: Sound when it moves to Attack phase
         phase = Phase.Attack;

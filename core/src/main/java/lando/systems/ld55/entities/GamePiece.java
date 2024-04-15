@@ -501,7 +501,6 @@ public class GamePiece {
 
         bloodDuration -= dt;
         if (bloodDuration < 0) return;
-        Gdx.app.log("test", ""+bloodDuration);
 
         GameScreen.particles.bloodFountain(position.x, position.y + bounds.height / 2);
     }

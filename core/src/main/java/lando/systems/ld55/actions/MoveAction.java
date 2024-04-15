@@ -33,7 +33,6 @@ public class MoveAction extends ActionBase {
         if (targetTile == null){
             Gdx.app.log("MoveAction", "TargetTile was null");
         }
-        Gdx.app.log("MoveAction", "Move action crated");
         this.piece = piece;
         this.targetTile = targetTile;
         this.board = board;
