@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.entities.GameBoard;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
+import lando.systems.ld55.ui.MovementBreadcrumb;
 
 public class MoveAction extends ActionBase {
 
@@ -23,6 +25,7 @@ public class MoveAction extends ActionBase {
     float blockAccum;
     Vector2 startMovePos = new Vector2();
     Vector2 targetMove = new Vector2();
+    Array<MovementBreadcrumb> breadcrumbArray = new Array<>();
 
     public MoveAction(GameBoard board, GamePiece piece, GameTile targetTile) {
         if (targetTile == null){
@@ -48,6 +51,8 @@ public class MoveAction extends ActionBase {
 
     @Override
     public void update(float dt) {
+        walkBreadCrumbChain();
+
         if (blocked) {
             blockAccum += dt;
             if (blockAccum > GamePiece.moveSeconds){
@@ -115,6 +120,25 @@ public class MoveAction extends ActionBase {
         int nextY = (int)Math.signum(targetTile.y - piece.currentTile.y) + piece.currentTile.y;
         nextTile = board.getTileAt(nextX, nextY);
 
+    }
+
+
+    private void walkBreadCrumbChain() {
+        breadcrumbArray.clear();
+        int dX = (int)Math.signum(targetTile.x - piece.currentTile.x);
+        int dY = (int)Math.signum(targetTile.y - piece.currentTile.y);
+        int nextX = dX + piece.currentTile.x;
+        int nextY = dY + piece.currentTile.y;
+        GameTile t = board.getTileAt(nextX, nextY);
+        breadcrumbArray.add(new MovementBreadcrumb(t, dX, dY));
+        while (dX != 0 || dY != 0) {
+            dX = (int)Math.signum(targetTile.x - nextX);
+            dY = (int)Math.signum(targetTile.y - nextY);
+            nextX = dX + nextX;
+            nextY = dY + nextY;
+            t = board.getTileAt(nextX, nextY);
+            breadcrumbArray.add(new MovementBreadcrumb(t, dX, dY));
+        }
     }
 
     Vector2 startPos = new Vector2();

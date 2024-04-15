@@ -13,6 +13,7 @@ import lando.systems.ld55.entities.EnemyAI;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.TileOverlayInfo;
 import lando.systems.ld55.screens.GameScreen;
+import lando.systems.ld55.ui.MovementBreadcrumb;
 
 import java.util.List;
 
@@ -186,6 +187,17 @@ public class ActionManager {
         }
 
 
+    }
+
+    Array<Array<MovementBreadcrumb>> breadcrumbLists;
+    public Array<Array<MovementBreadcrumb>> getActiveMoveLists() {
+        breadcrumbLists.clear();
+        for (ActionBase action : actionQueue) {
+            if (action instanceof MoveAction){
+                breadcrumbLists.add(((MoveAction)action).breadcrumbArray);
+            }
+        }
+        return breadcrumbLists;
     }
 
     /**
