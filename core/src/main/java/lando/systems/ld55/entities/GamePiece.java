@@ -216,11 +216,23 @@ public class GamePiece {
         isAttacking = true;
 
         switch (type) {
+            case Pawn:
+                GameScreen.particles.spawnSwordSlash(position.x, position.y + 5f, attackedPiece.position.x, attackedPiece.position.y + 5f);
+                break;
+            case Knight:
+                GameScreen.particles.spawnSwordSlash(position.x, position.y + 5f, attackedPiece.position.x, attackedPiece.position.y + 5f);
+                break;
+            case Rook:
+                GameScreen.particles.spawnArrow(position.x, position.y + 5f, attackedPiece.position.x, attackedPiece.position.y + 5f);
+                break;
             case Queen:
                 GameScreen.particles.spawnMagic(position.x, position.y + 5f, attackedPiece.position.x, attackedPiece.position.y + 5f);
                 break;
             case Bishop:
                 GameScreen.particles.spawnFireball(position.x, position.y + 5f, attackedPiece.position.x, attackedPiece.position.y + 5f);
+                break;
+            default:
+                GameScreen.particles.spawnSwordSlash(position.x, position.y + 5f, attackedPiece.position.x, attackedPiece.position.y + 5f);
                 break;
         }
     }
