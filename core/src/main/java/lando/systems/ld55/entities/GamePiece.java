@@ -36,10 +36,10 @@ public class GamePiece {
         Bishop(3, 2,
             Direction.TopRight | Direction.BottomRight,
             Direction.TopRight | Direction.BottomRight),
-        Rook(4, 2,
+        Rook(4, 3,
             Direction.Top | Direction.Right | Direction.Bottom | Direction.Left,
             Direction.Top | Direction.Right | Direction.Bottom | Direction.Left),
-        Queen(5, 3,
+        Queen(5, 4,
             Direction.TopLeft | Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom | Direction.BottomLeft | Direction.Left,
             Direction.TopLeft | Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom | Direction.BottomLeft | Direction.Left);
 

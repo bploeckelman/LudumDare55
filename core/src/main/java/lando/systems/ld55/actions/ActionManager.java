@@ -24,7 +24,7 @@ import java.util.List;
 public class ActionManager {
     public static final float AttackSpeed = 1f;
     public enum Phase {CollectActions, ResolveActions, Attack}
-    public static final int MIN_ACTION_POINTS = 2;
+    public static final int MIN_ACTION_POINTS = 3;
     public static final int MAX_ACTION_POINTS = 10;
     public static int ActionsPerTurn = MIN_ACTION_POINTS;
 
