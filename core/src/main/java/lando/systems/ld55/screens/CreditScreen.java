@@ -87,8 +87,9 @@ public class CreditScreen extends BaseScreen {
 
     @Override
     public void update(float dt) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) || Gdx.input.isTouched()) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) || Gdx.input.isTouched() || !exitingScreen) {
             if (accum > 2f) {
+                exitingScreen = true;
                 game.setScreen(new TitleScreen());
                 return;
             }
