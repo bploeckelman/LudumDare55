@@ -127,14 +127,14 @@ public class MoveAction extends ActionBase {
         int dY = (int)Math.signum(targetTile.y - piece.currentTile.y);
         int nextX = dX + piece.currentTile.x;
         int nextY = dY + piece.currentTile.y;
-        GameTile t = board.getTileAt(nextX, nextY);
+        GameTile t = piece.currentTile;
         breadcrumbArray.add(new MovementBreadcrumb(t, dX, dY));
         while (dX != 0 || dY != 0) {
+            t = board.getTileAt(nextX, nextY);
             dX = (int)Math.signum(targetTile.x - nextX);
             dY = (int)Math.signum(targetTile.y - nextY);
             nextX = dX + nextX;
             nextY = dY + nextY;
-            t = board.getTileAt(nextX, nextY);
             breadcrumbArray.add(new MovementBreadcrumb(t, dX, dY));
         }
     }
