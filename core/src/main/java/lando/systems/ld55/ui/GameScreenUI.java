@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -45,6 +46,12 @@ public class GameScreenUI {
             screen.assets.atlas.findRegion("icons/finish-turn-btn-hovered"),
             screen.assets.atlas.findRegion("icons/finish-turn-btn-pressed"),
             screen.assets.atlas.findRegion("icons/finish-turn-btn-disabled"));
+        endTurnButton.boundsPolygon = new Polygon(new float[]{
+            15, 135,
+            98, 135,
+            220, 10,
+            15, 10,
+        });
         endTurnButton.onClick = () -> {
             EnemyAI.doTurn(screen.gameBoard);
             screen.actionManager.endTurn();

@@ -67,6 +67,7 @@ public class GameScreen extends BaseScreen{
     }
 
     public void update(float dt) {
+        particles.update(dt);
         if (settingsUI.isSettingShown) {
             uiStage.act(dt);
             return;
@@ -85,7 +86,6 @@ public class GameScreen extends BaseScreen{
             Gdx.app.exit();
         }
         gameBoard.update(dt);
-        particles.update(dt);
         actionManager.update(dt);
         ui.update(dt);
 

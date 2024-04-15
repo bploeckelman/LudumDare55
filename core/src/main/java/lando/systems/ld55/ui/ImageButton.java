@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -21,6 +22,7 @@ public class ImageButton {
     public TextureRegion keyframe;
     public Rectangle bounds;
     public Circle boundsCircle;
+    public Polygon boundsPolygon;
     public Color color;
 
     public Runnable onClick = null;
@@ -67,7 +69,10 @@ public class ImageButton {
 
         disabled = isDisabled;
         if (!disabled) {
-            if (boundsCircle.contains(touchPos.x, touchPos.y)) {
+            if (boundsPolygon != null && boundsPolygon.contains(touchPos.x, touchPos.y)) {
+                pressed = isPressed;
+                hovered = !pressed;
+            } else if (boundsCircle.contains(touchPos.x, touchPos.y)) {
                 pressed = isPressed;
                 hovered = !pressed;
             }
