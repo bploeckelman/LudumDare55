@@ -26,27 +26,43 @@ public class EnemyAI {
             }
         }
 
+        int enemyCount = enemyPieces.size;
+        int playerCount = playerPieces.size;
+        int failsafe = 0;
         // Spawn things
-        if (enemyPieces.size <= playerPieces.size) {
+        while (actions > 0 && enemyCount <= playerCount && failsafe < 100)
+        {
+            failsafe++;
             GameTile summonTile = tryToFindSpawnTile(board);
             if (summonTile != null) {
-                board.gameScreen.actionManager.addAction(new SpawnAction(board,
-                    GamePiece.getGamePiece(Main.game.assets, GamePiece.Type.Pawn, GamePiece.Owner.Enemy), summonTile));
+                GamePiece.Type type = GamePiece.Type.random();
+                if (type.actionsToSpawn <= actions) {
+                    board.gameScreen.actionManager.addAction(new SpawnAction(board,
+                        GamePiece.getGamePiece(Main.game.assets, type, GamePiece.Owner.Enemy), summonTile));
+                    actions -= type.actionsToSpawn;
+                    enemyCount++;
+                }
             }
         }
 
-        // Try to move around randomly
-        if (enemyPieces.size > 0) {
-            GamePiece movePiece = enemyPieces.random();
-            if (movePiece.currentAction instanceof MoveAction) {
-                ActionBase a = movePiece.currentAction;
-                board.gameScreen.actionManager.removeAction(a);
-                movePiece.currentAction = null;
+        for (int i = 0; i < actions; i++) {
+            // Try to move around randomly
+            if (enemyPieces.size > 0) {
+                GamePiece movePiece = enemyPieces.random();
+                if (movePiece.currentAction instanceof MoveAction) {
+                    if (MathUtils.randomBoolean(.2f)) {
+                        ActionBase a = movePiece.currentAction;
+                        board.gameScreen.actionManager.removeAction(a);
+                        movePiece.currentAction = null;
+                    } else {
+                        continue;
+                    }
+                }
+                movePiece.moveTiles.clear();
+                movePiece.addMoveTiles(board);
+                GameTile moveTile = movePiece.moveTiles.random();
+                board.gameScreen.actionManager.addAction(new MoveAction(board, movePiece, moveTile));
             }
-            movePiece.moveTiles.clear();
-            movePiece.addMoveTiles(board);
-            GameTile moveTile = movePiece.moveTiles.random();
-            board.gameScreen.actionManager.addAction(new MoveAction(board, movePiece, moveTile));
         }
 
     }

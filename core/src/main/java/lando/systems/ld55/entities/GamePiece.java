@@ -20,15 +20,17 @@ import lando.systems.ld55.ui.HealthBar;
 public class GamePiece {
     public enum Owner {Player, Enemy}
     public enum Type {
-        Pawn(1),
-        Knight(2),
-        Bishop(3),
-        Rook(4),
-        Queen(5);
+        Pawn(1, 1),
+        Knight(2, 1),
+        Bishop(3, 2),
+        Rook(4, 2),
+        Queen(5, 3);
 
         public int defaultMaxHealth; //called default Max Health because they can potentially be leveled up
-        Type(int defaultMaxHealth) {
+        public int actionsToSpawn;
+        Type(int defaultMaxHealth, int actionsToSpawn) {
             this.defaultMaxHealth = defaultMaxHealth;
+            this.actionsToSpawn = actionsToSpawn;
         }
 
         public static Type random() {
