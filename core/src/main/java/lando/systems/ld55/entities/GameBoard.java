@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -25,7 +24,6 @@ import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.screens.GameScreen;
 import lando.systems.ld55.ui.ActionQueueUI;
 import lando.systems.ld55.ui.radial.RadialMenu;
-import lando.systems.ld55.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -228,7 +226,7 @@ public class GameBoard extends InputAdapter {
         return getTileAt(tile.x + offsetX, tile.y + offsetY);
     }
 
-    public List<TileOverlayInfo> getTileOverlaysForPattern(GameTile center, Pattern pattern) {
+    public List<TileOverlayInfo> getAttackTileOverlays(GameTile center, Pattern pattern) {
         var overlays = new ArrayList<TileOverlayInfo>();
 
         var centerIndex = Pattern.size / 2;
@@ -252,13 +250,17 @@ public class GameBoard extends InputAdapter {
 
                 var tile = getTileRelative(center, offsetX, offsetY);
                 if (tile != null) {
-                    var anim = gameScreen.assets.numbers.get(damage);
-                    var region = MathUtils.randomBoolean() ? TileOverlayAssets.getRandomArrow() : TileOverlayAssets.getRandomRegion();
+                    var color = TileOverlayAssets.getColorForDamageAmount(damage);
+                    var patch = TileOverlayAssets.getPatchForDamageAmount(damage);
+                    var region = TileOverlayAssets.tags.get(damage);
                     var overlay = new TileOverlayInfo(tile, damage)
-                        .addLayer("base-panel", 1f, 1, 1, 1, 0.5f, TileOverlayAssets.getRandomPatch(), null, null)
-//                        .addLayer("icon", 0.5f, Utils.randomColor(), null, region, null)
-                        .addLayer("dmg", 0.33f, Utils.randomColor(), null, null, anim);
+                        .addLayer("base-panel", 0.9f, 1, 1, 1, 0.5f, patch, null, null)
+                        .addLayer("icon-damage", 0.8f, Color.WHITE, 0.9f, null, region, null)
+                        .addLayer("icon-sword", 0.5f, color, 1f, null, TileOverlayAssets.sword, null)
                         ;
+                    var sword = overlay.findLayer("icon-sword");
+                    sword.bounds.x += 0;
+                    sword.bounds.y += 0;
                     overlays.add(overlay);
                 }
             }
@@ -296,12 +298,20 @@ public class GameBoard extends InputAdapter {
         var tile = getTileAtScreenPos(screenPosition);
         if (tile != null && tile.valid) {
             if (tile != hoverTile) {
-                tileOverlays = getTileOverlaysForPattern(tile, currentPattern);
+                // hovering a new tile
+                attackTileOverlays.clear();
+
+                // if a creature is on it, generate attack overlays
+                var piece = getGamePiece(tile);
+                if (piece != null) {
+                    var overlays = getAttackTileOverlays(tile, piece.pattern);
+                    attackTileOverlays.addAll(overlays);
+                }
             }
             hoverTile = tile;
         } else {
+            attackTileOverlays.clear();
             hoverTile = null;
-            tileOverlays.clear();
         }
 
         // Check here for action hover

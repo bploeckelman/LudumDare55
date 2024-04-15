@@ -152,7 +152,7 @@ public class ActionManager {
             }
             int maxDamage = 0;
             attackablePieces.clear();
-            List<TileOverlayInfo> attackTiles = gameScreen.gameBoard.getTileOverlaysForPattern(attackPiece.currentTile, attackPiece.pattern);
+            List<TileOverlayInfo> attackTiles = gameScreen.gameBoard.getAttackTileOverlays(attackPiece.currentTile, attackPiece.pattern);
             for (GamePiece p : gameScreen.gameBoard.gamePieces){
                 if (p.owner != attackPiece.owner && !p.isDead()){
                     for (TileOverlayInfo tileInfo : attackTiles){

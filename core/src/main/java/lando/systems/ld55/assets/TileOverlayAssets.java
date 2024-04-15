@@ -1,5 +1,6 @@
 package lando.systems.ld55.assets;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -42,6 +43,7 @@ public class TileOverlayAssets {
 
     public static NinePatch panelWhite;
     public static NinePatch panelRed;
+    public static NinePatch panelOrange;
     public static NinePatch panelGreen;
     public static NinePatch panelBlue;
     public static NinePatch panelYellow;
@@ -76,13 +78,15 @@ public class TileOverlayAssets {
         laurel      = atlas.findRegion("icons/kenney-board-game/award");
 
         tags = new Array<>();
-        for (int i = 1; i <= 10; i++) {
-            tags.add(atlas.findRegion("icons/kenney-board-game/tag_" + i));
+        for (int i = 0; i <= 10; i++) {
+            var tag = atlas.findRegion("icons/kenney-board-game/tag" + i);
+            tags.add(tag);
         }
 
         var margin = 10;
         panelWhite  = new NinePatch(atlas.findRegion("icons/kenney-ui/grey_panel"), margin, margin, margin, margin);
         panelRed    = new NinePatch(atlas.findRegion("icons/kenney-ui/red_panel"), margin, margin, margin, margin);
+        panelOrange = new NinePatch(atlas.findRegion("icons/kenney-ui/orange_panel"), margin, margin, margin, margin);
         panelGreen  = new NinePatch(atlas.findRegion("icons/kenney-ui/green_panel"), margin, margin, margin, margin);
         panelBlue   = new NinePatch(atlas.findRegion("icons/kenney-ui/blue_panel"), margin, margin, margin, margin);
         panelYellow = new NinePatch(atlas.findRegion("icons/kenney-ui/yellow_panel"), margin, margin, margin, margin);
@@ -101,6 +105,20 @@ public class TileOverlayAssets {
             case End: return dot;
             default: return question;
         }
+    }
+
+    public static NinePatch getPatchForDamageAmount(int damage) {
+        if      (damage >= 3) return panelRed;
+        else if (damage >  1) return panelOrange;
+        else if (damage >  0) return panelYellow;
+        else                  return panelWhite;
+    }
+
+    public static Color getColorForDamageAmount(int damage) {
+        if      (damage >= 3) return Color.RED;
+        else if (damage >  1) return Color.ORANGE;
+        else if (damage >  0) return Color.YELLOW;
+        else                  return Color.WHITE;
     }
 
     // testing... -----------------------------------------
