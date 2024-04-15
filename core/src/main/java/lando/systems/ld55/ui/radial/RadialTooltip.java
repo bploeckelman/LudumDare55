@@ -37,6 +37,7 @@ public class RadialTooltip {
 
     public void render(SpriteBatch batch) {
         if (button instanceof RadialSummonButton) {
+            assets.font.setColor(Color.WHITE);
             GamePiece.Type type = ((RadialSummonButton) button).pieceType;
             Assets.NinePatches.glass_blue.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
             Animation<TextureRegion> charAnimation = assets.getAnimation(type, GamePiece.Owner.Player);

@@ -60,12 +60,16 @@ public class RadialButton {
         float textWidth = radius + radius - 10;
 
 
-        font.getData().setScale(radius/MAX_RADIUS);
-        layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
-        font.getData().setScale((radius/MAX_RADIUS * textWidth)/layout.width);
-        layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
-        font.draw(batch, text, centerPosition.x - radius, centerPosition.y + layout.height/2f, radius +radius, Align.center, true);
-        font.getData().setScale(1f);
+        if (!text.isEmpty()) {
+            font.getData().setScale(radius / MAX_RADIUS);
+            layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
+            font.getData().setScale((radius / MAX_RADIUS * textWidth) / layout.width);
+            layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
+            font.draw(batch, text, centerPosition.x - radius, centerPosition.y + layout.height / 2f, radius + radius, Align.center, true);
+            font.getData().setScale(1f);
+        }
+
+        batch.setColor(Color.WHITE);
     }
 
     Vector2 click = new Vector2();

@@ -57,6 +57,7 @@ public class EnemyAI {
                         ActionBase a = movePiece.currentAction;
                         board.gameScreen.actionManager.removeAction(a);
                         movePiece.currentAction = null;
+                        actions--;
                     } else {
                         continue;
                     }
@@ -65,7 +66,10 @@ public class EnemyAI {
                 movePiece.addMoveTiles(board);
                 if (movePiece.moveTiles.size > 0) {
                     GameTile moveTile = movePiece.moveTiles.random();
-                    board.gameScreen.actionManager.addAction(new MoveAction(board, movePiece, moveTile));
+                    if (moveTile.x < movePiece.currentTile.x || MathUtils.randomBoolean(.1f)) {
+                        board.gameScreen.actionManager.addAction(new MoveAction(board, movePiece, moveTile));
+                        actions--;
+                    }
                 }
             }
         }

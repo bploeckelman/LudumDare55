@@ -50,6 +50,9 @@ public class CreditScreen extends BaseScreen {
     public CreditScreen() {
         super();
 
+        assets.fontZektonSmall.setColor(Color.WHITE);
+        assets.fontZektonSmall.getData().setScale(1f);
+
         titleLabel = new TypingLabel(assets.fontZektonSmall, title, 0f, Config.Screen.window_height - 20f);
         titleLabel.setWidth(Config.Screen.window_width);
         titleLabel.setFontScale(1f);
