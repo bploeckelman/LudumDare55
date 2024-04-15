@@ -1,5 +1,6 @@
 package lando.systems.ld55.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -257,6 +258,8 @@ public class GamePiece {
         if (currentAction != null && currentAction.isCompleted()){
             currentAction = null;
         }
+
+        adjustFocus(dt);
         healthBar.updateCurrentHealth(currentHealth);
     }
 
@@ -282,7 +285,8 @@ public class GamePiece {
         if (currentAction != null && currentAction instanceof MoveAction) {
             currentAction.render(batch);
         }
-        healthBar.render(batch);
+
+        healthBar.render(batch, healthAlpha);
         //TEST
 //        if (isAttacking){
 //            batch.setColor(Color.RED);
@@ -365,5 +369,22 @@ public class GamePiece {
 
     private boolean hasDirection(int direction) {
         return (directions & direction) == direction;
+    }
+
+    private float healthAlpha = 0;
+    private boolean hasFocus = false;
+    public void setFocus(boolean focus) {
+        hasFocus = focus;
+    }
+
+    private void adjustFocus(float dt) {
+        if (!hasFocus) {
+            dt = -dt * 2;
+        } else {
+            dt *= 4;
+        }
+
+        float alpha = healthAlpha + dt;
+        healthAlpha = MathUtils.clamp(alpha, 0f, 1f);
     }
 }

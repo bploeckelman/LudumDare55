@@ -49,35 +49,35 @@ public class HealthBar {
         updatePosition(barBounds.x, barBounds.y);
     }
 
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch, float alpha) {
         float borderX = barBounds.x;
         float borderY = barBounds.y;
         float borderWidth = barBounds.width;
         float borderHeight = barBounds.height;
-        batch.setColor(Color.WHITE);
+        batch.setColor(Color.WHITE.r, Color.WHITE.g, Color.WHITE.b, alpha);
         batch.draw(boxBorder, borderX, borderY, borderWidth, borderHeight);
 
         // Draw health boxes
         for (int i = 0; i < maxHealth; i++) {
             float boxX = barBounds.x + BOX_BORDER_SIZE + i * (boxWidth - BOX_BORDER_SIZE);
             boolean isFilled = i < currentHealth;
-            drawBox(batch, boxX, barBounds.y + BOX_BORDER_SIZE, isFilled);
+            drawBox(batch, boxX, barBounds.y + BOX_BORDER_SIZE, isFilled, alpha);
         }
         batch.setColor(Color.WHITE);
     }
 
-    private void drawBox(SpriteBatch batch, float x, float y, boolean filled) {
+    private void drawBox(SpriteBatch batch, float x, float y, boolean filled, float alpha) {
         // Draw black border
-        batch.setColor(Color.BLACK);
+        batch.setColor(0, 0, 0, alpha);
         batch.draw(boxBorder, x, y, boxWidth, boxHeight);
 
         if (filled) {
             if (currentHealth <= maxHealth / 3f || (currentHealth <= 1 && maxHealth > 1)) {
-                batch.setColor(0.8f, 0.1f, 0.1f, 1f);  // Red color
+                batch.setColor(0.8f, 0.1f, 0.1f, alpha);  // Red color
             } else if (currentHealth < maxHealth * 2f / 3f) {
-                batch.setColor(0.8f, 0.8f, 0.1f, 1f);  // Yellow color
+                batch.setColor(0.8f, 0.8f, 0.1f, alpha);  // Yellow color
             } else {
-                batch.setColor(0.1f, 0.8f, 0.1f, 1f);  // Green color
+                batch.setColor(0.1f, 0.8f, 0.1f, alpha);  // Green color
             }
             batch.draw(boxFill, x + BOX_BORDER_SIZE, y + BOX_BORDER_SIZE, boxWidth - 2 * BOX_BORDER_SIZE, boxHeight - 2 * BOX_BORDER_SIZE);
             batch.setColor(1f, 1f, 1f, 1f);

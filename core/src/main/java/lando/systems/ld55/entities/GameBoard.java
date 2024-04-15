@@ -282,6 +282,8 @@ public class GameBoard extends InputAdapter {
         return null;
     }
 
+    private GamePiece focusPiece;
+
     public void update(float dt) {
         if (gameScreen.gameOver) { return; }
 
@@ -298,13 +300,20 @@ public class GameBoard extends InputAdapter {
         screenPosition.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         var tile = getTileAtScreenPos(screenPosition);
         if (tile != null && tile.valid) {
+            var piece = getGamePiece(tile);
+            setFocus(piece);
             if (tile != hoverTile) {
                 // hovering a new tile
                 attackTileOverlays.clear();
+                if (focusPiece != null) {
+                    focusPiece.setFocus(false);
+                }
 
                 // if a creature is on it, generate attack overlays
-                var piece = getGamePiece(tile);
+
                 if (piece != null) {
+                    focusPiece = piece;
+                    piece.setFocus(true);
                     var overlays = getAttackTileOverlays(tile, piece.pattern);
                     attackTileOverlays.addAll(overlays);
                 }
@@ -352,6 +361,18 @@ public class GameBoard extends InputAdapter {
             radialMenu.update(dt);
             if (radialMenu.menuComplete()) {
                 radialMenu = null;
+            }
+        }
+    }
+
+    private void setFocus(GamePiece piece) {
+        if (focusPiece != piece) {
+            if (focusPiece != null) {
+                focusPiece.setFocus(false);
+            }
+            focusPiece = piece;
+            if (focusPiece != null) {
+                focusPiece.setFocus(true);
             }
         }
     }
