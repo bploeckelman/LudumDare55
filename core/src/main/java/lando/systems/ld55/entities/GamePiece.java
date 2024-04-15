@@ -166,10 +166,14 @@ public class GamePiece {
         return currentHealth <= 0;
     }
 
-    public void takeDamage(int amount) {
+    public void takeDamage(int amount, GameBoard board) {
         currentHealth -= amount;
         // TODO: make something cool happen here, health bar floats away as a particle maybe?
         healthBar.updateCurrentHealth(currentHealth);
+        if (currentHealth <= 0 && currentAction != null){
+            board.gameScreen.actionManager.removeAction(currentAction);
+            currentAction = null;
+        }
     }
 
     public void attack(GamePiece attackedPiece) {
@@ -311,7 +315,7 @@ public class GamePiece {
         return yAdjust * MathUtils.sin(anim);
     }
 
-    private void addMoveTiles(GameBoard gameBoard) {
+    public void addMoveTiles(GameBoard gameBoard) {
         if (currentTile == null) { return; }
 
         for (int i = 0; i < maxMovement; i++) {
