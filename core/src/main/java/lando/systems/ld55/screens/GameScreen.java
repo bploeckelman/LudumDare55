@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -131,22 +132,27 @@ public class GameScreen extends BaseScreen{
 
             font = assets.font;
             var phase = actionManager.getCurrentPhase();
-            var turnLabel = "Turn: " + (actionManager.getTurnNumber() +1);
             var phaseLabel = "Ohh Ohh";
             switch(phase){
                 case CollectActions: phaseLabel = "Planning"; break;
                 case ResolveActions: phaseLabel = "Resolving Actions"; break;
                 case Attack:         phaseLabel = "Attacking"; break;
             }
-            phaseLabel = "Phase: " + phaseLabel;
+            phaseLabel = phaseLabel + " Phase";
+            var actionsPlural = actionManager.playerActionsAvailable == 1 ? "" : "s";
+            var actionsRemainingLabel = actionManager.playerActionsAvailable + " Action" + actionsPlural + " Remaining";
+            var turnLabel = "Turn: " + (actionManager.getTurnNumber() +1);
 
-            font.getData().setScale(.5f);
+            font.getData().setScale(.40f);
             {
-                layout.setText(font, phaseLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+                layout.setText(font, actionsRemainingLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
                 font.draw(batch, layout, 0, windowCamera.viewportHeight - 20);
 
-                layout.setText(font, turnLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+                layout.setText(font, phaseLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
                 font.draw(batch, layout, 0, windowCamera.viewportHeight - 40);
+
+                layout.setText(font, turnLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+                font.draw(batch, layout, 0, windowCamera.viewportHeight - 60);
             }
             font.getData().setScale(1f);
 

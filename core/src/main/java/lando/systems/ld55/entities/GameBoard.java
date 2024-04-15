@@ -360,18 +360,8 @@ public class GameBoard extends InputAdapter {
 
         // Ony draw when we are in planning mode
         if (gameScreen.actionManager.getCurrentPhase() == ActionManager.Phase.CollectActions) {
-            for (GameTile t : tiles) {
-                if (t.summonable){
-                    var texture = gameScreen.assets.whitePixel;
-                    var alpha = 0.4f;
-                    var bounds = t.bounds;
-                    var color = Color.CYAN;
-                    batch.setColor(color.r, color.g, color.b, alpha);
-                    batch.draw(texture, bounds.x, bounds.y, bounds.width, bounds.height);
-                }
-            }
-
             // draw tile overlays
+            batch.setColor(1, 1, 1, 1);
             spawnTileOverlays.forEach(overlay -> overlay.render(batch));
             goalTileOverlays.forEach(overlay -> overlay.render(batch));
             moveTileOverlays.forEach(overlay -> overlay.render(batch));
@@ -452,7 +442,7 @@ public class GameBoard extends InputAdapter {
                     var panelAlpha = isRadialMenuTarget ? 0.8f : 0.5f;
                     var panelPatch = isRadialMenuTarget ? TileOverlayAssets.panelGreen : TileOverlayAssets.panelBlue;
                     spawnTileOverlays.add(new TileOverlayInfo(tile, 0)
-                        .addLayer("base-panel", 1f, 1, 1, 1, panelAlpha, panelPatch, null, null)
+                        .addLayer("base-panel", 0.75f, 1, 1, 1, panelAlpha, panelPatch, null, null)
                         .addLayer("icon", 0.66f, Color.WHITE, null, TileOverlayAssets.pawnUp, null)
                     );
                 }
