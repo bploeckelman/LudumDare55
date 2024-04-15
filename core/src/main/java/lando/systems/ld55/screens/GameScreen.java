@@ -13,9 +13,12 @@ import lando.systems.ld55.Config;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.Stats;
 import lando.systems.ld55.actions.ActionManager;
+import lando.systems.ld55.assets.TileOverlayAssets;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
+import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.StyleManager;
+import lando.systems.ld55.entities.TileOverlayInfo;
 import lando.systems.ld55.particles.Particles;
 import lando.systems.ld55.ui.GameScreenUI;
 import lando.systems.ld55.ui.SettingsUI;
@@ -199,5 +202,19 @@ public class GameScreen extends BaseScreen{
         gameOver = true;
         this.win = win;
         particles.gameOver(win);
+    }
+
+    public void showAttack(GamePiece attacker, GamePiece defender) {
+        var attackActionOverlay = gameBoard.attackActionOverlay;
+        attackActionOverlay.clear();
+        attackActionOverlay.add(new TileOverlayInfo(attacker.currentTile, 0)
+            .addLayer("attacker", 1f, Color.RED, 0.5f, TileOverlayAssets.panelWhite, null, null));
+
+        attackActionOverlay.add(new TileOverlayInfo(defender.currentTile, 0)
+            .addLayer("defender", 1f, Color.WHITE, 0.7f, TileOverlayAssets.panelWhite, null, null));
+    }
+
+    public void clearAttack() {
+        gameBoard.attackActionOverlay.clear();
     }
 }

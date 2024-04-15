@@ -116,6 +116,7 @@ public class ActionManager {
      * Add Enemy actions to the queue before calling this
      */
     public void endTurn() {
+        gameScreen.clearAttack();
         if (phase != Phase.CollectActions) {
             Gdx.app.log("ActionManager", "Calling end turn when not in the right phase");
             return;
@@ -183,6 +184,7 @@ public class ActionManager {
                 attackAccum = 0;
                 final GamePiece damagedPiece = attackablePieces.random();
                 attackPiece.attack(damagedPiece);
+                gameScreen.showAttack(attackPiece, damagedPiece);
 
                 int finalMaxDamage = maxDamage;
                 Timeline.createSequence()
