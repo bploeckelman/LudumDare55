@@ -11,7 +11,7 @@ import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.GameTile;
 
 public class RadialSummonButton extends RadialButton {
-    GamePiece.Type pieceType;
+    public GamePiece.Type pieceType;
     GameBoard board;
     GameTile summonTile;
 

@@ -25,17 +25,31 @@ public class GamePiece {
         }
     }
     public enum Type {
-        Pawn(1, 1),
-        Knight(2, 1),
-        Bishop(3, 2),
-        Rook(4, 2),
-        Queen(5, 3);
+        Pawn(1, 1,
+            Direction.Top | Direction.Right | Direction.Bottom,
+            Direction.Top | Direction.Left | Direction.Bottom),
+        Knight(2, 1,
+            Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom,
+            Direction.Top | Direction.TopLeft | Direction.Left | Direction.BottomLeft | Direction.Bottom),
+        Bishop(3, 2,
+            Direction.TopRight | Direction.BottomRight,
+            Direction.TopRight | Direction.BottomRight),
+        Rook(4, 2,
+            Direction.Top | Direction.Right | Direction.Bottom | Direction.Left,
+            Direction.Top | Direction.Right | Direction.Bottom | Direction.Left),
+        Queen(5, 3,
+            Direction.TopLeft | Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom | Direction.BottomLeft | Direction.Left,
+            Direction.TopLeft | Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom | Direction.BottomLeft | Direction.Left);
 
-        public int defaultMaxHealth; //called default Max Health because they can potentially be leveled up
-        public int actionsToSpawn;
-        Type(int defaultMaxHealth, int actionsToSpawn) {
+        public final int defaultMaxHealth; //called default Max Health because they can potentially be leveled up
+        public final int actionsToSpawn;
+        public final int directionPlayer;
+        public final int directionEnemy;
+        Type(int defaultMaxHealth, int actionsToSpawn, int directionPlayer, int directionEnemy) {
             this.defaultMaxHealth = defaultMaxHealth;
             this.actionsToSpawn = actionsToSpawn;
+            this.directionPlayer = directionPlayer;
+            this.directionEnemy = directionEnemy;
         }
 
         public static Type random() {
@@ -51,41 +65,32 @@ public class GamePiece {
     public static GamePiece getGamePiece(Assets assets, Type type, Owner owner) {
         // for now choose alignment based on owner
         var alignment = owner == Owner.Player ? 0 : 1;
-        var direction = Direction.Left;
         var movement = 0;
         var maxHealth = type.defaultMaxHealth;
+        var direction = (owner == Owner.Player)
+            ? type.directionPlayer
+            : type.directionEnemy;
         Array<Animation<TextureRegion>> animGroup;
         switch (type) {
             case Knight:
                 animGroup = assets.knight.get(alignment);
-                direction = (owner == Owner.Player)
-                    ? Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom
-                    : Direction.Top | Direction.TopLeft | Direction.Left | Direction.BottomLeft | Direction.Bottom;
                 movement = 6;
                 break;
             case Bishop:
                 animGroup = assets.bishop.get(alignment);
-                direction = (owner == Owner.Player)
-                    ? Direction.TopRight | Direction.BottomRight
-                    : Direction.TopLeft | Direction.BottomLeft;
                 movement = 10;
                 break;
             case Rook:
                 animGroup = assets.rook.get(alignment);
-                direction = Direction.Top | Direction.Right | Direction.Bottom | Direction.Left;
                 movement = 10;
                 break;
             case Queen:
                 animGroup = assets.queen.get(alignment);
-                direction = Direction.TopLeft | Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom | Direction.BottomLeft | Direction.Left;
                 movement = 10;
                 break;
             case Pawn:
             default:
                 animGroup = assets.pawn.get(alignment);
-                direction = (owner == Owner.Player)
-                    ? Direction.Top | Direction.Right | Direction.Bottom
-                    : Direction.Top | Direction.Left | Direction.Bottom;
                 movement = 4;
                 break;
         }

@@ -25,7 +25,10 @@ public class RadialMenu {
     private Array<RadialButton> buttons;
     private Interpolation interpolation = Interpolation.swingOut;
 
+    private RadialTooltip tooltip;
+
     public RadialMenu(GameBoard board, GameTile tile, GamePiece piece, MenuType type) {
+        tooltip = new RadialTooltip();
         buttons = new Array<>();
         targetProgress = 1f;
         currentProgress = 0;
@@ -66,6 +69,7 @@ public class RadialMenu {
     Vector2 centerVec2 = new Vector2();
     public void update(float dt) {
         board.gameScreen.actionManager.tempActionPointsUsed(0);
+        tooltip.setRadialButton(null);
         float windowDelta = dt/TIME_TO_OPEN;
         if (targetProgress < currentProgress) {
             // closing
@@ -102,12 +106,15 @@ public class RadialMenu {
             board.gameScreen.worldCamera.unproject(mosPos);
             for (RadialButton button : buttons) {
                 if (button.inButton(mosPos.x, mosPos.y)) {
+                    tooltip.setRadialButton(button);
                     if (button.enabled) {
                         board.gameScreen.actionManager.tempActionPointsUsed(button.pointsUsed);
                     }
                 }
             }
         }
+
+        tooltip.update(dt);
 
     }
 
@@ -142,5 +149,6 @@ public class RadialMenu {
         for (RadialButton button : buttons) {
             button.render(batch);
         }
+        tooltip.render(batch);
     }
 }

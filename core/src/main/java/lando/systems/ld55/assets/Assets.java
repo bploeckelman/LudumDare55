@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.I18NBundle;
 import lando.systems.ld55.Config;
+import lando.systems.ld55.entities.GamePiece;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
@@ -520,5 +521,22 @@ public class Assets implements Disposable {
         animGroup.add(new Animation<>(.15f, atlas.findRegions(portrait), Animation.PlayMode.LOOP));
 
         return animGroup;
+    }
+
+    public Animation<TextureRegion> getAnimation(GamePiece.Type type, GamePiece.Owner owner) {
+        var alignment = owner == GamePiece.Owner.Player ? 0 : 1;
+        switch (type) {
+            case Pawn:
+                return pawn.get(alignment).get(0);
+            case Knight:
+                return knight.get(alignment).get(0);
+            case Bishop:
+                return bishop.get(alignment).get(0);
+            case Rook:
+                return rook.get(alignment).get(0);
+            case Queen:
+                return queen.get(alignment).get(0);
+        }
+        return null;
     }
 }

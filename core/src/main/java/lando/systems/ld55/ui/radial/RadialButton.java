@@ -39,13 +39,8 @@ public class RadialButton {
     }
 
     public void render(SpriteBatch batch) {
-        if(enabled) {
-            batch.setColor(0.35f, 0.45f, 0.45f, 1f);
-        }
-        else {
-            batch.setColor(0.7f, 0.5f, 0.5f, .8f);
-        }
-
+        batch.setColor(0.5f, 0.5f, 0.5f, 1f);
+        if (!enabled) batch.setColor(.3f, .3f, .3f, 1f);
         background.draw(batch,centerPosition.x - radius, centerPosition.y - radius, radius*2f, radius * 2f);
         batch.setColor(1, 1, 1, 1);
 
