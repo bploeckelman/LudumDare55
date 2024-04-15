@@ -23,12 +23,14 @@ import lando.systems.ld55.entities.StyleManager;
 import lando.systems.ld55.entities.StylePiece;
 import lando.systems.ld55.particles.Particles;
 import lando.systems.ld55.ui.GameScreenUI;
+import lando.systems.ld55.ui.SettingsUI;
 
 public class GameScreen extends BaseScreen{
     public GameBoard gameBoard;
     public Particles particles;
     public ActionManager actionManager;
     public GameScreenUI ui;
+    public SettingsUI settingsUI;
     public final StyleManager styleManager = new StyleManager();
     private float gameOverTime = 5;
 
@@ -39,7 +41,9 @@ public class GameScreen extends BaseScreen{
         gameBoard = new GameBoard(this, 22, 10);
         particles = new Particles(assets);
         ui = new GameScreenUI(this);
-        Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard));
+        settingsUI = new SettingsUI(skin, windowCamera);
+        uiStage.addActor(settingsUI);
+        Gdx.input.setInputProcessor(new InputMultiplexer(gameBoard, uiStage));
         Main.game.audioManager.playMusic(AudioManager.Musics.mainMusic);
         setupStyle();
     }
@@ -68,6 +72,11 @@ public class GameScreen extends BaseScreen{
     }
 
     public void update(float dt) {
+        if (settingsUI.isSettingShown) {
+            uiStage.act(dt);
+            return;
+        }
+
         if (gameOver) {
             gameOverTime -= dt;
             if (gameOverTime < 0) {
@@ -89,7 +98,7 @@ public class GameScreen extends BaseScreen{
         var touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         worldCamera.unproject(touchPos);
         if (Gdx.input.justTouched() && gameBoard.hoverTile == null) {
-            particles.portal(touchPos.x, touchPos.y, 20f);
+            particles.levelUpEffect(touchPos.x, touchPos.y);
             Main.game.audioManager.playSound(AudioManager.Sounds.pew);
 //            Main.game.audioManager.playSound(AudioManager.Sounds.error_buzz);
         }
@@ -176,6 +185,10 @@ public class GameScreen extends BaseScreen{
             particles.draw(batch, Particles.Layer.FOREGROUND);
         }
         batch.end();
+
+        if (settingsUI.isSettingShown) {
+            uiStage.draw();
+        }
     }
 
     public boolean gameOver = false;
