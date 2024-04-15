@@ -475,8 +475,10 @@ public class Assets implements Disposable {
         var animGroup = new Array<Animation<TextureRegion>>();
         var idleImage = "characters/" + alignment + "/" + name + "/" + name + "-idle";
         var actionImage = "characters/" + alignment + "/" + name + "/" + name + "-action";
+        var portrait = "characters/" + alignment + "/" + name + "/" + name + "-portrait";
         animGroup.add(new Animation<>(.15f, atlas.findRegions(idleImage), Animation.PlayMode.LOOP));
         animGroup.add(new Animation<>(.15f, atlas.findRegions(actionImage), Animation.PlayMode.NORMAL));
+        animGroup.add(new Animation<>(.15f, atlas.findRegions(portrait), Animation.PlayMode.LOOP));
 
         return animGroup;
     }
