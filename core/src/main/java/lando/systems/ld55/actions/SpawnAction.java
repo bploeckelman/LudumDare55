@@ -13,7 +13,7 @@ import lando.systems.ld55.entities.Portal;
 
 public class SpawnAction extends ActionBase {
 
-    public static final float SummonTime = .5f;
+    public static final float SummonTime = 1f;
 
     private GamePiece gamePiece;
     public GameTile spawnTile;
@@ -72,37 +72,20 @@ public class SpawnAction extends ActionBase {
         }
     }
 
+    // start higher to get cucaracha 1st sooner
+    private int spawnCount = 4;
     private void startSpawn() {
-// moving here for now
-//        Gdx.app.log("cucaracha counter", String.valueOf(board.cucarachaCounter));
-//        if(board.cucarachaCounter >= 20) {
-//            Main.game.audioManager.playSound(AudioManager.Sounds.cucaracha_fanfare);
-//            board.cucarachaCounter = 0;
-//        }
-//        else {
-//            if(gamePiece.owner == GamePiece.Owner.Player) {
-//                Main.game.audioManager.playSound(AudioManager.Sounds.horn_fanfare);
-//            }
-//
-//            else {
-//                Main.game.audioManager.playSound(AudioManager.Sounds.enemy_spawn);
-//            }
-//            board.cucarachaCounter++;
-//        }
-
-
-
-        float x, y;
         if (gamePiece.owner == GamePiece.Owner.Enemy) {
             var bounds = board.spawnEvil.bounds;
-            x = bounds.x + bounds.width / 2;
-            gamePiece.startSpawn(x, 560, board.spawnEvil.anim.getAnimationDuration() + 0.5f);
+            float x = bounds.x + bounds.width / 2;
+            gamePiece.startSpawn(x, 560, board.spawnEvil.anim.getAnimationDuration() - 0.25f);
             board.spawnEvil.activate();
             Main.game.audioManager.playSound(AudioManager.Sounds.spawn_evil_start);
         } else {
-            gamePiece.startSpawn(44, 470, board.spawnGood.anim.getAnimationDuration() + 0.5f);
+            gamePiece.startSpawn(44, 470, board.spawnGood.anim.getAnimationDuration());
             board.spawnGood.activate();
-            Main.game.audioManager.playSound(AudioManager.Sounds.spawn_good_start);
+            var goodSpawnSound = (++spawnCount % 10 == 0) ? AudioManager.Sounds.cucaracha_fanfare : AudioManager.Sounds.spawn_good_start;
+            Main.game.audioManager.playSound(goodSpawnSound);
         }
     }
 
@@ -122,5 +105,9 @@ public class SpawnAction extends ActionBase {
         batch.setColor(1f, 1f, 1f, alpha);
         gamePiece.render(batch);
         batch.setColor(Color.WHITE);
+    }
+
+    private void next() {
+
     }
 }
