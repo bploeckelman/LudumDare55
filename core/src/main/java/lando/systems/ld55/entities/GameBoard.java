@@ -121,7 +121,7 @@ public class GameBoard extends InputAdapter {
         gridTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         actionQueueUI = new ActionQueueUI(gameScreen.actionManager, this);
         spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 180, 655);
-        spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1115, 195);
+        spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1150, 600);
 
         removeThis();
     }
