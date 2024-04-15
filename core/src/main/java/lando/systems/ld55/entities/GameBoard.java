@@ -160,6 +160,7 @@ public class GameBoard extends InputAdapter {
         }
         if (hoverTile != null) {
             GamePiece gamePiece = getGamePiece(hoverTile);
+            if (gamePiece != null && gamePiece.summoning) gamePiece = null;
             if (gamePiece != null && gamePiece.owner != GamePiece.Owner.Player) gamePiece = null;
             if (gamePiece == null) {
                 if (hoverTile.summonable) {
@@ -442,11 +443,15 @@ public class GameBoard extends InputAdapter {
                 if (tile == null) continue;
 
                 // can't summon if the tile has a piece on it
-                for (var piece : gamePieces) {
-                    if (piece.currentTile == tile) {
-                        summonable = false;
-                        break;
-                    }
+//                for (var piece : gamePieces) {
+//                    if (piece.currentTile == tile) {
+//                        summonable = false;
+//                        break;
+//                    }
+//                }
+                GamePiece g = getGamePiece(tile);
+                if (g != null) {
+                    summonable = false;
                 }
                 tile.summonable = summonable;
 

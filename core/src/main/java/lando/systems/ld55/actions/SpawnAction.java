@@ -53,6 +53,7 @@ public class SpawnAction extends ActionBase {
 
         if (accum > Portal.animationTime) {
             spawned = true;
+            gamePiece.summoning = false;
             board.gamePieces.add(gamePiece);
         }
 

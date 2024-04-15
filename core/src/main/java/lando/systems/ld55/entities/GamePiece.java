@@ -119,6 +119,7 @@ public class GamePiece {
     public ActionBase currentAction;
     public int maxHealth;
     public int currentHealth;
+    public boolean summoning;
 
     public HealthBar healthBar;
 
@@ -134,6 +135,7 @@ public class GamePiece {
         this.maxMovement = maxMovement;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
+        this.summoning = true;
         healthBar = new HealthBar(assets, position.x, position.y + 60f, maxHealth);
         switch (type) {
             case Pawn:
