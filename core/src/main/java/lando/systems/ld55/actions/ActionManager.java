@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import lando.systems.ld55.Main;
+import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.EnemyAI;
 import lando.systems.ld55.entities.GamePiece;
 import lando.systems.ld55.entities.TileOverlayInfo;
@@ -175,6 +176,8 @@ public class ActionManager {
                         @Override
                         public void onEvent(int type, BaseTween<?> source) {
                             damagedPiece.takeDamage(finalMaxDamage);
+                            gameScreen.particles.bloodBurst(damagedPiece.position.x, damagedPiece.position.y);
+                            Main.game.audioManager.playSound(AudioManager.Sounds.coin); //placeholder sound
                         }
                     }))
                     .start(Main.game.tween);
