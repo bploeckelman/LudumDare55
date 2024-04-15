@@ -126,6 +126,7 @@ public class ActionManager {
         phase = Phase.ResolveActions;
         currentAction = 0;
         currentAttackerPiece = 0;
+        gameScreen.gameBoard.turnTime = 0;
     }
 
     public int actionsRemaining() {

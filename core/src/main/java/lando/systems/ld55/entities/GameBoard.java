@@ -32,6 +32,7 @@ import java.util.List;
 public class GameBoard extends InputAdapter {
 
     public static final Color gridColor = new Color(.7f, .7f, .9f, 1f);
+    public static final Color endTurnWaveColor = new Color(.7f, .9f, .9f, .6f);
     public static final float marginLeft   = 112f;
     public static final float marginRight  = 112f;
     public static final float marginTop    = 120f;
@@ -57,6 +58,9 @@ public class GameBoard extends InputAdapter {
     public FrameBuffer gridFB;
     public Texture gridTexture;
 
+    public FrameBuffer endTurnFB;
+    public Texture endTurnTexture;
+
     public final int tilesWide;
     public final int tilesHigh;
     public final GameScreen gameScreen;
@@ -64,6 +68,8 @@ public class GameBoard extends InputAdapter {
 
     public RadialMenu radialMenu;
     public ActionQueueUI actionQueueUI;
+
+    public float turnTime = 0;
 
     private final Array<GameTile> loseTiles = new Array<>();
     private final Array<GameTile> winTiles = new Array<>();
@@ -118,6 +124,11 @@ public class GameBoard extends InputAdapter {
         gridFB = new FrameBuffer(Pixmap.Format.RGBA8888, Config.Screen.window_width, Config.Screen.window_height, true);
         gridTexture = gridFB.getColorBufferTexture();
         gridTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        endTurnFB = new FrameBuffer(Pixmap.Format.RGBA8888, Config.Screen.window_width, Config.Screen.window_height, true);
+        endTurnTexture = endTurnFB.getColorBufferTexture();
+        endTurnTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
         actionQueueUI = new ActionQueueUI(gameScreen.actionManager, this);
         spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 80, 580);
         spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1150, 600);
@@ -287,6 +298,7 @@ public class GameBoard extends InputAdapter {
     private GamePiece focusPiece;
 
     public void update(float dt) {
+        turnTime += dt;
         if (gameScreen.gameOver) { return; }
 
         // TEST ---------------
@@ -439,6 +451,7 @@ public class GameBoard extends InputAdapter {
         // NOTE - radial menu is drawn in game screen so it can be on top of everything
 
         actionQueueUI.render(batch);
+        renderEndTurnWave(batch);
     }
 
     public void renderFrameBuffers(SpriteBatch batch) {
@@ -450,6 +463,15 @@ public class GameBoard extends InputAdapter {
         }
         batch.end();
         gridFB.end();
+
+        endTurnFB.begin();
+        ScreenUtils.clear(0f, 0f, 0f, 0f);
+        batch.begin();
+        for (GameTile t : tiles){
+            t.renderEndTurnBuffer(batch);
+        }
+        batch.end();
+        endTurnFB.end();
     }
 
     private void renderGrid(SpriteBatch batch) {
@@ -464,6 +486,25 @@ public class GameBoard extends InputAdapter {
         shader.setUniformf("u_mouse", screenPosition);
 
         batch.draw(gridTexture, 0, Config.Screen.window_height, Config.Screen.window_width, -Config.Screen.window_height);
+
+        batch.setShader(null);
+        batch.setColor(Color.WHITE);
+        batch.end();
+        batch.begin();
+    }
+
+    private void renderEndTurnWave(SpriteBatch batch) {
+
+        ShaderProgram shader = gameScreen.assets.endTurnShader;
+        batch.end();
+        batch.setShader(shader);
+        batch.begin();
+        batch.setColor(endTurnWaveColor);
+        shader.setUniformf("u_time", turnTime);
+        shader.setUniformf("u_delay", .5f); // Seconds after end turn to start the wave
+        shader.setUniformf("u_timeFactor", .5f); // scale 1 second to cross the screen
+
+        batch.draw(endTurnTexture, 0, Config.Screen.window_height, Config.Screen.window_width, -Config.Screen.window_height);
 
         batch.setShader(null);
         batch.setColor(Color.WHITE);

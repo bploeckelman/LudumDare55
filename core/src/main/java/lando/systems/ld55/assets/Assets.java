@@ -91,6 +91,7 @@ public class Assets implements Disposable {
     public Array<Animation<TextureRegion>> thrones = new Array<>();
 
     public ShaderProgram portalShader;
+    public ShaderProgram endTurnShader;
 
     public Array<ShaderProgram> randomTransitions;
     public ShaderProgram starWarsShader;
@@ -395,6 +396,7 @@ public class Assets implements Disposable {
 
         portalShader = loadShader("shaders/default.vert", "shaders/portal.frag");
         gridShader = loadShader("shaders/default.vert", "shaders/grid.frag");
+        endTurnShader = loadShader("shaders/default.vert", "shaders/endTurn.frag");
 
         // initialize patch values
         Patch.debug.ninePatch        = new NinePatch(atlas.findRegion("ninepatch/debug"), 2, 2, 2, 2);
