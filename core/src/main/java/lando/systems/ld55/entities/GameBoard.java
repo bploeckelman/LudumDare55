@@ -416,7 +416,7 @@ public class GameBoard extends InputAdapter {
         batch.setColor(Color.WHITE);
 
         // sort by y position, top down
-        gamePieces.sort((a, b) -> Float.compare(a.currentTile.bounds.y, b.currentTile.bounds.y));
+        gamePieces.sort((a, b) -> Float.compare(b.currentTile.bounds.y, a.currentTile.bounds.y));
         for (GamePiece gp : gamePieces) {
             gp.render(batch);
         }
