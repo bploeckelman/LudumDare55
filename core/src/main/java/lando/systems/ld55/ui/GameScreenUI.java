@@ -25,10 +25,8 @@ public class GameScreenUI {
 
     public final GameScreen screen;
     public final ImageButton endTurnButton;
-    public Rectangle settingsButtonPanelBound;
+    public final Rectangle settingsButtonPanelBound;
     public final ImageButton settingsButton;
-//    public final ImageButton summonButton;
-//    public final ImageButton moveButton;
     public final NinePatch actionsPanel;
     public final Rectangle actionsPanelBounds;
     public final Array<ActionPoint> actionPoints;
