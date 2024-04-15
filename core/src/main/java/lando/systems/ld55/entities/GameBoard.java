@@ -65,7 +65,7 @@ public class GameBoard extends InputAdapter {
     public final GameScreen gameScreen;
     public final Vector3 screenPosition = new Vector3();
 
-    private RadialMenu radialMenu;
+    public RadialMenu radialMenu;
     public ActionQueueUI actionQueueUI;
 
     private final Array<GameTile> loseTiles = new Array<>();
@@ -379,9 +379,7 @@ public class GameBoard extends InputAdapter {
             selectedPiece.renderMovement(batch);
         }
 
-        if (radialMenu != null) {
-            radialMenu.render(batch);
-        }
+        // NOTE - radial menu is drawn in game screen so it can be on top of everything
 
         actionQueueUI.render(batch);
     }

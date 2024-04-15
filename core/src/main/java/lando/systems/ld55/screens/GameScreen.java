@@ -125,6 +125,10 @@ public class GameScreen extends BaseScreen{
         {
             ui.render(batch);
 
+            if (gameBoard.radialMenu != null) {
+                gameBoard.radialMenu.render(batch);
+            }
+
             var font = assets.fontAbandonedMed;
             var layout = assets.layout;
 //            layout.setText(font, "--- [Turn Order] ---", Color.WHITE, windowCamera.viewportWidth, Align.center, false);
