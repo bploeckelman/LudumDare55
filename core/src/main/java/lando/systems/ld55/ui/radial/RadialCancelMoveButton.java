@@ -22,7 +22,7 @@ public class RadialCancelMoveButton extends RadialButton {
         this.moveTile = tile;
         this.piece = piece;
         if (board.gameScreen.actionManager.playerActionsAvailable > 0){
-            text = "Cancel\n1 Action";
+            text = "Cancel\n(1 Action)";
             enabled= true;
         } else {
             text = "No Actions\nfor move";

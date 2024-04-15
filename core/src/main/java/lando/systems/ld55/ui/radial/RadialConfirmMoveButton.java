@@ -23,7 +23,7 @@ public class RadialConfirmMoveButton extends RadialButton {
         this.moveTile = tile;
         this.piece = piece;
         if (board.gameScreen.actionManager.playerActionsAvailable > 0){
-            text = "Move\n1 Action";
+            text = "Move\n(1 Action)";
             enabled= true;
         } else {
             text = "No Actions\nfor move";

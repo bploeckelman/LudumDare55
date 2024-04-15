@@ -30,7 +30,7 @@ public class RadialSummonButton extends RadialButton {
         Animation<TextureRegion> portrait = board.gameScreen.assets.getPortrait(type, GamePiece.Owner.Player);
         this.icon = portrait.getKeyFrame(0);
         iconEnabledColor.set(Color.WHITE);
-        iconDisabledColor.set(.8f, .8f, .8f, 1f);
+        iconDisabledColor.set(.8f, .8f, .8f, .1251f);
     }
 
     @Override

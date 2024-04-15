@@ -12,7 +12,7 @@ public class RadialButton {
     public static float MAX_RADIUS = 35f;
 
     public Color iconEnabledColor = new Color(.1f,.6f,.2f,1);
-    public Color iconDisabledColor = new Color(.4f, .4f, .4f, .81f);
+    public Color iconDisabledColor = new Color(.4f, .4f, .4f, .31f);
 
     public String text;
     public TextureRegion icon;
