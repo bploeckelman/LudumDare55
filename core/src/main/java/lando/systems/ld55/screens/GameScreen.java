@@ -70,11 +70,6 @@ public class GameScreen extends BaseScreen{
     }
 
     public void update(float dt) {
-        //Test
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            gameOver(false);
-        }
-        //Test
 
         particles.update(dt);
         if (settingsUI.isSettingShown) {
