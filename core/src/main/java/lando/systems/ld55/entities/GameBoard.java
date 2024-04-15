@@ -509,7 +509,7 @@ public class GameBoard extends InputAdapter {
         var activeMoveLists = gameScreen.actionManager.getActiveMoveLists();
         for (var moveList : activeMoveLists) {
             for (var breadcrumb : moveList) {
-                var color = breadcrumb.piece.owner == GamePiece.Owner.Player ? Color.SKY : Color.SALMON;
+                var color = breadcrumb.piece.owner.color;
                 var icon = TileOverlayAssets.getArrowForDir(breadcrumb.direction);
                 var overlay = new TileOverlayInfo(breadcrumb.tile, 0)
                     // NOTE(brian) - panel is too much since all movement paths will be drawn each frame
