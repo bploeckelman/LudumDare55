@@ -52,10 +52,10 @@ public class ActionItemUI {
 
         batch.setColor(piece.owner.color);
         if (highlight){
-            batch.setColor(Color.YELLOW.r, Color.YELLOW.g, Color.YELLOW.b, 0.7f);
+            var color = Color.YELLOW;
+            batch.setColor(color.r, color.g, color.b, 1f);//0.7f);
         }
-        TileOverlayAssets.panelGreen.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
-
+        TileOverlayAssets.panelWhite.draw(batch, bounds.x, bounds.y, bounds.width, bounds.height);
         batch.setColor(Color.WHITE);
 
         float qw = bounds.width / 16;

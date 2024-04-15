@@ -18,8 +18,8 @@ import lando.systems.ld55.ui.HealthBar;
 
 public class GamePiece {
     public enum Owner {
-        Player(Color.SKY),
-        Enemy(Color.CORAL);
+        Player(Color.CYAN),       // alternatives: LIGHTBLUE, BLUE
+        Enemy(Color.SALMON);  // alternatives: FIREBRICK, CORAL, RED
         public final Color color;
         Owner(Color color) {
             this.color = color;
