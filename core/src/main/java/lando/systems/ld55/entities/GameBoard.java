@@ -140,9 +140,9 @@ public class GameBoard extends InputAdapter {
             gamePieces.add(gp);
         }
         // LET'S GO BANANA
-        var gp = GamePiece.getGamePiece(gameScreen.assets, GamePiece.Type.Pawn, GamePiece.Owner.Player);
-        gp.setTile(getTileAt(20, 5));
-        gamePieces.add(gp);
+//        var gp = GamePiece.getGamePiece(gameScreen.assets, GamePiece.Type.Pawn, GamePiece.Owner.Player);
+//        gp.setTile(getTileAt(20, 5));
+//        gamePieces.add(gp);
     }
 
     private boolean isCornerTile(int x, int y, int cornerDepth) {
