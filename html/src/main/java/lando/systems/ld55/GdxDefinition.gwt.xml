@@ -21,7 +21,9 @@
   <!-- TODO - add things to the reflection cache as needed
   <extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld55.???"/>
   -->
-    <extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld55.particles.Particle"/>
+  <extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld55.particles.Particle"/>
+  <extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld55.utils.typinglabel.TypingGlyph" />
+  <extend-configuration-property name="gdx.reflect.include" value="lando.systems.ld55.utils.typinglabel.effects" />
 
   <entry-point class="lando.systems.ld55.gwt.GwtLauncher" />
 
