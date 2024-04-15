@@ -118,7 +118,7 @@ public class GameBoard extends InputAdapter {
         gridTexture = gridFB.getColorBufferTexture();
         gridTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         actionQueueUI = new ActionQueueUI(gameScreen.actionManager, this);
-        spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 180, 655);
+        spawnGood = new Spawn(Main.game.assets, GamePiece.Owner.Player, 80, 580);
         spawnEvil = new Spawn(Main.game.assets, GamePiece.Owner.Enemy, 1150, 600);
 
         removeThis();
@@ -365,6 +365,10 @@ public class GameBoard extends InputAdapter {
         for (Portal p : portalAnimations) {
             p.render(batch);
         }
+
+        // draw set pieces (from StyleMgr)
+        gameScreen.styleManager.render(batch);
+
         spawnGood.render(batch);
         spawnEvil.render(batch);
 
@@ -380,6 +384,8 @@ public class GameBoard extends InputAdapter {
 
         batch.setColor(Color.WHITE);
 
+        // sort by y position, top down
+        gamePieces.sort((a, b) -> Float.compare(a.currentTile.bounds.y, b.currentTile.bounds.y));
         for (GamePiece gp : gamePieces) {
             gp.render(batch);
         }
