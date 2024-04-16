@@ -255,7 +255,7 @@ public class TutorialScreen extends BaseScreen {
 
     private void renderPage9() {
         Assets.NinePatches.glass.draw(batch, 190f, 40f, 1010f, 130f);
-        assets.layout.setText(assets.font, "End Turn to summon and move. The button will flash if there is no more actions!", Color.WHITE, 1000f, Align.left, true);
+        assets.layout.setText(assets.font, "End Turn to summon and move. The button will flash if there are no more actions!", Color.WHITE, 1000f, Align.left, true);
         assets.font.draw(batch, assets.layout, 210f, 150f);
     }
     private void setupStyle() {
