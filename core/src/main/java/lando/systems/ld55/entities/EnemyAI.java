@@ -13,7 +13,7 @@ public class EnemyAI {
     public static Array<GamePiece> enemyPieces = new Array<>();
     public static void doTurn(GameBoard board) {
         int actions = 4;
-        if (MathUtils.randomBoolean(.2f)) {
+        if (board.gameScreen.actionManager.getTurnNumber() > 5 && MathUtils.randomBoolean(.2f)) {
             actions = 8;
         }
         // Make game decisions and add to the action queue
