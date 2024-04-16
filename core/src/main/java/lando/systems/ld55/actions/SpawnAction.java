@@ -73,7 +73,7 @@ public class SpawnAction extends ActionBase {
     }
 
     // start higher to get cucaracha 1st sooner
-    private int spawnCount = 4;
+    private static int spawnCount = 3;
     private void startSpawn() {
         if (gamePiece.owner == GamePiece.Owner.Enemy) {
             var bounds = board.spawnEvil.bounds;
@@ -84,7 +84,7 @@ public class SpawnAction extends ActionBase {
         } else {
             gamePiece.startSpawn(-100, 500, 0, new Vector2[] { new Vector2(40f, 500), new Vector2(200f, 450f) });
             board.spawnGood.activate();
-            var goodSpawnSound = (++spawnCount % 10 == 0) ? AudioManager.Sounds.cucaracha_fanfare : AudioManager.Sounds.spawn_good_start;
+            var goodSpawnSound = (++spawnCount % 8 == 0) ? AudioManager.Sounds.cucaracha_fanfare : AudioManager.Sounds.spawn_good_start;
             Main.game.audioManager.playSound(goodSpawnSound);
         }
     }
