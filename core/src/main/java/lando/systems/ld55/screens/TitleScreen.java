@@ -71,8 +71,8 @@ public class TitleScreen extends BaseScreen {
         subscribeEvents();
 
         Timeline.createSequence()
-            .delay(.5f)
-            .push(Tween.to(boardPosition, Vector2Accessor.Y, 1f)
+            .delay(.1f)
+            .push(Tween.to(boardPosition, Vector2Accessor.Y, 1.5f)
                 .target(-140).ease(Bounce.OUT))
             .beginParallel()
                 .push(Tween.to(kingPosition, Vector2Accessor.Y, .5f)
@@ -212,12 +212,13 @@ public class TitleScreen extends BaseScreen {
 
     private void transitionToGameScreen() {
         if (settingsUI.isSettingShown) { return; }
+        if (!drawUI) return;
         if (!exitingScreen ) {
             exitingScreen = true;
             var nextScreen = Config.Debug.show_intro_screen
                 ? new IntroScreen()
                 : new GameScreen();
-            game.setScreen(nextScreen);
+            game.setScreen(nextScreen, assets.doorwayShader, 2f);
             Main.game.audioManager.playSound(AudioManager.Sounds.click);
             unsubscribeEvents();
         }
@@ -225,6 +226,7 @@ public class TitleScreen extends BaseScreen {
 
     private void transitionToCreditsScreen() {
         if (settingsUI.isSettingShown) { return; }
+        if (!drawUI) return;
         if (!exitingScreen ) {
             Main.game.audioManager.playSound(AudioManager.Sounds.click);
             exitingScreen = true;

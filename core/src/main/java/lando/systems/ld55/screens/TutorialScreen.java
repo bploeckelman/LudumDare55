@@ -86,6 +86,7 @@ public class TutorialScreen extends BaseScreen {
                 particles.smoke(1000, 450);
                 styleManager.add(assets.queen.get(1).get(0), 1000, 550, false);
                 particles.smoke(1000, 550);
+                Main.game.audioManager.playSound(AudioManager.Sounds.cucaracha_fanfare);
                 showEnemies = true;
             } else if (!tutorialPage4Finished) {
                 Gdx.app.log("Tutorial", "Page 4 Finished");
@@ -116,6 +117,7 @@ public class TutorialScreen extends BaseScreen {
                 ui.endTurnButton.pulse = true;
             }
             else {
+                tutorialFinished = true;
                 launchGame();
             }
         }
@@ -151,7 +153,6 @@ public class TutorialScreen extends BaseScreen {
             renderPage7();
         } else if (!tutorialPage8Finished) {
             renderPage8();
-            tutorialFinished = true;
         } else {
             renderPage9();
         }
@@ -162,12 +163,12 @@ public class TutorialScreen extends BaseScreen {
     void launchGame() {
         if (!exitingScreen){
             exitingScreen = true;
-            game.setScreen(new GameScreen(), assets.doomShader, 1f);
+            game.setScreen(new GameScreen(), assets.cubeShader, 1f);
         }
     }
 
     private void renderPage1() {
-        assets.layout.setText(assets.font, "Welcome to the Board to Death.", Color.WHITE,
+        assets.layout.setText(assets.font, "Welcome to Board to Death.", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -206,7 +207,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage4() {
-        assets.layout.setText(assets.font, "Oh no, the wizard summoned the monster!", Color.WHITE,
+        assets.layout.setText(assets.font, "Oh no, the wizard summoned monsters!", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -215,7 +216,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage5() {
-        assets.layout.setText(assets.font, "Summon the Monarchs!", Color.WHITE,
+        assets.layout.setText(assets.font, "Summon the Troops!", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -224,7 +225,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage6() {
-        assets.layout.setText(assets.font, "Every action consumes action point.\nMovement will consume 1.\nSummoning cost differs per unit.", Color.WHITE,
+        assets.layout.setText(assets.font, "Every action consumes action points.\nMovement will consume 1.\nSummoning cost differs per unit.", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
