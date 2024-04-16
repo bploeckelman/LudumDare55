@@ -53,7 +53,7 @@ public class EnemyAI {
             if (enemyPieces.size > 0) {
                 GamePiece movePiece = enemyPieces.random();
                 if (movePiece.currentAction instanceof MoveAction) {
-                    if (MathUtils.randomBoolean(.2f)) {
+                    if (MathUtils.randomBoolean(.1f)) {
                         ActionBase a = movePiece.currentAction;
                         board.gameScreen.actionManager.removeAction(a);
                         movePiece.currentAction = null;
