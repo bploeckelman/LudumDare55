@@ -28,11 +28,11 @@ public class IntroScreen extends BaseScreen {
     String page2 =
         "{COLOR=black}When a mystical{GRADIENT=red;black} wizard{ENDGRADIENT} unleashes his army of {GRADIENT=red;brown}monsters {ENDGRADIENT}on the castle, " +
             "the King's warriors must confront the menace before they reach the kingdom.\n\n" +
-            "Kind of a dick move by the wizard, really.";
+            "(Kind of a dick move by the wizard. Really failed the vibe check.)";
     String page3 =
             "{COLOR=black}For whatever reason, the King's guards prefer a strategy of{GRADIENT=brown;red} turn-based combat {ENDGRADIENT}" +
                 "that is vaguely reminiscent of {GRADIENT=green;black}chess{ENDGRADIENT}, although the similarities are admittedly pretty superficial." +
-                "\n\nIf our warriors reach the wizard's stronghold, it means victory for the kingdom. Otherwise our king will be {GRADIENT=red;brown}Board To Death! {ENDGRADIENT} " ;
+                "\n\nIf our warriors reach the wizard's stronghold, it means victory for the kingdom. But if any of the enemies reach the king, he'll be {GRADIENT=red;brown}Board To Death! {ENDGRADIENT} " ;
 //    String page4 =
 //        "{COLOR=black}This is no mere chessboard, but a tapestry of fate woven by your strategic brilliance.\n" +
 //        "So, grand observer, will your reign usher in an era of prosperity...\n" +

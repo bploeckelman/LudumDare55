@@ -79,7 +79,7 @@ public class SpawnAction extends ActionBase {
             float x = bounds.x + bounds.width / 2;
             gamePiece.startSpawn(x, 560, board.spawnEvil.anim.getAnimationDuration() - 0.25f);
             board.spawnEvil.activate();
-            Main.game.audioManager.playSound(AudioManager.Sounds.spawn_evil_start, .75f);
+            Main.game.audioManager.playSound(AudioManager.Sounds.spawn_evil_start, .85f);
         } else {
             gamePiece.startSpawn(44, 470, board.spawnGood.anim.getAnimationDuration());
             board.spawnGood.activate();
