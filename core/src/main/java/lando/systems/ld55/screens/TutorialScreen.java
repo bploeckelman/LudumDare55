@@ -167,7 +167,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage1() {
-        assets.layout.setText(assets.font, "Welcome to the Board to Death.", Color.WHITE,
+        assets.layout.setText(assets.font, "Welcome to Board to Death.", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -206,7 +206,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage4() {
-        assets.layout.setText(assets.font, "Oh no, the wizard summoned the monster!", Color.WHITE,
+        assets.layout.setText(assets.font, "Oh no, the wizard summoned monsters!", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -215,7 +215,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage5() {
-        assets.layout.setText(assets.font, "Summon the Monarchs!", Color.WHITE,
+        assets.layout.setText(assets.font, "Summon the Troops!", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -224,7 +224,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage6() {
-        assets.layout.setText(assets.font, "Every action consumes action point.\nMovement will consume 1.\nSummoning cost differs per unit.", Color.WHITE,
+        assets.layout.setText(assets.font, "Every action consumes action points.\nMovement will consume 1.\nSummoning cost differs per unit.", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;

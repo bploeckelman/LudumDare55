@@ -124,7 +124,8 @@ public class IntroScreen extends BaseScreen {
     void launchGame() {
         if (!exitingScreen){
             exitingScreen = true;
-            game.setScreen(new TutorialScreen(), assets.doomShader, 1f);
+            game.setScreen(new TutorialScreen(), assets.doomShader, 2f);
+
         }
     }
 }

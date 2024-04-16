@@ -217,7 +217,7 @@ public class TitleScreen extends BaseScreen {
             var nextScreen = Config.Debug.show_intro_screen
                 ? new IntroScreen()
                 : new GameScreen();
-            game.setScreen(nextScreen);
+            game.setScreen(nextScreen, assets.doorwayShader, 2f);
             Main.game.audioManager.playSound(AudioManager.Sounds.click);
             unsubscribeEvents();
         }
