@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.audio.AudioManager;
 import lando.systems.ld55.entities.GameBoard;
@@ -77,11 +78,11 @@ public class SpawnAction extends ActionBase {
         if (gamePiece.owner == GamePiece.Owner.Enemy) {
             var bounds = board.spawnEvil.bounds;
             float x = bounds.x + bounds.width / 2;
-            gamePiece.startSpawn(x, 560, board.spawnEvil.anim.getAnimationDuration() - 0.25f);
+            gamePiece.startSpawn(x, 560, 0.4f, new Vector2[] { new Vector2(1080, 450f) });
             board.spawnEvil.activate();
             Main.game.audioManager.playSound(AudioManager.Sounds.spawn_evil_start, .85f);
         } else {
-            gamePiece.startSpawn(44, 470, board.spawnGood.anim.getAnimationDuration());
+            gamePiece.startSpawn(-100, 500, 0, new Vector2[] { new Vector2(40f, 500), new Vector2(200f, 450f) });
             board.spawnGood.activate();
             var goodSpawnSound = (++spawnCount % 10 == 0) ? AudioManager.Sounds.cucaracha_fanfare : AudioManager.Sounds.spawn_good_start;
             Main.game.audioManager.playSound(goodSpawnSound);

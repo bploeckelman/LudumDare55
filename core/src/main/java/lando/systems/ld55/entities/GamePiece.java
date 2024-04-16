@@ -291,8 +291,12 @@ public class GamePiece {
 
     public void moveToTile(GameTile tile) {
         moveTile = tile;
+        moveToPoint(tile.bounds.x + tile.bounds.width / 2, tile.bounds.y + TILE_OFFSET_Y);
+    }
+
+    public void moveToPoint(float x, float y) {
         startPosition.set(position);
-        movePosition.set(tile.bounds.x + tile.bounds.width / 2, tile.bounds.y + TILE_OFFSET_Y);
+        movePosition.set(x, y);
         Main.game.audioManager.playSound(AudioManager.Sounds.hop);
         moveAnimState = 0;
 
@@ -333,7 +337,12 @@ public class GamePiece {
         moveAnimState += dt;
         if (moveAnimState > moveSeconds) {
             moveAnimState = moveSeconds;
-            setTile(moveTile);
+            if (moveTile != null) {
+                setTile(moveTile);
+            } else {
+                selected = false;
+                isMoving = false;
+            }
         }
         position.set(startPosition);
         position.interpolate(movePosition, moveAnimState / moveSeconds, Interpolation.linear);
@@ -528,11 +537,15 @@ public class GamePiece {
     private boolean isSpawning = false;
     private float spawnTime = 0;
     private float maxSpawn;
+    private Vector2[] jumpPoints;
+    private int jumpIndex = 0;
 
-    public void startSpawn(float x, float y, float spawnTime) {
+    public void startSpawn(float x, float y, float spawnTime, Vector2[] jumpPoints) {
         this.spawnTime = this.maxSpawn = spawnTime;
         this.isSpawning = true;
         spawnPosition.set(x, y);
+        position.set(x, y);
+        this.jumpPoints = jumpPoints;
     }
 
     private void updateSpawn(float dt) {
@@ -541,16 +554,31 @@ public class GamePiece {
         spawnTime -= dt;
         if (spawnTime < 0) {
             spawnTime = 0;
-            isSpawning = false;
-            position.set(spawnPosition.x, spawnPosition.y);
+
+            if (isMoving) { return; }
+
+            if (jumpIndex < jumpPoints.length) {
+                var jp = jumpPoints[jumpIndex++];
+                moveToPoint(jp.x, jp.y);
+            } else {
+                isSpawning = false;
+            }
+        }
+
+        if (!isSpawning) {
             moveToTile(currentTile);
         }
     }
 
     private void renderSpawn(SpriteBatch batch) {
-        float flip = owner == Owner.Enemy ? -1 : 1;
-        batch.setColor(1, 1, 1, 1 - spawnTime / maxSpawn);
-        batch.draw(keyframe, spawnPosition.x - keyframe.getRegionWidth() / 2f, spawnPosition.y, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, flip, 1, 0);
-        batch.setColor(Color.WHITE);
+        float yOffset = getYOffset();
+
+        if (owner == Owner.Enemy) {
+            batch.setColor(1, 1, 1, 1 - spawnTime / maxSpawn);
+            batch.draw(keyframe, position.x - keyframe.getRegionWidth() / 2f, position.y + yOffset, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, -1, 1, 0);
+            batch.setColor(Color.WHITE);
+        } else {
+            batch.draw(keyframe, position.x - keyframe.getRegionWidth() / 2f, position.y + yOffset, bounds.width / 2, bounds.height / 2, bounds.width, bounds.height, 1, 1, 0);
+        }
     }
 }
