@@ -12,9 +12,9 @@ public class EnemyAI {
     public static Array<GamePiece> playerPieces = new Array<>();
     public static Array<GamePiece> enemyPieces = new Array<>();
     public static void doTurn(GameBoard board) {
-        int actions = 3;
-        if (MathUtils.randomBoolean(.1f)) {
-            actions = 5;
+        int actions = 4;
+        if (MathUtils.randomBoolean(.2f)) {
+            actions = 8;
         }
         // Make game decisions and add to the action queue
 
@@ -57,7 +57,6 @@ public class EnemyAI {
                         ActionBase a = movePiece.currentAction;
                         board.gameScreen.actionManager.removeAction(a);
                         movePiece.currentAction = null;
-                        actions--;
                     } else {
                         continue;
                     }
@@ -68,7 +67,6 @@ public class EnemyAI {
                     GameTile moveTile = movePiece.moveTiles.random();
                     if (moveTile.x < movePiece.currentTile.x || MathUtils.randomBoolean(.1f)) {
                         board.gameScreen.actionManager.addAction(new MoveAction(board, movePiece, moveTile));
-                        actions--;
                     }
                 }
             }
