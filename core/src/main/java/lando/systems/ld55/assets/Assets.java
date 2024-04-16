@@ -333,7 +333,7 @@ public class Assets implements Disposable {
         spawnEvilIdle = new Animation<>(0.2f, atlas.findRegions("stage/spawn-evil-idle/spawn-evil-idle"), Animation.PlayMode.LOOP);
         spawnEvilActive = new Animation<>(0.09f, atlas.findRegions("stage/spawn-evil-active/spawn-evil-active"), Animation.PlayMode.NORMAL);
         spawnGoodIdle = new Animation<>(1.2f, atlas.findRegions("stage/spawn-idle/spawn-idle"), Animation.PlayMode.LOOP);
-        spawnGoodActive = new Animation<>(0.15f, atlas.findRegions("stage/spawn-idle/spawn-idle"), Animation.PlayMode.LOOP_PINGPONG);
+        spawnGoodActive = new Animation<>(0.15f, atlas.findRegions("stage/spawn-active/spawn-active"), Animation.PlayMode.LOOP_PINGPONG);
         candle = new Animation<>(0.15f, atlas.findRegions("stage/candlestick-idle/candlestick-idle"), Animation.PlayMode.LOOP);
         candleEvil = new Animation<>(0.15f, atlas.findRegions("stage/candlestick-evil-idle/candlestick-evil-idle"), Animation.PlayMode.LOOP);
 
