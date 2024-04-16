@@ -160,19 +160,20 @@ public class GameScreen extends BaseScreen{
             }
             phaseLabel = phaseLabel + " Phase";
             var actionsPlural = actionManager.playerActionsAvailable == 1 ? "" : "s";
-            var actionsRemainingLabel = actionManager.playerActionsAvailable + " Action" + actionsPlural + " Remaining";
+            var actionsRemainingLabel = "Action" + actionsPlural + " Remaining: " + actionManager.playerActionsAvailable;
             var turnLabel = "Turn: " + (actionManager.getTurnNumber() +1);
 
-            font.getData().setScale(.40f);
+            font.getData().setScale(0.5f);
             {
                 layout.setText(font, actionsRemainingLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
-                font.draw(batch, layout, 0, windowCamera.viewportHeight - 20);
+                font.draw(batch, layout, 0, windowCamera.viewportHeight - 25);
 
-                layout.setText(font, phaseLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
-                font.draw(batch, layout, 0, windowCamera.viewportHeight - 40);
+//                layout.setText(font, phaseLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
+//                font.draw(batch, layout, 0, windowCamera.viewportHeight - 40);
 
                 layout.setText(font, turnLabel, Color.WHITE, windowCamera.viewportWidth, Align.center, false);
-                font.draw(batch, layout, 0, windowCamera.viewportHeight - 60);
+                font.draw(batch, layout, 0, windowCamera.viewportHeight - 55);
+//                font.draw(batch, layout, 0, windowCamera.viewportHeight - 60);
             }
             font.getData().setScale(1f);
 

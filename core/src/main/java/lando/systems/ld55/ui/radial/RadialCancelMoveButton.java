@@ -13,20 +13,24 @@ public class RadialCancelMoveButton extends RadialButton {
     GamePiece piece;
 
     public RadialCancelMoveButton(GameBoard board, GamePiece piece, GameTile tile) {
-        super(TileOverlayAssets.panelRed,
+        super(TileOverlayAssets.panelWhite,
             TileOverlayAssets.disabledCross,
-            "Confirm",
+            "", //"Confirm",
             true);
 
         pointsUsed = 1;
         this.board = board;
         this.moveTile = tile;
         this.piece = piece;
+        this.iconRadiusScale = 1.25f;
+        this.iconEnabledColor.set(1, 1, 1, 0.4f);
+        this.backgroundEnabledColor.set(0.5f, 0.5f, 0.5f, 1f);
         if (board.gameScreen.actionManager.playerActionsAvailable > 0){
-            text = "Cancel\n(1 Action)";
+//            text = "Stop\nmove\n$1";
+            text = " Stop \n$1";
             enabled= true;
         } else {
-            text = "No Actions\nfor move";
+            text = "No move\nto cancel";
             enabled = false;
         }
     }

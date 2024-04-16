@@ -1,6 +1,5 @@
 package lando.systems.ld55.ui.radial;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import lando.systems.ld55.Main;
 import lando.systems.ld55.actions.ActionBase;
 import lando.systems.ld55.actions.MoveAction;
@@ -17,16 +16,21 @@ public class RadialConfirmMoveButton extends RadialButton {
     GamePiece piece;
 
     public RadialConfirmMoveButton(GameBoard board, GamePiece piece, GameTile tile) {
-        super(TileOverlayAssets.panelGreen, TileOverlayAssets.pawnRight, "Confirm", true);
+        super(TileOverlayAssets.panelWhite,
+            TileOverlayAssets.checkmark,
+            "", // "Confirm",
+            true);
+
         this.pointsUsed = 1;
         this.board = board;
         this.moveTile = tile;
         this.piece = piece;
+
         if (board.gameScreen.actionManager.playerActionsAvailable > 0){
-            text = "Move\n(1 Action)";
+            text = " Move \n$1";
             enabled= true;
         } else {
-            text = "No Actions\nfor move";
+            text = "No actions\nfor move";
             enabled = false;
         }
     }

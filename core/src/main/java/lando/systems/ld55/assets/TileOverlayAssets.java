@@ -20,6 +20,7 @@ public class TileOverlayAssets {
     public static TextureRegion arrowDownLeft;
     public static TextureRegion arrowDownRight;
     public static TextureRegion arrowsCrossed;
+    public static TextureRegion arrowBack;
 
     public static TextureRegion target;
     public static TextureRegion cross;
@@ -66,6 +67,7 @@ public class TileOverlayAssets {
         arrowDownLeft  = atlas.findRegion("icons/kenney-ui/arrowDownLeft");
         arrowDownRight = atlas.findRegion("icons/kenney-ui/arrowDownRight");
         arrowsCrossed  = atlas.findRegion("icons/kenney-board-game/arrow_diagonal_cross_divided");
+        arrowBack      = atlas.findRegion("icons/kenney-board-game/arrow_counterclockwise_outline");
 
         target      = atlas.findRegion("icons/kenney-ui/target");
         cross       = atlas.findRegion("icons/kenney-ui/cross");

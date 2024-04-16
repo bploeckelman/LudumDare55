@@ -15,6 +15,7 @@ public class RadialButton {
     public Color iconEnabledColor = new Color(.1f,.6f,.2f,1);
     public Color iconDisabledColor = new Color(.4f, .4f, .4f, .81f); // alpha .31 maybe
     public Color iconMetaColor = Color.WHITE.cpy();
+    public Color backgroundEnabledColor = Color.LIGHT_GRAY.cpy();
 
     public String text;
     public float iconRadiusScale = 0.9f;
@@ -46,8 +47,8 @@ public class RadialButton {
         this.text = text;
         this.centerPosition = new Vector2();
         this.radius = 0;
-//        this.font = Main.game.assets.fontZektonSmall;
-        this.font = Main.game.assets.font;
+        this.font = Main.game.assets.fontZektonSmall;
+//        this.font = Main.game.assets.smallFont;
         this.layout = Main.game.assets.layout;
         this.enabled = enabled;
         this.hovered = false;
@@ -68,7 +69,8 @@ public class RadialButton {
         } else {
             // NOTE(brian) - should probably always be TileOverlayAssets.panelWhite for tinting
             background = backgroundEnabled;
-            batch.setColor(Color.LIGHT_GRAY);
+//            batch.setColor(Color.LIGHT_GRAY);
+            batch.setColor(backgroundEnabledColor);
         }
         background.draw(batch,
             centerPosition.x - radius,
@@ -145,17 +147,29 @@ public class RadialButton {
         // TODO(brian) - rework text rendering
         float textWidth = radius + radius - 10;
         if (!text.isEmpty()) {
-            font.getData().setScale(radius / MAX_RADIUS);
+            var fontData = font.getData();
+            fontData.setScale(radius / MAX_RADIUS);
             layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
-            font.getData().setScale((radius / MAX_RADIUS * textWidth) / layout.width);
+
+            var scale = (radius / MAX_RADIUS * textWidth) / layout.width;
+            fontData.setScale(scale);
             layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
+
+//            font.setColor(Color.BLACK);
+//            font.draw(batch, text,
+//                centerPosition.x - radius + 2,
+//                centerPosition.y + layout.height / 2f - 2,
+//                radius + radius,
+//                Align.center, true);
+
+            font.setColor(Color.WHITE);
             font.draw(batch, text,
                 centerPosition.x - radius,
-                centerPosition.y + layout.height / 2f + 5,
+                centerPosition.y + layout.height / 2f,
                 radius + radius,
-                Align.center,
-                true);
-            font.getData().setScale(1f);
+                Align.center, true);
+
+            fontData.setScale(1f);
         }
 
         batch.setColor(Color.WHITE);
