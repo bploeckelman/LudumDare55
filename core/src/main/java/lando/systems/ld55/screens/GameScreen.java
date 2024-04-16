@@ -38,7 +38,7 @@ public class GameScreen extends BaseScreen{
     public GameScreen() {
         Stats.reset();
         actionManager = new ActionManager(this);
-        gameBoard = new GameBoard(this, 12, 8);
+        gameBoard = new GameBoard(this, 10, 8);
         particles = new Particles(assets);
         ui = new GameScreenUI(this);
         settingsUI = new SettingsUI(skin, windowCamera);

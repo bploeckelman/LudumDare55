@@ -168,7 +168,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage1() {
-        assets.layout.setText(assets.font, "Welcome to Board to Death.", Color.WHITE,
+        assets.layout.setText(assets.font, "What's happening here?", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -177,14 +177,14 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage2() {
-        assets.layout.setText(assets.font, "This is you.\nThe good King", Color.YELLOW,
+        assets.layout.setText(assets.font, "This is us.\nHail to the King!", Color.YELLOW,
             Config.Screen.window_width / 2f, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
         Assets.NinePatches.glass.draw(batch, Config.Screen.window_width / 4f - panelWidth / 2f, Config.Screen.window_height - 260f, panelWidth, panelHeight);
         assets.font.draw(batch, assets.layout, 0, Config.Screen.window_height - 150f);
 
-        assets.layout.setText(assets.font, "This is them.\nThe bad Wizard.", Color.RED,
+        assets.layout.setText(assets.font, "This is them.\nTerrible people.", Color.RED,
             Config.Screen.window_width / 2f, Align.center, false);
         panelWidth = assets.layout.width + 100f;
         panelHeight = assets.layout.height + 50f;
@@ -193,7 +193,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage3() {
-        assets.layout.setText(assets.font, "Your goal is to reach the enemy side,\nbefore they reach you.\nBut you can't do it yourself.\nAfter all, you are the king.", Color.WHITE,
+        assets.layout.setText(assets.font, "We must reach the enemy's side,\nbefore they reach us.\nFor all the power of the crown,\nthe king cannot win alone.", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -207,7 +207,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage4() {
-        assets.layout.setText(assets.font, "Oh no, the wizard summoned monsters!", Color.WHITE,
+        assets.layout.setText(assets.font, "The evil wizard summons monsters.", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -216,7 +216,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage5() {
-        assets.layout.setText(assets.font, "Summon the Troops!", Color.WHITE,
+        assets.layout.setText(assets.font, "You summon the GOOD guys!", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -225,7 +225,7 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage6() {
-        assets.layout.setText(assets.font, "Every action consumes action points.\nMovement will consume 1.\nSummoning cost differs per unit.", Color.WHITE,
+        assets.layout.setText(assets.font, "Every action consumes action points.\nMovement consumes 1 point.\nSummoning costs vary per unit.", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -234,16 +234,16 @@ public class TutorialScreen extends BaseScreen {
     }
 
     private void renderPage7() {
-        assets.layout.setText(assets.font, "Action Points");
+        assets.layout.setText(assets.font, "Action points increase with time. ");
         Assets.NinePatches.glass.draw(batch, 100f, 160f, 1150f, 130f);
         assets.font.draw(batch, assets.layout, 120f, 260f);
 
-        assets.layout.setText(assets.font, "You get more action points the more you play!", Color.WHITE, 1200f, Align.left, true);
-        assets.font.draw(batch, assets.layout, 120f, 220f);
+        assets.layout.setText(assets.font, "The longer you play, the more you get!", Color.WHITE, 1200f, Align.left, true);
+        assets.font.draw(batch, assets.layout, 120f, 210f);
     }
 
     private void renderPage8() {
-        assets.layout.setText(assets.font, "Click on the tile with this icon to Summon!", Color.WHITE,
+        assets.layout.setText(assets.font, "Click the tiles with this icon to Summon!", Color.WHITE,
             Config.Screen.window_width, Align.center, false);
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
@@ -255,7 +255,7 @@ public class TutorialScreen extends BaseScreen {
 
     private void renderPage9() {
         Assets.NinePatches.glass.draw(batch, 190f, 40f, 1010f, 130f);
-        assets.layout.setText(assets.font, "End turn to summon and move. The button will flash if there is no more actions!", Color.WHITE, 1000f, Align.left, true);
+        assets.layout.setText(assets.font, "End Turn to summon and move. The button will flash if there is no more actions!", Color.WHITE, 1000f, Align.left, true);
         assets.font.draw(batch, assets.layout, 210f, 150f);
     }
     private void setupStyle() {
