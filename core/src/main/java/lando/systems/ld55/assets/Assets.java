@@ -52,12 +52,24 @@ public class Assets implements Disposable {
 
     public Texture pixel;
     public Texture gdx;
-    public Texture title;
     public Texture noiseTexture;
     public Texture whitePixel;
     public Texture levelLayout;
     public Texture introBackground;
     public Texture parchment;
+    public Texture titleBishopEvil;
+    public Texture titleBishopGood;
+    public Texture titlePawnGood;
+    public Texture titlePawnEvil;
+    public Texture titleKnightEvil;
+    public Texture titleArcherGood;
+    public Texture titleVignette;
+    public Texture titleTextSubTitle;
+    public Texture titleTextTitle;
+    public Texture titleKing;
+    public Texture titleDeath;
+    public Texture titleBoard;
+    public Texture titleBackground;
 
     public TextureRegion pixelRegion;
     public TextureRegion closeButton;
@@ -239,13 +251,28 @@ public class Assets implements Disposable {
             mgr.load("ui/uiskin.json", Skin.class);
             mgr.load("i18n/strings", I18NBundle.class);
 
-            mgr.load("images/title-image_00.png", Texture.class);
             mgr.load("images/libgdx.png", Texture.class);
             mgr.load("images/noise.png", Texture.class);
             mgr.load("images/pixel.png", Texture.class);
             mgr.load("images/level-layout.png", Texture.class);
             mgr.load("images/intro-background.png", Texture.class);
             mgr.load("images/parchment.png", Texture.class);
+
+            mgr.load("images/title/title-bishop-evil.png", Texture.class);
+            mgr.load("images/title/title-bishop-good.png", Texture.class);
+            mgr.load("images/title/title-pawn-evil.png", Texture.class);
+            mgr.load("images/title/title-pawn-good.png", Texture.class);
+            mgr.load("images/title/title-knight-evil.png", Texture.class);
+            mgr.load("images/title/title-archer-good.png", Texture.class);
+            mgr.load("images/title/title-vignette_00.png", Texture.class);
+            mgr.load("images/title/title-text-monarchs-monsters_00.png", Texture.class);
+            mgr.load("images/title/title-text-board-to-death_00.png", Texture.class);
+            mgr.load("images/title/title-king_00.png", Texture.class);
+            mgr.load("images/title/title-death_00.png", Texture.class);
+            mgr.load("images/title/title-board_00.png", Texture.class);
+            mgr.load("images/title/title-background_00.png", Texture.class);
+
+
 
             mgr.load("fonts/outfit-medium-20px.fnt", BitmapFont.class);
             mgr.load("fonts/outfit-medium-40px.fnt", BitmapFont.class);
@@ -337,7 +364,19 @@ public class Assets implements Disposable {
         strings = mgr.get("i18n/strings", I18NBundle.class);
 
         // Misc references
-        title = mgr.get("images/title-image_00.png");
+        titleBishopEvil = mgr.get("images/title/title-bishop-evil.png", Texture.class);
+        titleBishopGood = mgr.get("images/title/title-bishop-good.png", Texture.class);
+        titlePawnEvil = mgr.get("images/title/title-pawn-evil.png", Texture.class);
+        titlePawnGood = mgr.get("images/title/title-pawn-good.png", Texture.class);
+        titleKnightEvil =  mgr.get("images/title/title-knight-evil.png", Texture.class);
+        titleArcherGood =  mgr.get("images/title/title-archer-good.png", Texture.class);
+        titleVignette = mgr.get("images/title/title-vignette_00.png", Texture.class);
+        titleTextSubTitle = mgr.get("images/title/title-text-monarchs-monsters_00.png", Texture.class);
+        titleTextTitle = mgr.get("images/title/title-text-board-to-death_00.png", Texture.class);
+        titleKing = mgr.get("images/title/title-king_00.png", Texture.class);
+        titleDeath = mgr.get("images/title/title-death_00.png", Texture.class);
+        titleBoard = mgr.get("images/title/title-board_00.png", Texture.class);
+        titleBackground = mgr.get("images/title/title-background_00.png", Texture.class);
         gdx = mgr.get("images/libgdx.png");
         whitePixel = mgr.get("images/pixel.png");
         noiseTexture = mgr.get("images/noise.png");
