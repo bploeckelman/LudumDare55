@@ -240,7 +240,7 @@ public class TitleScreen extends BaseScreen {
     private void meaninglessClickEffect(float x, float y) {
         if (settingsUI.isSettingShown) { return; }
         particles.levelUpEffect(x, y);
-        Main.game.audioManager.playSound(AudioManager.Sounds.click);
+        Main.game.audioManager.playSound(AudioManager.Sounds.hop);
     }
 
     private void subscribeEvents() {
