@@ -86,6 +86,7 @@ public class TutorialScreen extends BaseScreen {
                 particles.smoke(1000, 450);
                 styleManager.add(assets.queen.get(1).get(0), 1000, 550, false);
                 particles.smoke(1000, 550);
+                Main.game.audioManager.playSound(AudioManager.Sounds.cucaracha_fanfare);
                 showEnemies = true;
             } else if (!tutorialPage4Finished) {
                 Gdx.app.log("Tutorial", "Page 4 Finished");
@@ -116,6 +117,7 @@ public class TutorialScreen extends BaseScreen {
                 ui.endTurnButton.pulse = true;
             }
             else {
+                tutorialFinished = true;
                 launchGame();
             }
         }
@@ -151,7 +153,6 @@ public class TutorialScreen extends BaseScreen {
             renderPage7();
         } else if (!tutorialPage8Finished) {
             renderPage8();
-            tutorialFinished = true;
         } else {
             renderPage9();
         }
