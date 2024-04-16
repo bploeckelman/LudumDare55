@@ -35,7 +35,7 @@ public class GamePiece {
         Pawn(1, 1,
             Direction.Top | Direction.Right | Direction.Bottom,
             Direction.Top | Direction.Left | Direction.Bottom),
-        Knight(2, 1,
+        Knight(2, 2,
             Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom,
             Direction.Top | Direction.TopLeft | Direction.Left | Direction.BottomLeft | Direction.Bottom),
         Bishop(3, 2,
@@ -44,7 +44,7 @@ public class GamePiece {
         Rook(4, 3,
             Direction.Top | Direction.Right | Direction.Bottom | Direction.Left,
             Direction.Top | Direction.Right | Direction.Bottom | Direction.Left),
-        Queen(5, 4,
+        Queen(5, 5,
             Direction.TopLeft | Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom | Direction.BottomLeft | Direction.Left,
             Direction.TopLeft | Direction.Top | Direction.TopRight | Direction.Right | Direction.BottomRight | Direction.Bottom | Direction.BottomLeft | Direction.Left);
 

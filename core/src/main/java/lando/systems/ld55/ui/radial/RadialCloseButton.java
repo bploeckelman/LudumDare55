@@ -7,11 +7,15 @@ public class RadialCloseButton extends RadialButton{
     RadialMenu menu;
 
     public RadialCloseButton(RadialMenu menu) {
-        super(TileOverlayAssets.panelWhite,
-            TileOverlayAssets.disabledCircle,
-            "Close\nMenu",
+        super(TileOverlayAssets.panelRed,
+            TileOverlayAssets.disabledCross,
+            "", //"Close\nMenu",
             true);
         this.menu = menu;
+        this.iconRadiusScale = 1.25f;
+//        this.iconOffsetX = 10f;
+//        this.iconOffsetY = 10f;
+        this.iconEnabledColor.set(1, 1, 1, 1);
         this.backgroundHovered = TileOverlayAssets.panelYellow;
     }
     @Override

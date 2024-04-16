@@ -75,8 +75,8 @@ public class TileOverlayAssets {
         question    = atlas.findRegion("icons/kenney-board-game/dice_question");
         dollar      = atlas.findRegion("icons/kenney-board-game/dollar");
         dollarOutline  = atlas.findRegion("icons/kenney-board-game/dollar_outline");
-        disabledCross  = atlas.findRegion("icons/kenney-board-game/flair_small_cross_outline");
-        disabledCircle = atlas.findRegion("icons/kenney-board-game/flair_small_disabled_outline");
+        disabledCross  = atlas.findRegion("icons/kenney-board-game/flair_small_cross_outline2");
+        disabledCircle = atlas.findRegion("icons/kenney-board-game/flair_small_disabled_outline2");
         pawn        = atlas.findRegion("icons/kenney-board-game/pawn");
         pawns       = atlas.findRegion("icons/kenney-board-game/pawns");
         pawnUp      = atlas.findRegion("icons/kenney-board-game/pawn_up");
