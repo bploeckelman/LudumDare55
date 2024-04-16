@@ -197,7 +197,10 @@ public class TutorialScreen extends BaseScreen {
         var panelWidth = assets.layout.width + 100f;
         var panelHeight = assets.layout.height + 50f;
         Assets.NinePatches.glass.draw(batch, Config.Screen.window_width / 2f - panelWidth / 2f, Config.Screen.window_height / 2f - panelHeight + 20f, panelWidth, panelHeight + 120f);
-        Assets.NinePatches.glass_yellow.draw(batch, Config.Screen.window_width / 2f - 50f, Config.Screen.window_height / 2f + 25f, 100f, 100f);
+        Assets.NinePatches.glass_dim.draw(batch, Config.Screen.window_width / 2f - 50f, Config.Screen.window_height / 2f + 25f, 100f, 100f);
+        batch.setColor(Color.YELLOW);
+        batch.draw(TileOverlayAssets.laurel, Config.Screen.window_width / 2f - 50f, Config.Screen.window_height / 2f + 25f, 100f, 100f);
+        batch.setColor(Color.WHITE);
         batch.draw(TileOverlayAssets.crown, Config.Screen.window_width / 2f - 50f, Config.Screen.window_height / 2f + 25f, 100f, 100f);
         assets.font.draw(batch, assets.layout, 0, Config.Screen.window_height / 2f);
     }
