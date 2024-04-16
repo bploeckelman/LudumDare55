@@ -89,11 +89,11 @@ public class GamePiece {
                 break;
             case Rook:
                 animGroup = assets.rook.get(alignment);
-                movement = 10;
+                movement = 8;
                 break;
             case Queen:
                 animGroup = assets.queen.get(alignment);
-                movement = 10;
+                movement = 12;
                 break;
             case Pawn:
             default:
