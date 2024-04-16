@@ -34,6 +34,8 @@ public class AudioManager implements Disposable {
         , level_up
         , horn_fanfare
         , cucaracha_fanfare
+        , victory_fanfare
+        , funeral_dirge
         , enemy_spawn
         , round_ring
         , hop
@@ -81,6 +83,8 @@ public class AudioManager implements Disposable {
         putSound(Sounds.error_buzz, assets.errorBuzz);
         putSound(Sounds.horn_fanfare, assets.hornFanfare);
         putSound(Sounds.spawn_good_start, assets.hornFanfare);
+        putSound(Sounds.victory_fanfare, assets.victoryFanfare);
+        putSound(Sounds.funeral_dirge, assets.funeralDirge);
         putSound(Sounds.spawn_evil_start, assets.squelch1);
         putSound(Sounds.spawn_evil_start, assets.squelch2);
         putSound(Sounds.spawn_evil_start, assets.squelch3);

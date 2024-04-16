@@ -31,6 +31,7 @@ public class GameScreen extends BaseScreen{
     public SettingsUI settingsUI;
     public final StyleManager styleManager = new StyleManager();
     private float gameOverTime = 5;
+    private boolean gameHasEnded;
 
 
 
@@ -42,6 +43,7 @@ public class GameScreen extends BaseScreen{
         ui = new GameScreenUI(this);
         settingsUI = new SettingsUI(skin, windowCamera);
         uiStage.addActor(settingsUI);
+        gameHasEnded = false;
         Gdx.input.setInputProcessor(new InputMultiplexer(uiStage, gameBoard));
         Main.game.audioManager.playMusic(AudioManager.Musics.mainMusic);
         setupStyle();
@@ -180,9 +182,22 @@ public class GameScreen extends BaseScreen{
 
             if (gameOver) {
                 if(win) {
+                    if(!gameHasEnded) {
+                        Main.game.audioManager.stopMusic();
+                        Main.game.audioManager.playSound(AudioManager.Sounds.victory_fanfare);
+                        gameHasEnded = true;
+                    }
+
+
                     layout.setText(font, "You win!" , Color.WHITE, windowCamera.viewportWidth, Align.center, false);
                 }
                 else {
+                    if(!gameHasEnded) {
+                        Main.game.audioManager.stopMusic();
+                        Main.game.audioManager.playSound(AudioManager.Sounds.funeral_dirge);
+                        gameHasEnded = true;
+                    }
+
                     layout.setText(font, "You Died..." , Color.RED, windowCamera.viewportWidth, Align.center, false);
                 }
 

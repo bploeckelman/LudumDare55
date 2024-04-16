@@ -145,6 +145,8 @@ public class Assets implements Disposable {
     public Sound levelUp;
     public Sound hornFanfare;
     public Sound cucarachaFanfare;
+    public Sound victoryFanfare;
+    public Sound funeralDirge;
     public Sound enemySpawn;
     public Sound squelch1;
     public Sound squelch2;
@@ -290,6 +292,8 @@ public class Assets implements Disposable {
             mgr.load("audio/sounds/error-buzz.ogg", Sound.class);
             mgr.load("audio/sounds/horn-fanfare.ogg", Sound.class);
             mgr.load("audio/sounds/cucaracha-fanfare.ogg", Sound.class);
+            mgr.load("audio/sounds/victory-fanfare.ogg", Sound.class);
+            mgr.load("audio/sounds/funeral-dirge.ogg", Sound.class);
             mgr.load("audio/sounds/enemy-spawn.ogg", Sound.class);
             mgr.load("audio/sounds/squelch1.ogg", Sound.class);
             mgr.load("audio/sounds/squelch2.ogg", Sound.class);
@@ -521,6 +525,8 @@ public class Assets implements Disposable {
         errorBuzz = mgr.get("audio/sounds/error-buzz.ogg", Sound.class);
         hornFanfare = mgr.get("audio/sounds/horn-fanfare.ogg", Sound.class);
         cucarachaFanfare = mgr.get("audio/sounds/cucaracha-fanfare.ogg", Sound.class);
+        victoryFanfare = mgr.get("audio/sounds/victory-fanfare.ogg", Sound.class);
+        funeralDirge = mgr.get("audio/sounds/funeral-dirge.ogg", Sound.class);
         enemySpawn = mgr.get("audio/sounds/enemy-spawn.ogg", Sound.class);
         squelch1 = mgr.get("audio/sounds/squelch1.ogg", Sound.class);
         squelch2 = mgr.get("audio/sounds/squelch2.ogg", Sound.class);
