@@ -21,7 +21,7 @@ public class LaunchScreen extends BaseScreen {
     public void update(float dt) {
         if (!exitingScreen && Gdx.input.justTouched()){
             exitingScreen = true;
-            game.setScreen(new TitleScreen());
+            game.setScreen(new TitleScreen(), assets.heartShader, .5f);
         }
     }
 
