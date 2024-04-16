@@ -17,6 +17,9 @@ public class RadialButton {
     public Color iconMetaColor = Color.WHITE.cpy();
 
     public String text;
+    public float iconRadiusScale = 0.9f;
+    public float iconOffsetX = 0f;
+    public float iconOffsetY = 0f;
     public TextureRegion icon;
     public TextureRegion iconMeta;
     public TextureRegion iconCost;
@@ -118,13 +121,13 @@ public class RadialButton {
         }
 
         // portrait (for summon)
-        var iconRadius = radius * 0.9f;
+        var iconRadius = radius * iconRadiusScale;
         var iconColor = enabled ? iconEnabledColor : iconDisabledColor;
-        var iconOffsetY = (summonBtn != null) ? iconRadius / 2f : iconRadius;
+        var iconOffsetY2 = (summonBtn != null) ? iconRadius / 2f : iconRadius;
         batch.setColor(iconColor);
         batch.draw(icon,
-            centerPosition.x - iconRadius,
-            centerPosition.y - iconOffsetY,
+            centerPosition.x - iconOffsetX - iconRadius,
+            centerPosition.y - iconOffsetY - iconOffsetY2,
             iconRadius * 2f, iconRadius * 2f);
         batch.setColor(Color.WHITE);
 
@@ -146,7 +149,12 @@ public class RadialButton {
             layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
             font.getData().setScale((radius / MAX_RADIUS * textWidth) / layout.width);
             layout.setText(font, text, Color.WHITE, textWidth, Align.center, false);
-            font.draw(batch, text, centerPosition.x - radius, centerPosition.y + layout.height / 2f, radius + radius, Align.center, true);
+            font.draw(batch, text,
+                centerPosition.x - radius,
+                centerPosition.y + layout.height / 2f + 5,
+                radius + radius,
+                Align.center,
+                true);
             font.getData().setScale(1f);
         }
 
