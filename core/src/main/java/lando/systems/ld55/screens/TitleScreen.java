@@ -212,6 +212,7 @@ public class TitleScreen extends BaseScreen {
 
     private void transitionToGameScreen() {
         if (settingsUI.isSettingShown) { return; }
+        if (!drawUI) return;
         if (!exitingScreen ) {
             exitingScreen = true;
             var nextScreen = Config.Debug.show_intro_screen
@@ -225,6 +226,7 @@ public class TitleScreen extends BaseScreen {
 
     private void transitionToCreditsScreen() {
         if (settingsUI.isSettingShown) { return; }
+        if (!drawUI) return;
         if (!exitingScreen ) {
             Main.game.audioManager.playSound(AudioManager.Sounds.click);
             exitingScreen = true;

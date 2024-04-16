@@ -65,7 +65,8 @@ public class IntroScreen extends BaseScreen {
     @Override
     public void update(float dt) {
         elapsedTime += dt;
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.justTouched() && elapsedTime > .5f) {
+            elapsedTime = 0;
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             worldCamera.unproject(touchPos);
             particles.levelUpEffect(touchPos.x, touchPos.y);
