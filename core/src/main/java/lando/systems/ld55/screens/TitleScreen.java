@@ -71,8 +71,8 @@ public class TitleScreen extends BaseScreen {
         subscribeEvents();
 
         Timeline.createSequence()
-            .delay(.5f)
-            .push(Tween.to(boardPosition, Vector2Accessor.Y, 1f)
+            .delay(.1f)
+            .push(Tween.to(boardPosition, Vector2Accessor.Y, 1.5f)
                 .target(-140).ease(Bounce.OUT))
             .beginParallel()
                 .push(Tween.to(kingPosition, Vector2Accessor.Y, .5f)
