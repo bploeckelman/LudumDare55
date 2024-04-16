@@ -33,6 +33,7 @@ public class RadialSummonButton extends RadialButton {
 
         var portrait = board.gameScreen.assets.getPortrait(type, GamePiece.Owner.Player);
         this.icon = portrait.getKeyFrame(0);
+        this.iconRadiusScale = 0.69f;
         this.iconEnabledColor.set(Color.WHITE);
         this.iconDisabledColor.set(Color.DARK_GRAY);
 //        iconDisabledColor.set(.8f, .8f, .8f, .1251f);
